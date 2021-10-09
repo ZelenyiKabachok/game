@@ -1,69 +1,35 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <cstdio>
-#include <stdlib.h>
 #include "shader.h"
 
-Shader::Shader(const char *VertFile, const char *FragFile)
+void Shader::Generate(const char *VertCode, const char *FragCode)
 {
 	GLint vertShader;
 	GLint fragShader;
-	CompileShader(vertShader, GL_VERTEX_SHADER, VertFile);
-	CompileShader(fragShader, GL_FRAGMENT_SHADER, FragFile);
-	CompoundShader(vertShader, fragShader);
+	CompileShader(VertCode, vertShader, GL_VERTEX_SHADER);
+	CompileShader(FragCode, fragShader, GL_FRAGMENT_SHADER);
+	compileStatus =	CompoundShader(vertShader, fragShader);
+/*
+	printf("VertexShader:\n%s\n\n", VertCode);
+	printf("FragShader:\n%s\n\n", FragCode);
+*/
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
 }
 
-void Shader::Params(const float *positionData, const float *colorData, int vertics)
+void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix)
 {
-	GLuint vboHandle[2];	
-	glGenBuffers(2, vboHandle);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboHandle[0]);
-	glBufferData(GL_ARRAY_BUFFER, vertics * sizeof(float), positionData, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboHandle[1]);
-	glBufferData(GL_ARRAY_BUFFER, vertics * sizeof(float), colorData, GL_STATIC_DRAW);
-
-	glGenVertexArrays(1, &vaoHandle);
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboHandle[0]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboHandle[1]);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+	GLuint location = glGetUniformLocation(programHandle, varName);
+	if(location >= 0)
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Shader::Render()
-{
-	glBindVertexArray(vaoHandle);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-}
 
-const char*  Shader::loadShaderAsString(const char *file)
-{
-	FILE *fd;
-	fd = fopen(file, "r");
-	if(!fd) {
-		printf("Can't open file: %s\n", file);
-		exit(0);
-	}
-	char *code = new char[512];
-	fread(code, 1, 512, fd);
-	fclose(fd);
-	return code;
-}
-
-void Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
+bool Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 {
 	programHandle = glCreateProgram();
 	if(!programHandle) {
 		printf("Error creating program object\n");
-		exit(0);
+		return false;
 	}
 	
 	glAttachShader(programHandle, vertShader);
@@ -84,21 +50,20 @@ void Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 			printf("Program log:\n%s\n", log);
 			delete[] log;
 		}
-	} else {
-		glUseProgram(programHandle);
+		return false;
 	}
+	return true;
 }
 
-void Shader::CompileShader(GLint& shader, GLenum shaderType, const char *file)
+void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderType)
 {
 	shader = glCreateShader(shaderType);
 
 	if(!shader) {
 		printf("Error creating shader!\n");
-		exit(0);
+		return;
 	}
-
-	const GLchar *shaderCode = loadShaderAsString(file);
+	
 	const GLchar *codeArray[] = {shaderCode};
 
 	glShaderSource(shader, 1, codeArray, NULL);
@@ -115,7 +80,6 @@ void Shader::CompileShader(GLint& shader, GLenum shaderType, const char *file)
 			char *log = new char[logLen];
 
 			glGetShaderInfoLog(shader, logLen, NULL, log);
-			printf("\nFile name %s\n", file);
 			printf("Shader log:\n%s\n", log);
 			delete[] log;
 		}

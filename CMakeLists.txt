@@ -4,7 +4,11 @@ set(PROJECT_NAME study1)
 
 project(${PROJECT_NAME})
 
-add_executable(study1 src/main.cpp src/shader.cpp)
+add_executable(study1 src/main.cpp 
+	src/shader.cpp src/shader.h
+	src/texture.cpp src/texture.h
+	src/resources.cpp src/resources.h
+	src/loads/stb_image.h src/loads/stb_image.cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL -lm")
 
