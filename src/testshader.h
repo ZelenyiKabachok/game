@@ -1,0 +1,35 @@
+#ifndef SHADER_H
+#define SHADER_H
+
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+class Shader {
+
+	GLuint programHandle;	
+	bool compileStatus = false;
+
+public:
+
+	Shader() {}
+
+	~Shader() { glDeleteProgram(programHandle); }
+
+	void Generate(const char *VertCode, const char *FragCode);
+
+	bool IsCompiled() { return compileStatus; }
+
+	void Use() { glUseProgram(programHandle); }
+
+	void SetMatrix4(const char *varName, const glm::mat4 &matrix);
+
+private:	
+
+	void CompileShader(const char *ShaderCode, GLint& shader, GLenum shaderType);
+	
+	bool CompoundShader(GLint& vertShader, GLint& fragShader);
+
+};
+
+#endif
