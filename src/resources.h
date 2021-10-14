@@ -8,32 +8,39 @@
 class ResourceManager {
 public:
 	
-	static std::map <const char*, Shader> Shaders;
-	static std::map <const char*, Texture2D> Textures;
+	std::map <const char*, Shader> Shaders;
+	std::map <const char*, Texture2D> Textures;
 	
 
-	static Shader LoadShader(const char *name, const char *VertShader, 
+	Shader LoadShader(const char *name, const char *VertShader, 
 														const char *FragShader);
 
-	static Shader GetShader(const char *name)
+	Shader GetShader(const char *name)
 	{ return Shaders[name]; }
 
-	static Texture2D LoadTexture(const char *name, const char *ImageFile, bool alpha);
+	Texture2D LoadTexture(const char *name, const char *ImageFile);
 
-	static Texture2D& GetTexture(const char *name)
+	Texture2D& GetTexture(const char *name)
 	{ return Textures[name]; }
 
+	void DeleteShader(const char *name)
+	{ glDeleteProgram(Shaders[name].programHandle); }
+	
+	void DeleteTexture(const char *name)
+	{ glDeleteTextures(1, &(Textures[name].texID)); }
+
+	ResourceManager() {}
+	
+	~ResourceManager();
 
 private:
 
-	ResourceManager() {}
-
-	static Shader LoadShaderFromFile(const char *VertShader, 
+	Shader LoadShaderFromFile(const char *VertShader, 
 												const char *FragShader);
 
-	static Texture2D LoadTextureFromFile(const char *ImageFile, bool alpha);
+	Texture2D LoadTextureFromFile(const char *ImageFile);
 
-	static const char* loadShaderAsString(const char *fileName);
+	const char* loadShaderAsString(const char *fileName);
 };
 
 #endif

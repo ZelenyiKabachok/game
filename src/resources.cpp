@@ -1,9 +1,9 @@
 #include <cstdio>
 #include "resources.h"
-
+/*
 std::map <const char *, Shader> ResourceManager::Shaders;
 std::map <const char *, Texture2D> ResourceManager::Textures;
-
+*/
 Shader ResourceManager::LoadShader(const char *name, const char *VertShader,
 														const char *FragShader)
 {
@@ -11,36 +11,41 @@ Shader ResourceManager::LoadShader(const char *name, const char *VertShader,
 	return Shaders[name];
 }
 
-Texture2D ResourceManager::LoadTexture(const char *name, const char *ImageFile,
-																	bool alpha)
+Texture2D ResourceManager::LoadTexture(const char *name, const char *ImageFile)
 {
-	Textures[name] = LoadTextureFromFile(ImageFile, alpha);
+	Textures[name] = LoadTextureFromFile(ImageFile);
 	return Textures[name];
 }	
 
-Texture2D ResourceManager::LoadTextureFromFile(const char *ImageFile, bool alpha)
+Texture2D ResourceManager::LoadTextureFromFile(const char *ImageFile)
 {
 	Texture2D texture;
 	int width, height, nrChannels;
-	unsigned char *data = stbi_load(ImageFile, &width, &height, &nrChannels, 0);
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char *pixels = stbi_load(ImageFile, &width, &height, &nrChannels, 0);
 
-	if(alpha) {
+	if(nrChannels == 4) {
 		texture.InternalFormat = GL_RGBA;
 		texture.ImageFormat = GL_RGBA;
 	}
 
-	if(data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, 
-			GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	} else {
-		printf("Error load texture!\n");
+	if(!pixels) {
+		printf("Error load texture %s\n", ImageFile);
 	}
+	texture.Generate(width, height, pixels);
 
-	texture.Generate(width, height, data);
-
-	stbi_image_free(data);
+	stbi_image_free(pixels);
 	return texture;
+}
+
+ResourceManager::~ResourceManager()
+{
+	for(auto item : Shaders) {
+		glDeleteProgram(item.second.programHandle);
+	}
+	for(auto item : Textures) {
+		glDeleteTextures(1, &(item.second.texID));
+	}
 }
 
 Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
@@ -49,14 +54,9 @@ Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
 	const char *VertCode = loadShaderAsString(VertexShader);
 	const char *FragCode = loadShaderAsString(FragShader);
 
-	//printf("Create(1) Shader ID = %u\n", shader.programHandle);
-
 	Shader shader;
 	shader.Generate(VertCode, FragCode);
 
-	//printf("Generate(2) Shader ID = %u\n", shader.programHandle);
-
-	//printf("Generate(3) Shader ID = %u\n", shader.programHandle);
 	return shader;
 }	
 

@@ -23,6 +23,12 @@ void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix)
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Shader::SetInt(const char *varName, const int var)
+{
+	GLuint location = glGetUniformLocation(programHandle, varName);
+	if(location >= 0)
+		glUniform1i(location, var);
+}
 
 bool Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 {

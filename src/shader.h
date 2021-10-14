@@ -25,6 +25,8 @@ public:
 
 	void SetMatrix4(const char *varName, const glm::mat4 &matrix);
 
+	void SetInt(const char *varName, const int var);
+
 private:	
 
 	void CompileShader(const char *ShaderCode, GLint& shader, GLenum shaderType);
