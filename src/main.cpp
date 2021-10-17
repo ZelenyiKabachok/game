@@ -70,7 +70,7 @@ int main()
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
-	float trAngle = M_PI/3;
+	float trAngle = 0;//M_PI/3;
 	vec3 TrPosition = { 2.0, -1.0, 0.0 };
 	vec3 TrSize = { 0.5, 0.5, 0.5 };
 	vec3 TrRotateVector = { 0.0, 1.0, 0.0};	
