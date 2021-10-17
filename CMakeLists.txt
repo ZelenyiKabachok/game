@@ -4,10 +4,12 @@ set(PROJECT_NAME game)
 
 project(${PROJECT_NAME})
 
-add_executable(game src/main.cpp 
-	src/shader.cpp src/shader.h
-	src/texture.cpp src/texture.h
-	src/resources.cpp src/resources.h
+add_executable(game 	src/main.cpp 
+	src/sprite.cpp		src/sprite.h
+	src/camera.cpp 		src/camera.h
+	src/shader.cpp 		src/shader.h
+	src/texture.cpp 	src/texture.h
+	src/resources.cpp 	src/resources.h
 	src/loads/stb_image.h src/loads/stb_image.cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL")
