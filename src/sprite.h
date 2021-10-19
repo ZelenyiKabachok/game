@@ -6,23 +6,32 @@
 #include "texture.h"
 #include "camera.h"
 
-class Sprite {
+class GraphObject {
 
 	Shader shader;
+	Texture2D texture;
 	GLuint VAO;
+	
+	vec3 ObPosition;
+	vec3 ObSize;
+	vec3 ObSpeed;
 
 public:
-	
-	Sprite(const Shader& sh);
 
-	void Draw(const Texture2D& texture, const float delta_time, 
-		const vec3& position, const vec3& size, const vec3& rotateVector,
- 											const float angle);
+	void initShaderData(const float *Data, const unsigned int *indices);	
 
-private:
+	void Move(const float delta_time, const vec3& rotateVec, const float angle);
 
-	void initShaderData();	
+	void Draw(const mat4& Model);
 
+	void ChangeTexture(const Texture2D& tex);
+
+	void ChangeSize(const vec3& newSize); 
+
+	void ChangeSpeed(const vec3& newSpeed);
+
+	GraphObject(const Shader& sh, const Texture2D& tex, const vec3& pos, 
+									const vec3& size, const vec3& speed);
 };
 
 #endif

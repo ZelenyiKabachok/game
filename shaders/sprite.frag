@@ -1,6 +1,5 @@
 #version 430
 
-in vec3 Color;
 in vec2 TexCoord;
 
 uniform sampler2D Texture;

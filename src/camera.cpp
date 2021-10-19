@@ -4,9 +4,14 @@
 extern int Height;
 extern int Width;
 
-Camera::Camera(vec3 Position, float NewSpeedX, float NewSpeedY, float NewSpeedZ) :
-							cameraPos((-Position)), RightSpeed(NewSpeedX), 
-							UpSpeed(NewSpeedY), DistanceSpeed(NewSpeedZ)
+void Camera::ChangeCameraSpeed(const vec3& newSpeed)
+{ cameraSpeed = newSpeed; }
+
+mat4 Camera::GetCameraMatrix()
+{ return Projection * View * Model; }
+
+Camera::Camera(const vec3& Position, const vec3& Speed) :
+					cameraPos((-Position)), cameraSpeed(Speed)
 {
 	Model = glm::rotate(mat4(1.0f), 0.0f, vec3(0.0, 0.0, 1.0));
 	View = glm::translate(mat4(1.0f), cameraPos);
@@ -16,9 +21,9 @@ Camera::Camera(vec3 Position, float NewSpeedX, float NewSpeedY, float NewSpeedZ)
 mat4 Camera::MoveCamera(float delta_time)
 {
 
-	cameraPos = vec3(cameraPos.x + ((-RightSpeed)*delta_time),
-					 cameraPos.y + ((-UpSpeed)*delta_time),
-					 cameraPos.z + ((-DistanceSpeed)*delta_time));
+	cameraPos = vec3(cameraPos.x + ((-cameraSpeed.x)*delta_time),
+					 cameraPos.y + ((-cameraSpeed.y)*delta_time),
+					 cameraPos.z + ((-cameraSpeed.z)*delta_time));
 
 	View = glm::translate(mat4(1.0f), cameraPos);
 	return Projection * View * Model;
