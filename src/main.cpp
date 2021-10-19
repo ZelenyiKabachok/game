@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "resources.h"
 #include "camera.h"
-#include "sprite.h"
+#include "gravity_object.h"
 
 using glm::mat4;
 using glm::vec3;
@@ -16,7 +16,7 @@ using glm::vec3;
 int Height = 1080;
 int Width = 1920;
 
-Camera camera(vec3(0.0, 0.0, 4.0), vec3(0.05, 0.05, 0.00));
+Camera camera(vec3(0.0, 0.0, 4.0), vec3(0.0, 0.0, 0.0));
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
@@ -59,8 +59,13 @@ int main()
 	resources.GetShader("triangle").Use();
 	resources.GetShader("triangle").SetInt("ourTexture", 0);
 
+/*
 	GraphObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
 					vec3(1.0, -1.0, 0.0), vec3(0.8, 0.8, 0.8), vec3(0.0, 0.08, 0.0));
+*/
+
+	GravityObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
+	vec3(0.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0), 500, 100);
 
 	float Data[] = {
 	   -0.8, -0.8, 0.0,		0.0, 0.0,
@@ -95,6 +100,7 @@ int main()
 
 		camera.MoveCamera(delta_time);
 
+		Quad.Attract(delta_time);
 		Quad.Move(delta_time, TrRotateVector, trAngle);
 
 		//trAngle += M_PI/1000;

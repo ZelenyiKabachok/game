@@ -3,16 +3,21 @@
 
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include "sprite.h"
 
-class GravityObject {
+class GravityObject : public GraphObject {
 
 	float mass;
+	float cooficient;
 
 public:
 	
-	GravityObject(float m) : mass(m) {}
+	GravityObject(const Shader& sh, const Texture2D& tex, const vec3& pos,
+						const vec3& size, const vec3& speed, float m, float coof) 
+		: GraphObject(sh, tex, pos, size, speed), 
+		mass(m), cooficient(coof) {}
 
-	vec3 Attract(vec3& position, float delta_time);
+	void Attract(float delta_time);
 
 };
 

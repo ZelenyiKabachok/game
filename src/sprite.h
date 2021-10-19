@@ -11,6 +11,8 @@ class GraphObject {
 	Shader shader;
 	Texture2D texture;
 	GLuint VAO;
+
+protected:
 	
 	vec3 ObPosition;
 	vec3 ObSize;
