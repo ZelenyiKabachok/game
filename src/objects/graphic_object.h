@@ -2,9 +2,8 @@
 #define SPRITE_H
 
 #include "glad/glad.h"
-#include "shader.h"
-#include "texture.h"
-#include "camera.h"
+#include "../loads.h"
+#include "../camera.h"
 
 class GraphObject {
 
@@ -20,7 +19,8 @@ protected:
 
 public:
 
-	void initShaderData(const float *Data, const unsigned int *indices);	
+	void initShaderData(const float *Data, const unsigned int *indices,
+						int DataVert, int IndicesQuantity);	
 
 	void Move(const float delta_time, const vec3& rotateVec, const float angle);
 

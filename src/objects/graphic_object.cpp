@@ -1,8 +1,9 @@
-#include "sprite.h"
+#include "graphic_object.h"
 
 extern Camera camera;
 
-void GraphObject::initShaderData(const float *Data, const unsigned int *indices)
+void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
+								 int DataVert, int IndicesQuantity)
 {
 	unsigned int VBO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -12,10 +13,11 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices)
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, 32 * sizeof(float), Data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, DataVert * sizeof(float), Data, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(float), indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, IndicesQuantity * sizeof(float),
+													indices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), NULL);

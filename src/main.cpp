@@ -6,9 +6,10 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "resources.h"
+#include "loads.h"
+#include "objects.h"
 #include "camera.h"
-#include "gravity_object.h"
+
 
 using glm::mat4;
 using glm::vec3;
@@ -16,7 +17,7 @@ using glm::vec3;
 int Height = 1080;
 int Width = 1920;
 
-Camera camera(vec3(0.0, 0.0, 4.0), vec3(0.0, 0.0, 0.0));
+Camera camera(vec3(0.0, 0.0, 50.0), vec3(0.0, 0.0, 0.0));
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
@@ -55,6 +56,7 @@ int main()
 									"../shaders/sprite.frag");
 
 	resources.LoadTexture("triangle", "../resourses/cxx.png");
+	resources.LoadTexture("paral", "../resourses/wod2.jpg");
 
 	resources.GetShader("triangle").Use();
 	resources.GetShader("triangle").SetInt("ourTexture", 0);
@@ -65,20 +67,35 @@ int main()
 */
 
 	GravityObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
-	vec3(0.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0), 500, 100);
+	vec3(-20.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0), 5, 0.1);
 
-	float Data[] = {
+	GravityObject Paral(resources.GetShader("triangle"), resources.GetTexture("paral"),
+	vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0), 10, 0.1);
+
+	float QuadData[] = {
 	   -0.8, -0.8, 0.0,		0.0, 0.0,
 	   -0.8,  0.8, 0.0,		0.0, 1.0,
 	   	0.8,  0.8, 0.0,		1.0, 1.0,
 	   	0.8, -0.8, 0.0,		1.0, 0,0
 	};
-	unsigned int indices[] {
+	unsigned int QuadIndices[] {
 		0, 1, 2,
 		0, 2, 3
 	};
 
-	Quad.initShaderData(Data, indices);
+	float ParalData[] = {
+		-0.8, -0.8, 0.0,	0.0, 0.0,
+		 0.0,  0.8, 0.0,	0.0, 0.8,
+		 0.8,  0.8, 0.0,	1.0, 1.0,
+		 0.0, -0.8, 0.0,	1.0, 0.0
+	};
+	unsigned int ParalIndices[] {
+		0, 1, 2,
+		0, 2, 3,
+	};	
+
+	Quad.initShaderData(QuadData, QuadIndices, 20, 6);
+	Paral.initShaderData(ParalData, ParalIndices, 20, 6);
 
 	float current_time = 0.0;
 	float delta_time = 0.0;
@@ -92,7 +109,7 @@ int main()
 	while(!glfwWindowShouldClose(pWindow)) {
 		
 		current_time = glfwGetTime();
-		delta_time = current_time - last_time;
+		delta_time = (current_time - last_time);
 		last_time = current_time;
 
 		glfwSetKeyCallback(pWindow, Keyboard);
@@ -100,8 +117,11 @@ int main()
 
 		camera.MoveCamera(delta_time);
 
-		Quad.Attract(delta_time);
+		Quad.Attract(delta_time, vec3(10, 20, 0));
 		Quad.Move(delta_time, TrRotateVector, trAngle);
+
+		//Paral.Attract(delta_time, vec3(0));
+		//Paral.Move(delta_time, TrRotateVector, trAngle);
 
 		//trAngle += M_PI/1000;
 

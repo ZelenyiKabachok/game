@@ -3,7 +3,7 @@
 
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
-#include "sprite.h"
+#include "graphic_object.h"
 
 class GravityObject : public GraphObject {
 
@@ -17,7 +17,7 @@ public:
 		: GraphObject(sh, tex, pos, size, speed), 
 		mass(m), cooficient(coof) {}
 
-	void Attract(float delta_time);
+	void Attract(float delta_time, const vec3& Force);
 
 };
 

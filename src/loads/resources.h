@@ -6,11 +6,11 @@
 #include "texture.h"
 
 class ResourceManager {
-public:
 	
 	std::map <const char*, Shader> Shaders;
 	std::map <const char*, Texture2D> Textures;
 	
+public:
 
 	Shader LoadShader(const char *name, const char *VertShader, 
 														const char *FragShader);
