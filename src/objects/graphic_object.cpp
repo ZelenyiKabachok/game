@@ -23,10 +23,6 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), NULL);
     glEnableVertexAttribArray(0);
 
-//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float),
-												//(void*)(3*sizeof(float)));
-//	glEnableVertexAttribArray(1);
-
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float),
 												(void*)(3*sizeof(float)));
 	glEnableVertexAttribArray(1);
@@ -34,6 +30,9 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 }
 
 void GraphObject::Move(const float delta_time, const vec3& rotateVector,
@@ -76,3 +75,9 @@ void GraphObject::ChangeSize(const vec3& newSize)
 
 void GraphObject::ChangeSpeed(const vec3& newSpeed)
 { ObSpeed = newSpeed; }
+
+void GraphObject::ChangePosition(const vec3& newPos)
+{ ObPosition = newPos; }
+
+vec3 GraphObject::GetSpeed() { return ObSpeed; }
+vec3 GraphObject::GetPosition() { return ObPosition; }

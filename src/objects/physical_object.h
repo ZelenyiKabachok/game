@@ -5,19 +5,31 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "graphic_object.h"
 
-class GravityObject : public GraphObject {
+//Класс PhysicObject наследуется от класса GraphObject.
+//Учитывает коллизию объекта и силы, действующие на него.
+class PhysicObject : public GraphObject {
 
 	float mass;
-	float cooficient;
+
+//Коэфициент для расчёта силы сопротивления воздуха.
+//Зависит от полощади и обтекаемости объекта, но программист сам его задаёт.
+	float coofResistance; 
+	const float ForceOfAttract = mass * 9.8;
 
 public:
 	
-	GravityObject(const Shader& sh, const Texture2D& tex, const vec3& pos,
-						const vec3& size, const vec3& speed, float m, float coof) 
-		: GraphObject(sh, tex, pos, size, speed), 
-		mass(m), cooficient(coof) {}
+	PhysicObject(float m, float coof, const Shader& sh, 
+					const Texture2D& tex, const vec3& pos = vec3(0),
+					const vec3& size = vec3(1), const vec3& speed = vec3(0));
 
-	void Attract(float delta_time, const vec3& Force);
+//Вычисляя равнодеёствующую всех сил, изменяет вектор скорости объекта.
+//Вызывает метод void Move(const float, const vec3&, const float).
+	void AttractAndMove(float delta_time, const vec3& Force = vec3(0),
+						const vec3& RotationVec = vec3(1), float angle = 0);
+
+	float GetMass();
+	
+	float GetCoof();
 
 };
 

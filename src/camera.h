@@ -21,15 +21,15 @@ class Camera {
 
 public:
 
-	Camera(const vec3& Position, const vec3& Speed);
-
 	mat4 MoveCamera(float delta_time);
 
-	vec3 GetPosition() { return cameraPos; };
+	Camera(const vec3& Position = vec3(0), const vec3& Speed = vec3(0));
 	
 	mat4 GetCameraMatrix();
 
 	void ChangeCameraSpeed(const vec3& NewSpeed);
+
+	vec3 GetPosition();
 
 };
 

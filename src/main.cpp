@@ -17,7 +17,7 @@ using glm::vec3;
 int Height = 1080;
 int Width = 1920;
 
-Camera camera(vec3(0.0, 0.0, 50.0), vec3(0.0, 0.0, 0.0));
+Camera camera(vec3(0.0, 0.0, 10.0), vec3(0.0, 0.0, 0.0));
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
@@ -66,11 +66,13 @@ int main()
 					vec3(1.0, -1.0, 0.0), vec3(0.8, 0.8, 0.8), vec3(0.0, 0.08, 0.0));
 */
 
-	GravityObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
-	vec3(-20.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0), 5, 0.1);
+	PhysicObject Quad(5, 0.1, resources.GetShader("triangle"), 
+						resources.GetTexture("triangle"), vec3(-5.0, 1.0, 0.0),
+									vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0));
 
-	GravityObject Paral(resources.GetShader("triangle"), resources.GetTexture("paral"),
-	vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0), 10, 0.1);
+	PhysicObject Paral(10, 0.1, resources.GetShader("triangle"),
+									resources.GetTexture("paral")
+	/*vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),*/);
 
 	float QuadData[] = {
 	   -0.8, -0.8, 0.0,		0.0, 0.0,
@@ -101,10 +103,9 @@ int main()
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
-	float trAngle = 0;
-	vec3 TrRotateVector = { 0.0, 1.0, 0.0};	
+	float QAngle = 0;
 
-	glClearColor(0.2, 0.3, 0.3, 1);
+	glClearColor(0.7, 0.4, 0.2, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
 		
@@ -117,13 +118,11 @@ int main()
 
 		camera.MoveCamera(delta_time);
 
-		Quad.Attract(delta_time, vec3(10, 20, 0));
-		Quad.Move(delta_time, TrRotateVector, trAngle);
+		Quad.AttractAndMove(delta_time, vec3(10, 20, 0));
 
-		//Paral.Attract(delta_time, vec3(0));
-		//Paral.Move(delta_time, TrRotateVector, trAngle);
+		Paral.AttractAndMove(delta_time);
 
-		//trAngle += M_PI/1000;
+		QAngle += M_PI/80;
 
 		glfwSwapBuffers(pWindow);
 		
