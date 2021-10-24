@@ -3,8 +3,6 @@
 
 #include "../physical_object.h"
 
-namespace AircraftParts {
-
 //Хвост для самолёта.
 //Направляет самолёт.
 class Tail : public PhysicObject {
@@ -24,7 +22,5 @@ public:
 	Tail(PhysicObject& tail, float mAngle, float ang);
 
 };
-
-}
 
 #endif

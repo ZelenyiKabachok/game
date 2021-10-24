@@ -3,8 +3,6 @@
 
 #include "../physical_object.h"
 
-namespace AircraftParts {
-
 //Крылья самолёта.
 //Расчитывает силу подъёма.
 class Wings : public PhysicObject {
@@ -22,14 +20,12 @@ class Wings : public PhysicObject {
 
 //Меняет коэфициент силы сопротивления воздуха.
 //При торможении coofResistance устанавливается в coofResBrake.
-	void Fly(bool gas, bool brake);
+	void CalcLiftForce(bool gas, bool brake);
 
 public:
 
 	Wings(PhysicObject& wings, float coofBrake, float lCoof);
 
 };
-
-}
 
 #endif

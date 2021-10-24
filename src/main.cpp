@@ -1,14 +1,4 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <cstdio>
-#include <map>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include "loads.h"
-#include "objects.h"
-#include "camera.h"
+#include "game.h"
 
 
 using glm::mat4;

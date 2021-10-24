@@ -3,8 +3,6 @@
 
 #include "../physical_object.h"
 
-namespace AircraftParts {
-
 //Двигатель для самолёта.
 //Расчитывает силу тяги.
 class Engine : public PhysicObject {
@@ -40,8 +38,8 @@ public:
 	Engine(PhysicObject engine, float maxForce, float startForce, 
 				float boost, float consumption);
 
-};
+	virtual ~Engine() {}
 
-}
+};
 
 #endif

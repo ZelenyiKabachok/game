@@ -1,9 +1,29 @@
 #ifndef GAME_H
 #define GAME_H
 
-class Game {
-	
-	Game(unsigned int height, unsigned int width);
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
+#include <cstdio>
+#include <map>
+
+#include "levels.h"
+#include "loads.h"
+#include "objects.h"
+#include "camera.h"
+
+
+class Game {
+public:	
+
+	Game();
+
+	~Game();
+
+	void Init(ILevel& level);
+
+};
 
 #endif

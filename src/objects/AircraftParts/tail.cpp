@@ -1,7 +1,5 @@
 #include "tail.h"
 
-using namespace AircraftParts;
-
 Tail::Tail(PhysicObject& tail, float mAngle, float ang) :
 			PhysicObject(tail), maxAngle(mAngle), angle(ang) {}
 

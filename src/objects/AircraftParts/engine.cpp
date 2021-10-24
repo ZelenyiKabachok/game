@@ -1,7 +1,5 @@
 #include "engine.h"
 
-using namespace AircraftParts;
-
 Engine::Engine(PhysicObject engine, float maxForce, float startForce,
 											float boost, float consumption) :
 						PhysicObject(engine), maxThrustForce(maxForce),

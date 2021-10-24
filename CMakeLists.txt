@@ -5,6 +5,8 @@ set(PROJECT_NAME game)
 project(${PROJECT_NAME})
 
 add_executable(game 	src/main.cpp 
+	src/game.cpp					src/game.h
+	src/Levels/level.h			
 	src/objects/AircraftParts/body.cpp		src/objects/AircraftParts/body.h
 	src/objects/AircraftParts/engine.cpp	src/objects/AircraftParts/engine.h	
 	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
