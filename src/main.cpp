@@ -17,7 +17,7 @@ using glm::vec3;
 int Height = 1080;
 int Width = 1920;
 
-Camera camera(vec3(0.0, 0.0, 10.0), vec3(0.0, 0.0, 0.0));
+Camera camera(vec3(0.0, 0.0, 30.0), vec3(0.0, 0.0, 0.0));
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
@@ -50,6 +50,8 @@ int main()
         return -1;
     }
 
+	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	ResourceManager resources;
 	
 	resources.LoadShader("triangle", "../shaders/sprite.vert", 
@@ -67,12 +69,13 @@ int main()
 */
 
 	PhysicObject Quad(5, 0.1, resources.GetShader("triangle"), 
-						resources.GetTexture("triangle"), vec3(-5.0, 1.0, 0.0),
-									vec3(0.5, 0.5, 0.5), vec3(0.0, 0.0, 0.0));
+						resources.GetTexture("triangle"));
 
+/*
 	PhysicObject Paral(10, 0.1, resources.GetShader("triangle"),
 									resources.GetTexture("paral")
-	/*vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),*/);
+	vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),);
+*/
 
 	float QuadData[] = {
 	   -0.8, -0.8, 0.0,		0.0, 0.0,
@@ -84,7 +87,8 @@ int main()
 		0, 1, 2,
 		0, 2, 3
 	};
-
+	
+	/*
 	float ParalData[] = {
 		-0.8, -0.8, 0.0,	0.0, 0.0,
 		 0.0,  0.8, 0.0,	0.0, 0.8,
@@ -95,9 +99,10 @@ int main()
 		0, 1, 2,
 		0, 2, 3,
 	};	
+	*/
 
 	Quad.initShaderData(QuadData, QuadIndices, 20, 6);
-	Paral.initShaderData(ParalData, ParalIndices, 20, 6);
+	//Paral.initShaderData(ParalData, ParalIndices, 20, 6);
 
 	float current_time = 0.0;
 	float delta_time = 0.0;
@@ -105,7 +110,7 @@ int main()
 
 	float QAngle = 0;
 
-	glClearColor(0.7, 0.4, 0.2, 1);
+	glClearColor(0.25, 0.25, 0.25, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
 		
@@ -118,9 +123,9 @@ int main()
 
 		camera.MoveCamera(delta_time);
 
-		Quad.AttractAndMove(delta_time, vec3(10, 20, 0));
+		Quad.AttractAndMove(delta_time);
 
-		Paral.AttractAndMove(delta_time);
+//		Paral.AttractAndMove(delta_time);
 
 		QAngle += M_PI/80;
 

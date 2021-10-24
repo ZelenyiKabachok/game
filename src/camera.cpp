@@ -25,7 +25,7 @@ Camera::Camera(const vec3& Position, const vec3& Speed) :
 void Camera::ChangeCameraSpeed(const vec3& newSpeed)
 { cameraSpeed = newSpeed; }
 
-mat4 Camera::GetCameraMatrix()
+mat4 Camera::GetCameraMatrix() const
 { return Projection * View * Model; }
 
-vec3 Camera::GetPosition() { return cameraPos; };
+vec3 Camera::GetPosition() const { return cameraPos; };

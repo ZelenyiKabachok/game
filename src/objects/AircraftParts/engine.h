@@ -1,22 +1,47 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-#include "physic_object.h"
+#include "../physical_object.h"
 
-//Двигатель для самолёта
-class PlaneEngine : public PhysObject {
+namespace AircraftParts {
+
+//Двигатель для самолёта.
+//Расчитывает силу тяги.
+class Engine : public PhysicObject {
+	friend class Plane;
 
 	const float maxThrustForce; 	//Максимальная сила тяги двигателя
-	float curThrustForce; 			//Текущая силя тяги двигателя
-	const float boostThrustForce; 	//Изменение силы тяги двигателя
-	float fuel consumption;			//Расход топлива
+
+//Вектор текущей силы тяги двигателя.
+//Всегда сонаправлен вектору скорости самолёта.
+	vec3 ThrustForce; 				
+
+//Вектор изменения силы тигя двигателя.
+//Сонаправлен вектору силы тяги двигателя.
+	vec3 boostThrustForce;
+	const float boostThrFor; 		//Изменение силы тяги двигателя
+	const float averFuelConsumption;//Средний расход топлива при нормальной работе
+	float fuelConsumption;			//Расход топлива
+
+	//Обновляет состояние объекта.
+	virtual void Work(const float delta_time, const vec3& direct, 
+									bool gas = 0, bool brake = 0);
+
+	virtual void SideEffect();
+
+	//void ChangeAverFuelConsumption(float newConsumption)
+	
+	void CalcFuelConsumption(const float delta_time);
+	
+	bool MaxForce(const float delta_time);
 
 public:
 
-	PlaneEngine();
-
-//Обновляет состояние объекта.
-//Вызывает метод void AttractAndMove(float, const vec3&, const vec3&, float)
-	void UpDate(const float delta_time, bool gas = 0, bool brake = 0);
+	Engine(PhysicObject engine, float maxForce, float startForce, 
+				float boost, float consumption);
 
 };
+
+}
+
+#endif

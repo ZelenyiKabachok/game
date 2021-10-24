@@ -6,9 +6,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 class Shader {
-
-	bool compileStatus = false;
-
 public:
 
 	GLuint programHandle = 0;	
@@ -19,19 +16,17 @@ public:
 
 	void Generate(const char *VertCode, const char *FragCode);
 
-	bool IsCompiled() { return compileStatus; }
+	void Use() const;
 
-	void Use() { glUseProgram(programHandle); }
+	void SetMatrix4(const char *varName, const glm::mat4 &matrix) const;
 
-	void SetMatrix4(const char *varName, const glm::mat4 &matrix);
-
-	void SetInt(const char *varName, const int var);
+	void SetInt(const char *varName, const int var) const;
 
 private:	
 
 	void CompileShader(const char *ShaderCode, GLint& shader, GLenum shaderType);
 	
-	bool CompoundShader(GLint& vertShader, GLint& fragShader);
+	void CompoundShader(GLint& vertShader, GLint& fragShader);
 };
 
 #endif

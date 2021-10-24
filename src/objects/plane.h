@@ -4,14 +4,16 @@
 #include "physical_object.h"
 #include "aircraft_parts.h"
 
+using namespace AircraftParts;
+
 //Класс Plane создаёт самолёт.
-//Является управляющим для классов PlaneBody, PlaneEngine, PlaneWing, PlaneTail.
+//Управляющим для классов Body, Engine, Wing, Tail.
 class Plane {
 
-	PlaneBody body;
-	PlaneEngine engine;
-	PlaneWing wing;
-	PlaneTail tail;
+	Body body;
+	Engine engine;
+	Wings wing;
+	Tail tail;
 
 	float TotalWeight; //Вес самолёта.
 	float AverResistCoof; //Средний коэффициент сопротивления воздуха
@@ -20,8 +22,7 @@ class Plane {
 
 public:
 	
-	Plane(PlaneBody& Abody, PlaneEngie& Aengine, PlaneWing& Awing,
-									PlaneTail& Atail, float speed);
+	Plane(Body& Abody, Engine& Aengine, Wings& Awing, Tail& Atail, float speed);
 		
 	void Move();
 

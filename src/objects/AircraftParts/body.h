@@ -3,21 +3,26 @@
 
 #include "../physical_object.h"
 
-class PlaneBody : public PhysicObject {
+namespace AircraftParts {
 
-//Коэфициент силы подъёма, чем больше тем быстрее поднимает высоту
-	const float liftingCoof;
+//Корпус для самолёта.
+//Содержит информация о количестве топлива.
+class Body : public PhysicObject {
+	friend class Plane;
 
-//Максимальный объём топливного бака (в литрах)
+//Максимальный объём топливного бака
 	const float fualTankSize;
 
 //Текущий объём топливного бака 
 	float curFuelQuantity;
 
+	void BurnFuel(float fuelConsumption);
+
 public:
 
-	PlaneBody();
+	Body(PhysicObject& body, float fualSize);
 
 };
 
+}
 #endif

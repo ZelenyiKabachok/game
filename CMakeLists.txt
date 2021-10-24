@@ -5,12 +5,17 @@ set(PROJECT_NAME game)
 project(${PROJECT_NAME})
 
 add_executable(game 	src/main.cpp 
-	src/camera.cpp 		src/camera.h
+	src/objects/AircraftParts/body.cpp		src/objects/AircraftParts/body.h
+	src/objects/AircraftParts/engine.cpp	src/objects/AircraftParts/engine.h	
+	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
+	src/objects/AircraftParts/tail.cpp		src/objects/AircraftParts/tail.h
+	src/objects/plane.cpp			src/objects/plane.h
 	src/objects/physical_object.cpp	src/objects/physical_object.h
 	src/objects/graphic_object.cpp	src/objects/graphic_object.h
 	src/loads/shader.cpp 			src/loads/shader.h
 	src/loads/texture.cpp 			src/loads/texture.h
-	src/loads/resources.cpp 			src/loads/resources.h
+	src/camera.cpp 					src/camera.h
+	src/loads/resources.cpp 		src/loads/resources.h
 	src/loads/stb_image.h 			src/loads/stb_image.cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL")

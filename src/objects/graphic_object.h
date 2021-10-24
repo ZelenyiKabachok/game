@@ -1,7 +1,7 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
-#include "glad/glad.h"
+#include <glad/glad.h>
 #include "../loads.h"
 #include "../camera.h"
 
@@ -32,7 +32,7 @@ public:
 
 private: 
 //Отрисовывает объект
-	void Draw(const mat4& Model);
+	void Draw(const mat4& Model) const;
 
 public:
 
@@ -44,12 +44,13 @@ public:
 	
 	void ChangePosition(const vec3& newPos);
 
+//Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
 	GraphObject(const Shader& sh, const Texture2D& tex, const vec3& pos = vec3(0), 
 							const vec3& size = vec3(1), const vec3& speed = vec3(0));
 
-	vec3 GetSpeed();
+	vec3 GetSpeed() const;
 	
-	vec3 GetPosition();
+	vec3 GetPosition() const;
 };
 
 #endif

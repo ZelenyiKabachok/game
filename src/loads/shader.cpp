@@ -7,7 +7,7 @@ void Shader::Generate(const char *VertCode, const char *FragCode)
 	GLint fragShader;
 	CompileShader(VertCode, vertShader, GL_VERTEX_SHADER);
 	CompileShader(FragCode, fragShader, GL_FRAGMENT_SHADER);
-	compileStatus =	CompoundShader(vertShader, fragShader);
+	CompoundShader(vertShader, fragShader);
 /*
 	printf("VertexShader:\n%s\n\n", VertCode);
 	printf("FragShader:\n%s\n\n", FragCode);
@@ -16,26 +16,25 @@ void Shader::Generate(const char *VertCode, const char *FragCode)
 	glDeleteShader(fragShader);
 }
 
-void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix)
+void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix) const
 {
 	GLuint location = glGetUniformLocation(programHandle, varName);
 	if(location >= 0)
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-void Shader::SetInt(const char *varName, const int var)
+void Shader::SetInt(const char *varName, const int var) const
 {
 	GLuint location = glGetUniformLocation(programHandle, varName);
 	if(location >= 0)
 		glUniform1i(location, var);
 }
 
-bool Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
+void Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 {
 	programHandle = glCreateProgram();
 	if(!programHandle) {
 		printf("Error creating program object\n");
-		return false;
 	}
 	
 	glAttachShader(programHandle, vertShader);
@@ -56,9 +55,7 @@ bool Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 			printf("Program log:\n%s\n", log);
 			delete[] log;
 		}
-		return false;
 	}
-	return true;
 }
 
 void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderType)
@@ -91,3 +88,5 @@ void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderT
 		}
 	}
 }
+
+void Shader::Use() const { glUseProgram(programHandle); }

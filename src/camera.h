@@ -25,11 +25,11 @@ public:
 
 	Camera(const vec3& Position = vec3(0), const vec3& Speed = vec3(0));
 	
-	mat4 GetCameraMatrix();
+	mat4 GetCameraMatrix() const;
 
 	void ChangeCameraSpeed(const vec3& NewSpeed);
 
-	vec3 GetPosition();
+	vec3 GetPosition() const;
 
 };
 

@@ -31,7 +31,7 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 
     glBindVertexArray(0);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
 
@@ -48,7 +48,7 @@ void GraphObject::Move(const float delta_time, const vec3& rotateVector,
 	Draw(Model);
 }
 
-void GraphObject::Draw(const mat4& Model)
+void GraphObject::Draw(const mat4& Model) const
 {
 	shader.Use();
 
@@ -79,5 +79,5 @@ void GraphObject::ChangeSpeed(const vec3& newSpeed)
 void GraphObject::ChangePosition(const vec3& newPos)
 { ObPosition = newPos; }
 
-vec3 GraphObject::GetSpeed() { return ObSpeed; }
-vec3 GraphObject::GetPosition() { return ObPosition; }
+vec3 GraphObject::GetSpeed() const { return ObSpeed; }
+vec3 GraphObject::GetPosition() const { return ObPosition; }
