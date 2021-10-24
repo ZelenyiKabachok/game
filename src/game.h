@@ -14,15 +14,18 @@
 #include "objects.h"
 #include "camera.h"
 
+extern Camera camera;
 
 class Game {
 public:	
 
-	Game();
+	Game() {}
 
-	~Game();
+	~Game() {}
 
 	void Init(ILevel& level);
+
+	void UpDate(float delta_time, ILevel& level);
 
 };
 

@@ -1,13 +1,13 @@
 #include "game.h"
 
-
-using glm::mat4;
-using glm::vec3;
-
 int Height = 1080;
 int Width = 1920;
 
-Camera camera(vec3(0.0, 0.0, 30.0), vec3(0.0, 0.0, 0.0));
+ResourceManager resources;
+
+Camera camera(glm::vec3(0.0, 0.0, 30.0), glm::vec3(0.0, 0.0, 0.0));
+
+Game game;
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
@@ -42,8 +42,9 @@ int main()
 
 	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-	ResourceManager resources;
-	
+	FirstLevel First;
+	game.Init(First);
+/*
 	resources.LoadShader("triangle", "../shaders/sprite.vert", 
 									"../shaders/sprite.frag");
 
@@ -53,19 +54,26 @@ int main()
 	resources.GetShader("triangle").Use();
 	resources.GetShader("triangle").SetInt("ourTexture", 0);
 
-/*
+	std::vector<PhysicObject> PhObjects = {
+	{5, 0.1, resources.GetShader("triangle"), resources.GetTexture("triangle")},
+	{10, 0.1, resources.GetShader("triangle"),
+		resources.GetTexture("paral"), vec3(-1.0, 1.0, 0.0), 
+		vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0)}
+	};
+
+
+
+
 	GraphObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
 					vec3(1.0, -1.0, 0.0), vec3(0.8, 0.8, 0.8), vec3(0.0, 0.08, 0.0));
 */
-
-	PhysicObject Quad(5, 0.1, resources.GetShader("triangle"), 
-						resources.GetTexture("triangle"));
-
 /*
-	PhysicObject Paral(10, 0.1, resources.GetShader("triangle"),
-									resources.GetTexture("paral")
-	vec3(-1.0, 1.0, 0.0), vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),);
-*/
+	GrObjects = new PhysicObject[2] = {
+	Paral(10, 0.1, resources.GetShader("triangle"),
+	resources.GetTexture("paral")vec3(-1.0, 1.0, 0.0), 
+	vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),);
+
+	};
 
 	float QuadData[] = {
 	   -0.8, -0.8, 0.0,		0.0, 0.0,
@@ -78,7 +86,6 @@ int main()
 		0, 2, 3
 	};
 	
-	/*
 	float ParalData[] = {
 		-0.8, -0.8, 0.0,	0.0, 0.0,
 		 0.0,  0.8, 0.0,	0.0, 0.8,
@@ -89,18 +96,16 @@ int main()
 		0, 1, 2,
 		0, 2, 3,
 	};	
-	*/
+	
 
-	Quad.initShaderData(QuadData, QuadIndices, 20, 6);
-	//Paral.initShaderData(ParalData, ParalIndices, 20, 6);
-
+	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
+	PhObjects[1].initShaderData(ParalData, ParalIndices, 20, 6);
+*/
 	float current_time = 0.0;
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
-	float QAngle = 0;
-
-	glClearColor(0.25, 0.25, 0.25, 1);
+	glClearColor(0.21, 0.21, 0.21, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
 		
@@ -111,13 +116,13 @@ int main()
 		glfwSetKeyCallback(pWindow, Keyboard);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		camera.MoveCamera(delta_time);
+		game.UpDate(delta_time, First);
 
-		Quad.AttractAndMove(delta_time);
+/*
+		PhObjects[0].AttractAndMove(delta_time);
 
-//		Paral.AttractAndMove(delta_time);
-
-		QAngle += M_PI/80;
+		PhObjects[1].AttractAndMove(delta_time);
+*/
 
 		glfwSwapBuffers(pWindow);
 		

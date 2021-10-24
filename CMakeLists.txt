@@ -7,6 +7,7 @@ project(${PROJECT_NAME})
 add_executable(game 	src/main.cpp 
 	src/game.cpp					src/game.h
 	src/Levels/level.h			
+	src/Levels/first_level.cpp		src/Levels/first_level.h
 	src/objects/AircraftParts/body.cpp		src/objects/AircraftParts/body.h
 	src/objects/AircraftParts/engine.cpp	src/objects/AircraftParts/engine.h	
 	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
@@ -20,7 +21,7 @@ add_executable(game 	src/main.cpp
 	src/loads/resources.cpp 		src/loads/resources.h
 	src/loads/stb_image.h 			src/loads/stb_image.cpp)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL -std=c++11")
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
