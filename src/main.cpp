@@ -1,7 +1,7 @@
 #include "game.h"
 
-int Height = 1080;
-int Width = 1920;
+const int Height = 1080;
+const int Width = 1920;
 
 ResourceManager resources;
 
@@ -11,10 +11,13 @@ Game game;
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
 {
-	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(pWindow, GLFW_TRUE);
-	}
+	game.KeyboardInput(pWindow, key, scancode, action, modes);
 }	
+
+static void Mouse(GLFWwindow *pWindow, double x, double y)
+{
+	game.MouseInput(y);
+}
 
 int main()
 {
@@ -41,66 +44,12 @@ int main()
     }
 
 	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetKeyCallback(pWindow, Keyboard);
+	glfwSetCursorPosCallback(pWindow, Mouse);
 
 	FirstLevel First;
 	game.Init(First);
-/*
-	resources.LoadShader("triangle", "../shaders/sprite.vert", 
-									"../shaders/sprite.frag");
 
-	resources.LoadTexture("triangle", "../resourses/cxx.png");
-	resources.LoadTexture("paral", "../resourses/wod2.jpg");
-
-	resources.GetShader("triangle").Use();
-	resources.GetShader("triangle").SetInt("ourTexture", 0);
-
-	std::vector<PhysicObject> PhObjects = {
-	{5, 0.1, resources.GetShader("triangle"), resources.GetTexture("triangle")},
-	{10, 0.1, resources.GetShader("triangle"),
-		resources.GetTexture("paral"), vec3(-1.0, 1.0, 0.0), 
-		vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0)}
-	};
-
-
-
-
-	GraphObject Quad(resources.GetShader("triangle"), resources.GetTexture("triangle"),
-					vec3(1.0, -1.0, 0.0), vec3(0.8, 0.8, 0.8), vec3(0.0, 0.08, 0.0));
-*/
-/*
-	GrObjects = new PhysicObject[2] = {
-	Paral(10, 0.1, resources.GetShader("triangle"),
-	resources.GetTexture("paral")vec3(-1.0, 1.0, 0.0), 
-	vec3(0.5, 0.5, 0.5), vec3(-1.0, 7.0, 0.0),);
-
-	};
-
-	float QuadData[] = {
-	   -0.8, -0.8, 0.0,		0.0, 0.0,
-	   -0.8,  0.8, 0.0,		0.0, 1.0,
-	   	0.8,  0.8, 0.0,		1.0, 1.0,
-	   	0.8, -0.8, 0.0,		1.0, 0,0
-	};
-	unsigned int QuadIndices[] {
-		0, 1, 2,
-		0, 2, 3
-	};
-	
-	float ParalData[] = {
-		-0.8, -0.8, 0.0,	0.0, 0.0,
-		 0.0,  0.8, 0.0,	0.0, 0.8,
-		 0.8,  0.8, 0.0,	1.0, 1.0,
-		 0.0, -0.8, 0.0,	1.0, 0.0
-	};
-	unsigned int ParalIndices[] {
-		0, 1, 2,
-		0, 2, 3,
-	};	
-	
-
-	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
-	PhObjects[1].initShaderData(ParalData, ParalIndices, 20, 6);
-*/
 	float current_time = 0.0;
 	float delta_time = 0.0;
 	float last_time = 0.0;
@@ -113,16 +62,9 @@ int main()
 		delta_time = (current_time - last_time);
 		last_time = current_time;
 
-		glfwSetKeyCallback(pWindow, Keyboard);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		game.UpDate(delta_time, First);
-
-/*
-		PhObjects[0].AttractAndMove(delta_time);
-
-		PhObjects[1].AttractAndMove(delta_time);
-*/
 
 		glfwSwapBuffers(pWindow);
 		

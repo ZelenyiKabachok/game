@@ -60,10 +60,14 @@ void FirstLevel::Load()
 	PhObjects[1].initShaderData(ParalData, ParalIndices, 20, 6);
 }
 
-void FirstLevel::UpDate(float delta_time)
+void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 {
+	
 	PhObjects[0].AttractAndMove(delta_time);
-
 	PhObjects[1].AttractAndMove(delta_time);
 }
 
+FirstLevel::~FirstLevel()
+{
+	PhObjects.clear();
+}

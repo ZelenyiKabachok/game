@@ -57,6 +57,9 @@ Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
 	Shader shader;
 	shader.Generate(VertCode, FragCode);
 
+	delete[] VertCode;
+	delete[] FragCode;
+
 	return shader;
 }	
 

@@ -15,17 +15,30 @@
 #include "camera.h"
 
 extern Camera camera;
+extern const int Width;
+extern const int Height;
 
 class Game {
+
+	bool pressedKeys[2];//Нажатые клавишы
+
+	float lastPosY; 	//Предыдущая Y-позиция мыши.
+	float angle;		//Угол смещение мыши.
+
 public:	
 
-	Game() {}
+	Game() : lastPosY(Height/2), angle(0) {}
 
 	~Game() {}
 
-	void Init(ILevel& level);
+	void KeyboardInput(GLFWwindow *pWindow, int key, int scancode,
+											int action, int modes);
 
-	void UpDate(float delta_time, ILevel& level);
+	void MouseInput(float curY);
+
+	void Init(ILevel& level) const;
+
+	void UpDate(float delta_time, ILevel& level) const;
 
 };
 

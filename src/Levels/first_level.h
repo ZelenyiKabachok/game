@@ -16,7 +16,7 @@ class FirstLevel : public ILevel {
 
 	std::vector<PhysicObject> PhObjects;
 
-//	Plane *plane;
+	Plane *plane;
 
 public:
 
@@ -24,9 +24,9 @@ public:
 
 	virtual void Load();
 
-	virtual void UpDate(float delta_time);
+	virtual void UpDate(float delta_time, const bool *keys, const float angle);
 
-	virtual ~FirstLevel() {}
+	virtual ~FirstLevel();
 
 };
 

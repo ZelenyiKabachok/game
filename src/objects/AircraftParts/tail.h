@@ -8,18 +8,16 @@
 class Tail : public PhysicObject {
 	friend class Plane;
 
-	const float maxAngle; //Максимальный угол наклона.
 	float angle; //Угол наклона.
 	vec3 direction; //Еденичный вектор направления.
 
-
 //Изменяет вектор направления самолёта.
 //Управление мышью.
-	void SetDirect();
+	void SetDirect(float alpha);
 
 public:
 
-	Tail(PhysicObject& tail, float mAngle, float ang);
+	Tail(PhysicObject& tail, float alpha);
 
 };
 

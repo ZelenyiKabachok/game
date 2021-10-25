@@ -8,10 +8,7 @@ void Shader::Generate(const char *VertCode, const char *FragCode)
 	CompileShader(VertCode, vertShader, GL_VERTEX_SHADER);
 	CompileShader(FragCode, fragShader, GL_FRAGMENT_SHADER);
 	CompoundShader(vertShader, fragShader);
-/*
-	printf("VertexShader:\n%s\n\n", VertCode);
-	printf("FragShader:\n%s\n\n", FragCode);
-*/
+
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
 }
