@@ -44,11 +44,10 @@ void GraphObject::Move(const float delta_time, const vec3& rotateVector,
 	glm::mat4 Position = glm::translate(glm::mat4(1.0f), ObPosition);
 	glm::mat4 Size = glm::scale(mat4(1.0f), ObSize);
 
-	glm::mat4 Model = Position * Rotate * Size;
-	Draw(Model);
+	Model = Position * Rotate * Size;
 }
 
-void GraphObject::Draw(const mat4& Model) const
+void GraphObject::Draw() const
 {
 	shader.Use();
 
@@ -65,7 +64,9 @@ void GraphObject::Draw(const mat4& Model) const
 GraphObject::GraphObject(const Shader& sh, const Texture2D& tex, 
 						const vec3& pos, const vec3& size, const vec3& speed) : 
 	shader(sh), texture(tex), ObPosition(pos), ObSize(size), ObSpeed(speed)
-{}
+{
+	Move(0.0);
+}
 
 void GraphObject::ChangeTexture(const Texture2D& tex)
 { texture = tex; }

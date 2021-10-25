@@ -14,23 +14,23 @@ class Plane {
 	Tail tail;
 
 	float TotalWeight = 0; //Вес самолёта.
-	float AverResistCoof = 0; //Средний коэффициент сопротивления воздуха
+	float AverResistCoof = 0; //Средний коэффициент сопротивления воздуха.
 
-	float PlaneSpeed;
+	vec3 PlaneSpeed;
     
 //Расставляет части самолёта по местам.
 //Считает общий вес самолёта и коэффициент сопротивления воздуха.
 	void Build();
-/*
-	void KeyInput(bool gas, bool brake); 
 
-	void MouseInput(float angle);
-*/
+//Меняет расположение частей самолёта относительно
+//его корпуса.
+	void ChangePosParts();
+
 public:
 	
-	Plane(Body& Abody, Engine& Aengine, Wings& Awing, Tail& Atail, float speed);
+	Plane(Body& Abody, Engine& Aengine, Wings& Awing, Tail& Atail, vec3 speed);
 		
-	void Fly(bool gas, bool brake, float angle);
+	void Fly(float delta_time, bool gas, bool brake, float angle);
 };
 	
 

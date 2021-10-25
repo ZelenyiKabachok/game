@@ -13,7 +13,7 @@ class Tail : public PhysicObject {
 
 //Изменяет вектор направления самолёта.
 //Управление мышью.
-	void SetDirect(float alpha);
+	void FindDirect(float alpha);
 
 public:
 

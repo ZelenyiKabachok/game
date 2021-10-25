@@ -26,7 +26,6 @@ void PhysicObject::AttractAndMove(float delta_time, const vec3& Force,
 	printf("Final Force = { %f; %f; %f }\n", FinalForce.x, FinalForce.y, FinalForce.z);
 	printf("\n");
 */
-
 	Move(delta_time, rotateVec, angle);
 }
 

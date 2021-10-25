@@ -9,6 +9,7 @@ void Game::UpDate(float delta_time, ILevel& level) const
 {
 	camera.MoveCamera(delta_time);
 	level.UpDate(delta_time, pressedKeys, angle);
+	level.Render();
 }
 
 void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode,

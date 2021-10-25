@@ -12,6 +12,8 @@ class GraphObject {
 	Texture2D texture;
 	GLuint VAO;
 
+	mat4 Model;
+
 protected:
 	
 	vec3 ObPosition; //Позиция объекта в мировых координатах
@@ -25,14 +27,11 @@ public:
 						int DataVert, int IndicesQuantity);	
 
 //Обновляет объект (его позицию с учётом камеры)
-//Должен вызываться каждый кадр
-//Вызывает метод void Draw(const mat4&)
 	void Move(const float delta_time, const vec3& rotateVec = vec3(1),
 												const float angle = 0);
 
-private: 
 //Отрисовывает объект
-	void Draw(const mat4& Model) const;
+	void Draw() const;
 
 public:
 

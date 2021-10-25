@@ -67,6 +67,12 @@ void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 	PhObjects[1].AttractAndMove(delta_time);
 }
 
+void FirstLevel::Render()
+{
+	PhObjects[0].Draw();
+	PhObjects[1].Draw();
+}
+
 FirstLevel::~FirstLevel()
 {
 	PhObjects.clear();

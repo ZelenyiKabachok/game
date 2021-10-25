@@ -3,9 +3,9 @@
 Wings::Wings(PhysicObject& wings, float coofBrake, float lCoof) : 
 		PhysicObject(wings), liftingCoof(lCoof), coofResBrake(coofBrake) {}
 
-void Wings::CalcLiftForce(bool gas, bool brake)
+void Wings::CalcLiftForce(const vec3& PlaneSpeed, bool gas, bool brake)
 {
-	liftingForce = liftingCoof * ObSpeed;
+	liftingForce = liftingCoof * PlaneSpeed;
 	if(brake) {
 		coofResistance = coofResBrake;	
 	} else {

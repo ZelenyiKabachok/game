@@ -3,7 +3,7 @@
 Tail::Tail(PhysicObject& tail, float alpha) :
 			PhysicObject(tail), angle(alpha) {}
 
-void Tail::SetDirect(float alpha)
+void Tail::FindDirect(float alpha)
 {
 	angle += alpha;
 

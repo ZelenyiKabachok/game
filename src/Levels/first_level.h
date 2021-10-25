@@ -26,6 +26,8 @@ public:
 
 	virtual void UpDate(float delta_time, const bool *keys, const float angle);
 
+	virtual void Render();
+
 	virtual ~FirstLevel();
 
 };

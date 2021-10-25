@@ -20,7 +20,7 @@ class Wings : public PhysicObject {
 
 //Меняет коэфициент силы сопротивления воздуха.
 //При торможении coofResistance устанавливается в coofResBrake.
-	void CalcLiftForce(bool gas, bool brake);
+	void CalcLiftForce(const vec3& PlaneSpeed, bool gas, bool brake);
 
 public:
 
