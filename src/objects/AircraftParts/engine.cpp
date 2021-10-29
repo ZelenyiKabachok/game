@@ -1,10 +1,13 @@
 #include "engine.h"
 
-Engine::Engine(PhysicObject engine, float maxForce, float startForce,
-											float boost, float consumption) :
-						PhysicObject(engine), maxThrustForce(maxForce),
-						ThrustForce(startForce), boostThrFor(boost),
-						averFuelConsumption(consumption) {}
+Engine::Engine(enum planeEngines name, float maxForce, float startForce, 
+					float boost, float consumption, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos, const vec3& size,
+					const vec3& speed) : 
+				PhysicObject(m, coof, sh, tex, pos, size, speed),
+				Name(name), maxThrustForce(maxForce), ThrustForce(startForce),
+				boostThrFor(boost), averFuelConsumption(consumption) {}
 
 void Engine::Work(const float delta_time, const vec3& direct, bool gas, bool brake)
 {

@@ -2,13 +2,16 @@
 #define BODY_H
 
 #include "../physical_object.h"
+#include "../../loads/resources.h"
 
-enum planeParts { ENGINE, WINGS, TAIL };
+enum planeBodies { RustBody };
 
 //Корпус для самолёта.
 //Содержит информация о количестве топлива.
 class Body : public PhysicObject {
 	friend class Plane;
+
+	const enum planeBodies Name;
 
 //Максимальный объём топливного бака
 	const float fualTankSize;
@@ -19,17 +22,22 @@ class Body : public PhysicObject {
 	float bodyCoofResis;//Коэфициент сопротивление воздуха.
 	float bodyMass; 	//Вес корпуса самолёта.
 
-//Расположение всех частей самолёта относительно копруса.
-	vec3 StartPartsPos[3];
+//Расположение всех существующий частей самолёта относительно копруса.
+protected:
+	vec3 StartEnginesPos[1];
+	vec3 StartWingsPos[1];
+	vec3 StartTailsPos[1];
 
-	vec3 GetPartPos(enum planeParts part);
-
+private:
 //Сжегает топливо.
 	void BurnFuel(float fuelConsumption);
 
 public:
 
-	Body(PhysicObject& body, float fualSize, vec3 *parts);
+	Body(enum planeBodies name, float fualSize, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos = vec3(0), const vec3& size = vec3(1),
+					const vec3& speed = vec3(0));
 
 };
 

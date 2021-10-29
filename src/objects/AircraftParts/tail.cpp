@@ -1,7 +1,11 @@
 #include "tail.h"
 
-Tail::Tail(PhysicObject& tail, float alpha) :
-			PhysicObject(tail), angle(alpha) {}
+Tail::Tail(enum planeTail name, float alpha, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos, const vec3& size,
+					const vec3& speed) : 
+				PhysicObject(m, coof, sh, tex, pos, size, speed), 
+				Name(name), angle(alpha) {}
 
 void Tail::FindDirect(float alpha)
 {

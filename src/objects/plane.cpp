@@ -2,9 +2,9 @@
 
 void Plane::ChangePosParts()
 {
-	engine.ChangePosition(body.ObPosition + body.StartPartsPos[ENGINE]);
-	wings.ChangePosition(body.ObPosition + body.StartPartsPos[WINGS]);
-	tail.ChangePosition(body.ObPosition + body.StartPartsPos[TAIL]);
+	engine.ChangePosition(body.ObPosition + body.StartEnginesPos[RustEngine]);
+	wings.ChangePosition(body.ObPosition + body.StartWingsPos[RustWings]);
+	tail.ChangePosition(body.ObPosition + body.StartTailsPos[RustTail]);
 }
 
 void Plane::Fly(float delta_time, bool gas, bool brake, float angle)

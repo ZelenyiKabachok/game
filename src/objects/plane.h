@@ -1,7 +1,7 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "physical_object.h"
+//#include "physical_object.h"
 #include "aircraft_parts.h"
 
 //Класс Plane создаёт самолёт.
@@ -13,8 +13,8 @@ class Plane {
 	Wings wings;
 	Tail tail;
 
-	float TotalWeight = 0; //Вес самолёта.
-	float AverResistCoof = 0; //Средний коэффициент сопротивления воздуха.
+	float TotalWeight = 0; 		//Вес самолёта.
+	float AverResistCoof = 0; 	//Средний коэффициент сопротивления воздуха.
 
 	vec3 PlaneSpeed;
     
@@ -31,7 +31,11 @@ public:
 	Plane(Body& Abody, Engine& Aengine, Wings& Awing, Tail& Atail, vec3 speed);
 		
 	void Fly(float delta_time, bool gas, bool brake, float angle);
+
+	void ChangeBody(Body& Abody);
+	void ChangeEngine(Engine& Aengine);
+	void ChangeWings(Wings& Awing);
+	void ChangeTail(Tail& Atail);
 };
-	
 
 #endif

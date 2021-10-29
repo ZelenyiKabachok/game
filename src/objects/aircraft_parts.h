@@ -13,4 +13,6 @@
 #include "AircraftParts/wings.h"
 #include "AircraftParts/tail.h"
 
+#include "AircraftParts/rusty_body.h"
+
 #endif

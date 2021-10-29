@@ -8,10 +8,14 @@ add_executable(game 	src/main.cpp
 	src/game.cpp					src/game.h
 	src/Levels/level.h			
 	src/Levels/first_level.cpp		src/Levels/first_level.h
+
 	src/objects/AircraftParts/body.cpp		src/objects/AircraftParts/body.h
 	src/objects/AircraftParts/engine.cpp	src/objects/AircraftParts/engine.h	
 	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
 	src/objects/AircraftParts/tail.cpp		src/objects/AircraftParts/tail.h
+
+	src/objects/AircraftParts/rusty_body.cpp	src/objects/AircraftParts/rusty_body.h
+
 	src/objects/plane.cpp			src/objects/plane.h
 	src/objects/physical_object.cpp	src/objects/physical_object.h
 	src/objects/graphic_object.cpp	src/objects/graphic_object.h

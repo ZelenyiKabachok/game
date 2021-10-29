@@ -3,10 +3,14 @@
 
 #include "../physical_object.h"
 
+enum planeEngines { RustEngine };
+
 //Двигатель для самолёта.
 //Расчитывает силу тяги.
 class Engine : public PhysicObject {
 	friend class Plane;
+
+	const enum planeEngines Name;
 
 	const float maxThrustForce; 	//Максимальная сила тяги двигателя
 
@@ -35,8 +39,12 @@ class Engine : public PhysicObject {
 
 public:
 
-	Engine(PhysicObject engine, float maxForce, float startForce, 
-				float boost, float consumption);
+	Engine(enum planeEngines name, float maxForce, float startForce, 
+					float boost, float consumption, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos = vec3(0), const vec3& size = vec3(1),
+					const vec3& speed = vec3(0));
+
 
 	virtual ~Engine() {}
 

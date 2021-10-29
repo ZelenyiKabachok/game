@@ -3,11 +3,14 @@
 
 #include "../physical_object.h"
 
+enum planeWings { RustWings };
+
 //Крылья самолёта.
 //Расчитывает силу подъёма.
 class Wings : public PhysicObject {
 	friend class Plane;
 
+	const enum planeWings Name;
 //Коэфициент силы подъёма, чем больше тем быстрее поднимает высоту.
 	const float liftingCoof;
 //Коэфициент сопротивления воздуха при торможении.
@@ -24,8 +27,10 @@ class Wings : public PhysicObject {
 
 public:
 
-	Wings(PhysicObject& wings, float coofBrake, float lCoof);
-
+	Wings(enum planeWings name, float coofBrake, float lCoof, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos = vec3(0), const vec3& size = vec3(1),
+					const vec3& speed = vec3(0)); 
 };
 
 #endif

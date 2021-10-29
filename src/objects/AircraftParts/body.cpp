@@ -1,18 +1,16 @@
 #include "body.h"
 
-Body::Body(PhysicObject& body, float fualSize, vec3 *parts) : 
+/*
+Body::Body(PhysicObject& body, float fualSize) : 
 						PhysicObject(body), fualTankSize(fualSize),
-						curFuelQuantity(fualSize)
-{
-	for(int i = 0; i <= 2; i++) {
-		StartPartsPos[i] = parts[i];
-	}
-}
-
-vec3 Body::GetPartPos(enum planeParts part)
-{
-	return StartPartsPos[part];
-}
+						curFuelQuantity(fualSize) {}
+*/
+Body::Body(enum planeBodies name, float fualSize, float m, float coof, 
+					const Shader& sh, const Texture2D& tex, 
+					const vec3& pos, const vec3& size,
+					const vec3& speed) : 
+				PhysicObject(m, coof, sh, tex, pos, size, speed),
+				Name(name), fualTankSize(fualSize) {}
 
 void Body::BurnFuel(float fuelConsumption)
 {

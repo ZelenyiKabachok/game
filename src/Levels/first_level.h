@@ -12,7 +12,7 @@ extern ResourceManager resources;
 
 class FirstLevel : public ILevel {
 
-//	vector<GraphObject> GrObjects;
+	std::vector<GraphObject> GrObjects;
 
 	std::vector<PhysicObject> PhObjects;
 

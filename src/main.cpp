@@ -5,7 +5,7 @@ const int Width = 1920;
 
 ResourceManager resources;
 
-Camera camera(glm::vec3(0.0, 0.0, 30.0), glm::vec3(0.0, 0.0, 0.0));
+Camera camera(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0));
 
 Game game;
 
@@ -28,7 +28,7 @@ int main()
 		return -1;
 	}
 
-	pWindow = glfwCreateWindow(Width, Height, "Study", NULL, NULL);
+	pWindow = glfwCreateWindow(Width, Height, "Game", NULL, NULL);
 
 	if(pWindow == NULL) {
 		printf("Error, can't create window!\n");
@@ -54,6 +54,9 @@ int main()
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
+    glViewport(0, 0, Width, Height);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.21, 0.21, 0.21, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
