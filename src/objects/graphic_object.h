@@ -23,7 +23,7 @@ protected:
 public:
 
 //Инициализация шейдера
-	void initShaderData(const float *Data, const unsigned int *indices,
+	void initShaderData(float *Data, unsigned int *indices,
 						int DataVert, int IndicesQuantity);	
 
 //Обновляет объект (его позицию с учётом камеры)

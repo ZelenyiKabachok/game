@@ -14,7 +14,10 @@ add_executable(game 	src/main.cpp
 	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
 	src/objects/AircraftParts/tail.cpp		src/objects/AircraftParts/tail.h
 
+	src/objects/AircraftParts/rusty_engine.cpp	src/objects/AircraftParts/rusty_engine.h
 	src/objects/AircraftParts/rusty_body.cpp	src/objects/AircraftParts/rusty_body.h
+	src/objects/AircraftParts/rusty_wings.cpp	src/objects/AircraftParts/rusty_wings.h
+	src/objects/AircraftParts/rusty_tail.cpp	src/objects/AircraftParts/rusty_tail.h
 
 	src/objects/plane.cpp			src/objects/plane.h
 	src/objects/physical_object.cpp	src/objects/physical_object.h

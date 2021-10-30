@@ -5,7 +5,7 @@ const int Width = 1920;
 
 ResourceManager resources;
 
-Camera camera(glm::vec3(0.0, 0.0, 10.0), glm::vec3(0.0, 0.0, 0.0));
+Camera camera(glm::vec3(30.0, -30.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
 
 Game game;
 
@@ -54,9 +54,23 @@ int main()
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
+
     glViewport(0, 0, Width, Height);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+//	Plane *plane = Load();
+/*
+	body.initShaderData(QuadData, QuadIndices, 20, 6);
+	engine.initShaderData(QuadData, QuadIndices, 20, 6);
+	wings.initShaderData(QuadData, QuadIndices, 20, 6);
+	tail.initShaderData(QuadData, QuadIndices, 20, 6);
+
+	PhysicObject Test( 5, 0.1, resources.GetShader("plane"), resources.GetTexture("body"),
+		vec3(0.0, -1.0, 0.0), vec3(2.2, 1.0, 1.0));
+
+	Test.initShaderData(QuadData, QuadIndices, 20, 6);
+*/
 	glClearColor(0.21, 0.21, 0.21, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
@@ -67,6 +81,15 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
+//		plane->Render();
+/*
+		body.Draw();
+		tail.Draw();
+		engine.Draw();
+		wings.Draw();
+
+		Test.Draw();
+*/
 		game.UpDate(delta_time, First);
 
 		glfwSwapBuffers(pWindow);

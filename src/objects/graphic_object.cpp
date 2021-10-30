@@ -2,7 +2,7 @@
 
 extern Camera camera;
 
-void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
+void GraphObject::initShaderData(float *Data, unsigned int *indices,
 								 int DataVert, int IndicesQuantity)
 {
 	unsigned int VBO, EBO;
@@ -31,7 +31,7 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 
     glBindVertexArray(0);
 
-//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
 

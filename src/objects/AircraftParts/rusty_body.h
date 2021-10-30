@@ -3,12 +3,10 @@
 
 #include "../aircraft_parts.h"
 
-extern ResourceManager resources;
-
 class RustyBody : public Body {
-
 public:
-	RustyBody();
+
+	RustyBody(Shader& shader);
 
 };
 

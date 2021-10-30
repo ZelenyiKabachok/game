@@ -2,7 +2,6 @@
 #define BODY_H
 
 #include "../physical_object.h"
-#include "../../loads/resources.h"
 
 enum planeBodies { RustBody };
 

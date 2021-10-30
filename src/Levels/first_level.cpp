@@ -32,26 +32,44 @@ void FirstLevel::Load()
 		vec3(0.0, 0.0, -70.0), vec3(35*2.92, 35*1.0, 35*1.0) }
 	};
 
-/*
+
 	PhObjects = {
-	{ 5, 0.1, resources.GetShader("triangle"), resources.GetTexture("plane"),
+	{ 5, 0.1, resources.GetShader("plane"), resources.GetTexture("tail"),
 		vec3(0.0, -1.0, 0.0), vec3(2.2, 1.0, 1.0) },
 	};
-*/
+
+	RustyBody body(resources.GetShader("plane"));
+	RustyEngine engine(resources.GetShader("plane"));
+	RustyWings wings(resources.GetShader("plane"));
+	RustyTail tail(resources.GetShader("plane"));
+
+
+	plane = new Plane(body, engine, wings, tail, vec3(0.0, 0.0, 0.0));
+
+
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
+	//PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
+
+
 }
 
 void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 {
-	
+	plane->Fly(delta_time, false, false, 0.0);	
 }
 
 void FirstLevel::Render()
 {
 	GrObjects[0].Draw();
+	plane->Render();
+//	/body->Draw();
+	//PhObjects[0].Draw();
 }
 
 FirstLevel::~FirstLevel()
 {
+	GrObjects.clear();
 	PhObjects.clear();
+//	plane.clear();
+	delete plane;
 }

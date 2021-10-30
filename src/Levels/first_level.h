@@ -17,6 +17,7 @@ class FirstLevel : public ILevel {
 	std::vector<PhysicObject> PhObjects;
 
 	Plane *plane;
+	
 
 public:
 
