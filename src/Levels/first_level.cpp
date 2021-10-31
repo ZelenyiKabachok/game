@@ -44,7 +44,7 @@ void FirstLevel::Load()
 	RustyTail tail(resources.GetShader("plane"));
 
 
-	plane = new Plane(body, engine, wings, tail, vec3(0.0, 0.0, 0.0));
+	plane = new Plane(body, engine, wings, tail, vec3(30.0, 10.0, 0.0));
 
 
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
@@ -55,7 +55,8 @@ void FirstLevel::Load()
 
 void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 {
-	plane->Fly(delta_time, false, false, 0.0);	
+	plane->Fly(delta_time, keys[W], keys[S], angle);	
+	plane->PrintPlaneState();
 }
 
 void FirstLevel::Render()

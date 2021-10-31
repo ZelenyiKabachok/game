@@ -31,7 +31,7 @@ void GraphObject::initShaderData(float *Data, unsigned int *indices,
 
     glBindVertexArray(0);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 }
 

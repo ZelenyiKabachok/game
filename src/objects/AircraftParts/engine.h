@@ -39,7 +39,7 @@ class Engine : public PhysicObject {
 
 public:
 
-	Engine(enum planeEngines name, float maxForce, float startForce, 
+	Engine(enum planeEngines name, float maxForce, vec3 startForce, 
 					float boost, float consumption, float m, float coof, 
 					const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),

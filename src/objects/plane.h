@@ -37,6 +37,8 @@ public:
 
 	void Render() const;
 
+	void PrintPlaneState() const;
+
 	void ChangeBody(Body& Abody);
 	void ChangeEngine(Engine& Aengine);
 	void ChangeWings(Wings& Awing);
