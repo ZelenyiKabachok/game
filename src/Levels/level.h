@@ -6,6 +6,8 @@
 
 enum Keys { W, S };
 
+extern Camera camera;
+
 //Интерфейс для уровней.
 class ILevel {
 public:

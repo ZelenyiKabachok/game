@@ -1,10 +1,10 @@
 #ifndef FIRST_LEVEL_H
 #define FIRST_LEVEL_H
 
-#include "level.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "level.h"
 
 using glm::vec3;
 

@@ -39,6 +39,8 @@ public:
 
 	void PrintPlaneState() const;
 
+	const Body& GetBody() const;
+
 	void ChangeBody(Body& Abody);
 	void ChangeEngine(Engine& Aengine);
 	void ChangeWings(Wings& Awing);

@@ -44,8 +44,8 @@ void Plane::Fly(float delta_time, bool gas, bool brake, float angle)
 	PlaneSpeed = body.ObSpeed;
 	tail.FindDirect(angle);
 	tail.FindAngle(PlaneSpeed);
-	engine.Work(delta_time, tail.direction, gas, brake);
-	wings.CalcLiftForce(PlaneSpeed, gas, brake);
+	engine.Work(delta_time, tail.DirAngle, gas, brake);
+	wings.CalcLiftForce(PlaneSpeed, tail.PlaneAngle, gas, brake);
 	body.BurnFuel(engine.fuelConsumption);
 
 //Скорость, позиция, силы и т.д всего самолёта будут
@@ -105,3 +105,7 @@ Plane::Plane(const Body& Abody, const Engine& Aengine, const Wings& Awing,
 	Init();
 }
 
+const Body& Plane::GetBody() const
+{
+	return body;
+}

@@ -1,19 +1,22 @@
 #include "engine.h"
 
 Engine::Engine(enum planeEngines name, float maxForce, vec3 startForce, 
-					float boost, float consumption, float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
+					vec3 boost, float boostM, float consumption, float m, 
+					float coof, const Shader& sh, const Texture2D& tex, 
 					const vec3& pos, const vec3& size,
 					const vec3& speed) : 
 				PhysicObject(m, coof, sh, tex, pos, size, speed),
 				Name(name), maxThrustForce(maxForce),
 				ThrustForce(startForce),
-				boostThrFor(boost), averFuelConsumption(consumption) {}
+				boostThrustForce(boost), MaxBoost(boostM),
+				averFuelConsumption(consumption) {}
 
-void Engine::Work(const float delta_time, const vec3& direct, bool gas, bool brake)
+void Engine::Work(const float delta_time, float angle, bool gas, bool brake)
 {
-	boostThrustForce *= direct;
-	//ThrustForce *= direct;
+	glm::mat4 RotateMatrix = glm::rotate(mat4(1.0), angle, vec3(0.0, 0.0, 1.0));
+	boostThrustForce = vec3(RotateMatrix * glm::vec4(MaxBoost, 0.0, 0.0, 1.0));
+	ThrustForce = vec3(RotatMatrix * glm::vec4(maxThrustForce, 0.0, 0.0, 1.0));
+
 	if(gas && MaxForce(delta_time)) {
 		ThrustForce += boostThrustForce * delta_time;
 	}

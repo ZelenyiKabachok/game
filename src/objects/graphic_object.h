@@ -5,6 +5,9 @@
 #include "../loads.h"
 #include "../camera.h"
 
+using glm::vec3;
+using glm::mat4;
+
 // Класс GraphObject отображает спрайт на экране
 class GraphObject {
 

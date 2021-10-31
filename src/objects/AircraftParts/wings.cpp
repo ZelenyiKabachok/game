@@ -7,9 +7,14 @@ Wings::Wings(enum planeWings name, float coofBrake, float lCoof, float m, float 
 				PhysicObject(m, coof, sh, tex, pos, size, speed), 
 				Name(name), liftingCoof(lCoof), coofResBrake(coofBrake) {}
 
-void Wings::CalcLiftForce(const vec3& PlaneSpeed, bool gas, bool brake)
+void Wings::CalcLiftForce(const vec3& PlaneSpeed, float PlaneAngle, bool gas, bool brake)
 {
-	liftingForce = liftingCoof * PlaneSpeed;
+	mat4 RotateMatrix = glm::rotate(mat4(1.0),
+						(float)(-(PlaneAngle+M_PI/2)), vec3(0.0, 0.0, 1.0));
+
+	float speed = glm::length(liftingCoof*PlaneSpeed);
+	liftingForce = vec3(glm::vec4(speed, 0.0, 0.0, 0.0) * RotateMatrix);
+	
 	if(brake) {
 		coofResistance = coofResBrake;	
 	} else {

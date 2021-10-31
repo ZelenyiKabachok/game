@@ -21,12 +21,12 @@ class Engine : public PhysicObject {
 //Вектор изменения силы тигя двигателя.
 //Сонаправлен вектору силы тяги двигателя.
 	vec3 boostThrustForce;
-	const float boostThrFor; 		//Изменение силы тяги двигателя
+	const float MaxBoost;
 	const float averFuelConsumption;//Средний расход топлива при нормальной работе
 	float fuelConsumption;			//Расход топлива
 
 	//Обновляет состояние объекта.
-	virtual void Work(const float delta_time, const vec3& direct, 
+	virtual void Work(const float delta_time, float angle, 
 									bool gas = 0, bool brake = 0);
 
 	virtual void SideEffect();
@@ -40,8 +40,8 @@ class Engine : public PhysicObject {
 public:
 
 	Engine(enum planeEngines name, float maxForce, vec3 startForce, 
-					float boost, float consumption, float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
+					vec3 boost, float boostM, float consumption, float m, 
+					float coof, const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),
 					const vec3& speed = vec3(0));
 

@@ -4,9 +4,12 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "objects/graphic_object.h"
 
 using glm::vec3;
 using glm::mat4;
+
+class GraphObject;
 
 class Camera {
 	
@@ -17,9 +20,16 @@ class Camera {
 	mat4 View;
 	mat4 Projection;
 
+	const GraphObject *target = NULL;
+	bool focus = false;
+
 	const float cameraZoom = M_PI/4;
 
 public:
+
+	void FocusOnTheObject(const GraphObject *obj);
+
+	void CancelFocus();
 
 	mat4 MoveCamera(float delta_time);
 

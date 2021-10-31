@@ -5,7 +5,9 @@ extern int Width;
 
 mat4 Camera::MoveCamera(float delta_time)
 {
-
+	if(focus) { 
+		ChangeCameraSpeed(target->GetSpeed());
+	}
 	cameraPos = vec3(cameraPos.x + ((-cameraSpeed.x)*delta_time),
 					 cameraPos.y + ((-cameraSpeed.y)*delta_time),
 					 cameraPos.z + ((-cameraSpeed.z)*delta_time));
@@ -19,7 +21,19 @@ Camera::Camera(const vec3& Position, const vec3& Speed) :
 {
 	Model = glm::rotate(mat4(1.0f), 0.0f, vec3(0.0, 0.0, 1.0));
 	View = glm::translate(mat4(1.0f), cameraPos);
-	Projection = glm::perspective(cameraZoom, float((float)(Width)/Height), 0.1f, 100.0f);
+	Projection = glm::perspective(cameraZoom, float((float)(Width)/Height), 0.1f, 300.0f);
+}
+
+void Camera::FocusOnTheObject(const GraphObject *obj)
+{
+	target = obj;
+	focus = true;
+}
+
+void Camera::CancelFocus()
+{
+	target = NULL;
+	focus = false;
 }
 
 void Camera::ChangeCameraSpeed(const vec3& newSpeed)

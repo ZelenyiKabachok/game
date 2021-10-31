@@ -23,7 +23,7 @@ class Game {
 	bool pressedKeys[2];//Нажатые клавишы
 
 	float lastPosY; 	//Предыдущая Y-позиция мыши.
-	float angle;		//Угол смещение мыши.
+	float angle = 0;	//Угол смещение мыши.
 
 public:	
 

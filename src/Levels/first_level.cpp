@@ -29,7 +29,7 @@ void FirstLevel::Load()
 
 	GrObjects = {
 	{ resources.GetShader("plane"), resources.GetTexture("back"),
-		vec3(0.0, 0.0, -70.0), vec3(35*2.92, 35*1.0, 35*1.0) }
+		vec3(118.0, 2.5, -70.0), vec3(65*2.92, 65*1.0, 1.0) }
 	};
 
 
@@ -50,6 +50,7 @@ void FirstLevel::Load()
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 	//PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
+	camera.FocusOnTheObject(&(plane->GetBody()));
 
 }
 
