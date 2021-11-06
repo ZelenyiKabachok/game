@@ -21,11 +21,15 @@ Camera::Camera(const vec3& Position, const vec3& Speed) :
 {
 	Model = glm::rotate(mat4(1.0f), 0.0f, vec3(0.0, 0.0, 1.0));
 	View = glm::translate(mat4(1.0f), cameraPos);
-	Projection = glm::perspective(cameraZoom, float((float)(Width)/Height), 0.1f, 300.0f);
+	Projection = glm::perspective(cameraZoom, float((float)(Width)/Height), 0.1f, 3000.0f);
 }
 
 void Camera::FocusOnTheObject(const GraphObject *obj)
 {
+	float save = cameraPos.z;
+	cameraPos = -obj->GetPosition();
+	cameraPos.z = save;
+
 	target = obj;
 	focus = true;
 }

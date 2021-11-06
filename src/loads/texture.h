@@ -2,7 +2,7 @@
 #define TEXTURE_H
 
 #include <glad/glad.h>
-#include "stb_image.h"
+#include "../../external/stb_image/stb_image.h"
 
 class Texture2D {
 public:

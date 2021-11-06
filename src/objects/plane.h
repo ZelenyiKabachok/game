@@ -31,11 +31,11 @@ class Plane {
 public:
 	
 	Plane(const Body& Abody, const Engine& Aengine, const Wings& Awing,
-			const Tail& Atail, const vec3& speed);
+		  const Tail& Atail, const vec3& pos, const vec3& speed);
 		
 	void Fly(float delta_time, bool gas, bool brake, float angle);
 
-	void Render() const;
+	void Render(const Camera& camera) const;
 
 	void PrintPlaneState() const;
 

@@ -18,7 +18,7 @@ public:
 
 	void Use() const;
 
-	void SetMatrix4(const char *varName, const glm::mat4 &matrix) const;
+	void SetMatrix4(const char *varName, const glm::mat4& matrix) const;
 
 	void SetInt(const char *varName, const int var) const;
 

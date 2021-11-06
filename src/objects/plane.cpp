@@ -25,18 +25,18 @@ void Plane::PrintPlaneState() const
 	printf("Plane Thust Force = { %f; %f; %f }\n", engine.ThrustForce.x, 
 								engine.ThrustForce.y, engine.ThrustForce.z);
 	printf("Plane Boost ThrustForce = { %f; %f; 0.0 }\n", 
-						engine.boostThrustForce.x, engine.boostThrustForce.y);
+						engine.PowerPulse.x, engine.PowerPulse.y);
 	printf("Plane Lifting Force = { %f; %f; 0.0 }\n",
 						wings.liftingForce.x, wings.liftingForce.y);
 	printf("\n ----------------------------------------------------------------- \n");
 }
 
-void Plane::Render() const
+void Plane::Render(const Camera& camera) const
 {
-	body.Draw();
-	engine.Draw();
-	wings.Draw();
-	tail.Draw();
+	body.Draw(camera);
+	engine.Draw(camera);
+	wings.Draw(camera);
+	tail.Draw(camera);
 }
 
 void Plane::Fly(float delta_time, bool gas, bool brake, float angle)
@@ -97,9 +97,10 @@ void Plane::Init()
 }
 
 Plane::Plane(const Body& Abody, const Engine& Aengine, const Wings& Awing,
-								const Tail& Atail, const vec3& speed) :
+			 const Tail& Atail, const vec3& pos, const vec3& speed) :
 			body(Abody), engine(Aengine), wings(Awing), tail(Atail), PlaneSpeed(speed)
 {
+	body.ObPosition = pos;
 	body.ObSpeed = PlaneSpeed;
 	Build();
 	Init();

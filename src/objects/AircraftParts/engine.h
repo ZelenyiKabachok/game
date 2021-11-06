@@ -20,8 +20,8 @@ class Engine : public PhysicObject {
 
 //Вектор изменения силы тигя двигателя.
 //Сонаправлен вектору силы тяги двигателя.
-	vec3 boostThrustForce;
-	const float MaxBoost;
+	vec3 PowerPulse;
+	const float Pulse; //Длина векторы PowerPulse.
 	const float averFuelConsumption;//Средний расход топлива при нормальной работе
 	float fuelConsumption;			//Расход топлива
 
@@ -40,7 +40,7 @@ class Engine : public PhysicObject {
 public:
 
 	Engine(enum planeEngines name, float maxForce, vec3 startForce, 
-					vec3 boost, float boostM, float consumption, float m, 
+					vec3 Ppulse, float pulse, float consumption, float m, 
 					float coof, const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),
 					const vec3& speed = vec3(0));

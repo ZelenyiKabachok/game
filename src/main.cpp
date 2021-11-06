@@ -5,7 +5,7 @@ const int Width = 1920;
 
 ResourceManager resources;
 
-Camera camera(glm::vec3(40.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
+//Camera camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
 
 Game game;
 
@@ -53,7 +53,6 @@ int main()
 	float current_time = 0.0;
 	float delta_time = 0.0;
 	float last_time = 0.0;
-
 
     glViewport(0, 0, Width, Height);
     glEnable(GL_BLEND);

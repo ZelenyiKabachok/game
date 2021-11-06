@@ -1,14 +1,14 @@
 #include <cstdio>
 #include "resources.h"
 
-Shader& ResourceManager::LoadShader(const char *name, const char *VertShader,
+const Shader& ResourceManager::LoadShader(const char *name, const char *VertShader,
 														const char *FragShader)
 {
 	Shaders[name] = LoadShaderFromFile(VertShader, FragShader);
 	return Shaders[name];
 }
 
-Texture2D& ResourceManager::LoadTexture(const char *name, const char *ImageFile)
+const Texture2D& ResourceManager::LoadTexture(const char *name, const char *ImageFile)
 {
 	Textures[name] = LoadTextureFromFile(ImageFile);
 	return Textures[name];
@@ -74,10 +74,10 @@ const char* ResourceManager::loadShaderAsString(const char *file)
 	return code;
 }
 
-Texture2D& ResourceManager::GetTexture(const char *name)
+const Texture2D& ResourceManager::GetTexture(const char *name)
 { return Textures[name]; }
 
-Shader& ResourceManager::GetShader(const char *name)
+const Shader& ResourceManager::GetShader(const char *name)
 { return Shaders[name]; }
 
 

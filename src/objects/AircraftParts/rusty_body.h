@@ -6,7 +6,7 @@
 class RustyBody : public Body {
 public:
 
-	RustyBody(Shader& shader);
+	RustyBody(const Shader& shader);
 
 };
 

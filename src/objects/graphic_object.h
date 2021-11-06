@@ -5,6 +5,8 @@
 #include "../loads.h"
 #include "../camera.h"
 
+class Camera;
+
 using glm::vec3;
 using glm::mat4;
 
@@ -26,7 +28,7 @@ protected:
 public:
 
 //Инициализация шейдера
-	void initShaderData(float *Data, unsigned int *indices,
+	void initShaderData(const float *Data, const unsigned int *indices,
 						int DataVert, int IndicesQuantity);	
 
 //Обновляет объект (его позицию с учётом камеры)
@@ -34,9 +36,7 @@ public:
 												const float angle = 0);
 
 //Отрисовывает объект
-	void Draw() const;
-
-public:
+	void Draw(const Camera& camera) const;
 
 	void ChangeTexture(const Texture2D& tex);
 
@@ -49,6 +49,8 @@ public:
 //Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
 	GraphObject(const Shader& sh, const Texture2D& tex, const vec3& pos = vec3(0), 
 							const vec3& size = vec3(1), const vec3& speed = vec3(0));
+
+	virtual ~GraphObject() {}
 
 	vec3 GetSpeed() const;
 	

@@ -12,10 +12,10 @@ class ResourceManager {
 	
 public:
 
-	Shader& LoadShader(const char *name, const char *VertShader, 
+	const Shader& LoadShader(const char *name, const char *VertShader, 
 														const char *FragShader);
 
-	Texture2D& LoadTexture(const char *name, const char *ImageFile);
+	const Texture2D& LoadTexture(const char *name, const char *ImageFile);
 
 	void DeleteShader(const char *name)
 	{ glDeleteProgram(Shaders[name].programHandle); }
@@ -23,8 +23,8 @@ public:
 	void DeleteTexture(const char *name)
 	{ glDeleteTextures(1, &(Textures[name].texID)); }
 
-	Shader& GetShader(const char *name);
-	Texture2D& GetTexture(const char *name);
+	const Shader& GetShader(const char *name);
+	const Texture2D& GetTexture(const char *name);
 
 	ResourceManager() {}
 	

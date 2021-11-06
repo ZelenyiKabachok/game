@@ -7,7 +7,6 @@ void Game::Init(ILevel& level) const
 
 void Game::UpDate(float delta_time, ILevel& level) const
 {
-	camera.MoveCamera(delta_time);
 	level.UpDate(delta_time, pressedKeys, angle);
 	level.Render();
 }

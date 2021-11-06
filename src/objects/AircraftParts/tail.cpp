@@ -19,7 +19,7 @@ void Tail::FindDirect(float alpha)
 
 }
 
-void Tail::FindAngle(vec3 PlaneSpeed)
+void Tail::FindAngle(const vec3& PlaneSpeed)
 {
 	PlaneAngle = acos((PlaneSpeed.x)/
 		(sqrt(PlaneSpeed.x*PlaneSpeed.x + PlaneSpeed.y*PlaneSpeed.y + 

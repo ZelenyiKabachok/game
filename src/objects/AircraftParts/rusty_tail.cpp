@@ -1,6 +1,6 @@
 #include "rusty_tail.h"
 
-RustyTail::RustyTail(Shader& shader) :
+RustyTail::RustyTail(const Shader& shader) :
 			Tail(
 				RustTail, 0, 200, 100, shader,
 				resources.LoadTexture("tail", "../resources/Tails/Rusty_tail.png"),

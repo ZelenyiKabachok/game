@@ -20,13 +20,17 @@ add_executable(game 	src/main.cpp
 	src/objects/AircraftParts/rusty_tail.cpp	src/objects/AircraftParts/rusty_tail.h
 
 	src/objects/plane.cpp			src/objects/plane.h
+
 	src/objects/physical_object.cpp	src/objects/physical_object.h
 	src/objects/graphic_object.cpp	src/objects/graphic_object.h
+	src/objects/collision.cpp		src/objects/collision.h	
+
 	src/loads/shader.cpp 			src/loads/shader.h
 	src/loads/texture.cpp 			src/loads/texture.h
+	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp 					src/camera.h
 	src/loads/resources.cpp 		src/loads/resources.h
-	src/loads/stb_image.h 			src/loads/stb_image.cpp)
+)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL -std=c++11")
 

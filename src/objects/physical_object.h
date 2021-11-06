@@ -22,6 +22,8 @@ public:
 					const Texture2D& tex, const vec3& pos = vec3(0),
 					const vec3& size = vec3(1), const vec3& speed = vec3(0));
 
+	virtual ~PhysicObject() {}
+
 	PhysicObject(float m, float coof, GraphObject object);
 
 //Вычисляя равнодеёствующую всех сил, изменяет вектор скорости объекта.

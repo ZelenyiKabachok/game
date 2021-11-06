@@ -1,6 +1,6 @@
 #include "rusty_body.h"
 
-RustyBody::RustyBody(Shader& shader) :
+RustyBody::RustyBody(const Shader& shader) :
 		Body(
 			RustBody, 1000.0, 2000, 700, shader,
 			resources.LoadTexture("body", "../resources/Bodies/Rusty_body.png"),

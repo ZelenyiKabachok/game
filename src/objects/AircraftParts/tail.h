@@ -21,7 +21,7 @@ class Tail : public PhysicObject {
 	void FindDirect(float alpha);
 
 //Находит угол наклона cамолёта.
-	void FindAngle(vec3 PlaneSpeed);
+	void FindAngle(const vec3& PlaneSpeed);
 
 public:
 
@@ -29,6 +29,8 @@ public:
 					const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),
 					const vec3& speed = vec3(0)); 
+
+	virtual ~Tail() {}
 
 };
 

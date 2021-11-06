@@ -1,6 +1,6 @@
 #include "rusty_wings.h"
 
-RustyWings::RustyWings(Shader& shader) :
+RustyWings::RustyWings(const Shader& shader) :
 			Wings(
 				RustWings, 600, 620, 500, 200, shader,
 				resources.LoadTexture("wings", "../resources/Wings/Rusty_wings.png"),

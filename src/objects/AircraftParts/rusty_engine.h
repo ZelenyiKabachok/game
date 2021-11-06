@@ -6,7 +6,7 @@
 class RustyEngine : public Engine {
 public:
 
-	RustyEngine(Shader& shader);
+	RustyEngine(const Shader& shader);
 
 };
 

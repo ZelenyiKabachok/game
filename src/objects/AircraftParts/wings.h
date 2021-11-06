@@ -31,6 +31,9 @@ public:
 					const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),
 					const vec3& speed = vec3(0)); 
+
+	virtual ~Wings() {}
+
 };
 
 #endif

@@ -6,7 +6,7 @@
 class RustyWings : public Wings {
 public:
 	
-	RustyWings(Shader& shader);
+	RustyWings(const Shader& shader);
 
 };
 

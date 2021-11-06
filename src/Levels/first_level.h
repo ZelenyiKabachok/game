@@ -12,6 +12,8 @@ extern ResourceManager resources;
 
 class FirstLevel : public ILevel {
 
+	Camera camera;
+
 	std::vector<GraphObject> GrObjects;
 
 	std::vector<PhysicObject> PhObjects;
@@ -21,7 +23,7 @@ class FirstLevel : public ILevel {
 
 public:
 
-	FirstLevel() {}
+	FirstLevel(); 
 
 	virtual void Load();
 

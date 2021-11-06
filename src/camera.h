@@ -20,15 +20,19 @@ class Camera {
 	mat4 View;
 	mat4 Projection;
 
-	const GraphObject *target = NULL;
+	const GraphObject *target = NULL; //в ~Camera не уничтожается.
 	bool focus = false;
 
 	const float cameraZoom = M_PI/4;
 
 public:
 
+//Начинает следовать за указанным объектом.
+//Нужно быть очень аккуратным.
 	void FocusOnTheObject(const GraphObject *obj);
 
+//Вызывается если нужно отменить фокус,
+//или перед уничтожением объекта, за которым следует камера.
 	void CancelFocus();
 
 	mat4 MoveCamera(float delta_time);

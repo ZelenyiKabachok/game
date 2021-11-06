@@ -1,8 +1,6 @@
 #include "graphic_object.h"
 
-extern Camera camera;
-
-void GraphObject::initShaderData(float *Data, unsigned int *indices,
+void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 								 int DataVert, int IndicesQuantity)
 {
 	unsigned int VBO, EBO;
@@ -47,7 +45,7 @@ void GraphObject::Move(const float delta_time, const vec3& rotateVector,
 	Model = Position * Rotate * Size;
 }
 
-void GraphObject::Draw() const
+void GraphObject::Draw(const Camera& camera) const
 {
 	shader.Use();
 

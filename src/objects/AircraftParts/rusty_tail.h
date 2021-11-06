@@ -6,7 +6,7 @@
 class RustyTail : public Tail {
 public:
 
-	RustyTail(Shader& shader);
+	RustyTail(const Shader& shader);
 
 };
 
