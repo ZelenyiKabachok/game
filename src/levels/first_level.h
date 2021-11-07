@@ -1,7 +1,6 @@
 #ifndef FIRST_LEVEL_H
 #define FIRST_LEVEL_H
 
-#include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "level.h"
@@ -12,11 +11,11 @@ extern ResourceManager resources;
 
 class FirstLevel : public ILevel {
 
-	Camera camera;
+	Camera *camera;
 
-	std::vector<GraphObject> GrObjects;
+	List<GraphObject> GrObjects;
 
-	std::vector<PhysicObject> PhObjects;
+	List<PhysicObject> PhObjects;
 
 	Plane *plane;
 	

@@ -8,7 +8,7 @@
 из Plane. Унаследованны от PhysicObject.
 */
 
-#include "../loads/resources.h"
+#include "../utility/resources.h"
 
 extern ResourceManager resources;
 

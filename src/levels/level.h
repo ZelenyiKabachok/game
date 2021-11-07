@@ -1,7 +1,8 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
-#include "../loads.h"
+#include "../utility/resources.h"
+#include "../utility/list.h"
 #include "../objects.h"
 
 enum Keys { W, S };

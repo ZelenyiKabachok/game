@@ -2,7 +2,7 @@
 #define SPRITE_H
 
 #include <glad/glad.h>
-#include "../loads.h"
+#include "../utility/resources.h"
 #include "../camera.h"
 
 class Camera;

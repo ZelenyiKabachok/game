@@ -4,32 +4,34 @@ set(PROJECT_NAME game)
 
 project(${PROJECT_NAME})
 
-add_executable(game 	src/main.cpp 
-	src/game.cpp					src/game.h
-	src/Levels/level.h			
-	src/Levels/first_level.cpp		src/Levels/first_level.h
+add_executable(game 					src/main.cpp 
+	src/game.cpp						src/game.h
+	src/levels/level.h			
+	src/levels/first_level.cpp			src/levels/first_level.h
 
-	src/objects/AircraftParts/body.cpp		src/objects/AircraftParts/body.h
-	src/objects/AircraftParts/engine.cpp	src/objects/AircraftParts/engine.h	
-	src/objects/AircraftParts/wings.cpp		src/objects/AircraftParts/wings.h
-	src/objects/AircraftParts/tail.cpp		src/objects/AircraftParts/tail.h
+	src/objects/AircraftParts/body.cpp			src/objects/AircraftParts/body.h
+	src/objects/AircraftParts/engine.cpp		src/objects/AircraftParts/engine.h	
+	src/objects/AircraftParts/wings.cpp			src/objects/AircraftParts/wings.h
+	src/objects/AircraftParts/tail.cpp			src/objects/AircraftParts/tail.h
 
 	src/objects/AircraftParts/rusty_engine.cpp	src/objects/AircraftParts/rusty_engine.h
 	src/objects/AircraftParts/rusty_body.cpp	src/objects/AircraftParts/rusty_body.h
 	src/objects/AircraftParts/rusty_wings.cpp	src/objects/AircraftParts/rusty_wings.h
 	src/objects/AircraftParts/rusty_tail.cpp	src/objects/AircraftParts/rusty_tail.h
 
-	src/objects/plane.cpp			src/objects/plane.h
+	src/objects/plane.cpp				src/objects/plane.h
 
-	src/objects/physical_object.cpp	src/objects/physical_object.h
-	src/objects/graphic_object.cpp	src/objects/graphic_object.h
-	src/objects/collision.cpp		src/objects/collision.h	
+	src/objects/physical_object.cpp		src/objects/physical_object.h
+	src/objects/graphic_object.cpp		src/objects/graphic_object.h
+	src/objects/collision.cpp			src/objects/collision.h	
 
-	src/loads/shader.cpp 			src/loads/shader.h
-	src/loads/texture.cpp 			src/loads/texture.h
+	src/utility/shader.cpp 				src/utility/shader.h
+	src/utility/texture.cpp 			src/utility/texture.h
+	src/utility/resources.cpp 			src/utility/resources.h
+	src/utility/list.cpp				src/utility/list.h		src/utility/temp_list.cpp
+
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
-	src/camera.cpp 					src/camera.h
-	src/loads/resources.cpp 		src/loads/resources.h
+	src/camera.cpp 						src/camera.h
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL -std=c++11")

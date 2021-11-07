@@ -22,13 +22,14 @@ void FirstLevel::Load()
 		0, 2, 3
 	};
 
-	GrObjects = {
-	{ resources.GetShader("plane"), resources.GetTexture("back"),
+	camera = new Camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
+
+	GraphObject grobj[] = {
+		{ resources.GetShader("plane"), resources.GetTexture("back"),
 		vec3(118.0, 2.5, 0.0), vec3(50*2.92, 50*1.0, 1.0) }
 	};
 
-
-	PhObjects = {
+	PhysicObject phobj[] = {
 	{ 5, 0.1, resources.GetShader("plane"), resources.GetTexture("box"),
 		vec3(0.0, -1.0, 0.0), vec3(1.0, 1.0, 1.0) }, 
 
@@ -39,6 +40,8 @@ void FirstLevel::Load()
 		vec3(20.0, 1.0, 0.0), vec3(0.5, 0.5, 1.0) },
 	};
 
+	GrObjects.Create(grobj, 1);
+	PhObjects.Create(phobj, 3);
 
 	RustyBody body(resources.GetShader("plane"));
 	RustyEngine engine(resources.GetShader("plane"));
@@ -48,48 +51,42 @@ void FirstLevel::Load()
 	plane = new Plane(body, engine, wings, tail, vec3(-50.0, 0.0, 0.0), 
 						vec3(30.0, 0.0, 0.0));
 
-	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
+	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
 	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 	PhObjects[1].initShaderData(QuadData, QuadIndices, 20, 6);
 	PhObjects[2].initShaderData(QuadData, QuadIndices, 20, 6);
 
-
-	camera.FocusOnTheObject(&(plane->GetBody()));
+	camera->FocusOnTheObject(&(plane->GetBody()));
 
 }
 
 void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 {
-	camera.MoveCamera(delta_time);
+	camera->MoveCamera(delta_time);
 	plane->Fly(delta_time, keys[W], keys[S], angle);	
 
 	PhObjects[0].AttractAndMove(delta_time);
 	PhObjects[1].AttractAndMove(delta_time);
 	PhObjects[2].AttractAndMove(delta_time);
-
 }
 
 void FirstLevel::Render()
 {
-	GrObjects[0].Draw(camera);
-	plane->Render(camera);
+	GrObjects[0].Draw(*camera);
+	plane->Render(*camera);
 
-
-	PhObjects[0].Draw(camera);
-	PhObjects[1].Draw(camera);
-	PhObjects[2].Draw(camera);
+	PhObjects[0].Draw(*camera);
+	PhObjects[1].Draw(*camera);
+	PhObjects[2].Draw(*camera);
 
 }
 
-FirstLevel::FirstLevel() : 
-	camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0)) {}
+FirstLevel::FirstLevel() {}
 
 FirstLevel::~FirstLevel()
 {
-	camera.CancelFocus();
-	GrObjects.clear();
-	PhObjects.clear();
+	camera->CancelFocus();
 	delete plane;
 }

@@ -10,7 +10,7 @@
 #include <map>
 
 #include "levels.h"
-#include "loads.h"
+#include "utility/resources.h"
 #include "objects.h"
 #include "camera.h"
 
