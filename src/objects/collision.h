@@ -1,21 +1,36 @@
+#ifndef COLLISION_H
+#define COLLISION_H
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 //Класс содержит форму, для которой расчитываются столкновения.
-class CollisionOb {
+class Collision {
+	friend class PCollisions;
 
 	glm::vec2 *shape;	//Массив точек.
 	glm::vec2 center;	//Центр фигуры.
 
 	const int points;	//Количество точек.
 
-public:
+	//Хранит нижнюю левую и верхнюю правую точки прямоугольника.
+	glm::vec2 AABB[2];
+
 //При создании объекта CollisOb центр находится в точке (0; 0).
+//Создаётся классом PCollisions.
 //Форма должна быть выпуклой.
-	CollisionOb(glm::vec2 *nShape, int nPoints);
+	Collision(glm::vec2 *nShape, int nPoints);
 
-	void Change(glm::mat4 matrix);
+	void find_AABB_points();
 
-	~CollisionOb();
+public:
+
+	void Movement(glm::mat4 matrix);
+
+	void Rotation(glm::mat4 matrix);
+
+	~Collision();
 
 };
+
+#endif
