@@ -1,6 +1,6 @@
 #include "collision_pointers.h"
 
-PCollisions::PCollisions(glm::vec2 *shape, int points)
+void PCollisions::Init(glm::vec2 *shape, int points)
 {
 	Collision tmp(shape, points);
 	Collision *ptr = &tmp;

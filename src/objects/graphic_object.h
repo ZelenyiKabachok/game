@@ -17,7 +17,9 @@ class GraphObject {
 	Texture2D texture;
 	GLuint VAO;
 
-	mat4 Model;
+	mat4 PositionMatrix;
+	mat4 RotateMatrix;
+	mat4 SizeMatrix;
 
 protected:
 	
@@ -25,20 +27,29 @@ protected:
 	vec3 ObSize;	 //Размер обекта
 	vec3 ObSpeed;	 //Скорость объекта
 
+	vec3 SlantVector; 	//Вектор, относительно которого наклонён объект.
+	float SlantAngle;	//Угол наклона.
+
 public:
 
 //Инициализация шейдера
 	void initShaderData(const float *Data, const unsigned int *indices,
 						int DataVert, int IndicesQuantity);	
 
-//Обновляет объект (его позицию с учётом камеры)
-	void Move(const float delta_time, const vec3& rotateVec = vec3(1),
-												const float angle = 0);
+	void Draw(const Camera& camera) const;  //Отрисовывает объект
 
-//Отрисовывает объект
-	void Draw(const Camera& camera) const;
+//Обновляет позицию объектa.
+	void Move(const float delta_time);
+//Поворачивает объект.
+	void Rotate(const vec3& rotateVec = vec3(1), const float angle = 0);
+//Масштабирует объект.
+	void Scale();
 
 	void ChangeTexture(const Texture2D& tex);
+	
+	void ChangeSlantVector(const vec3& newSlVec);
+
+	void ChangeSlantAngle(float angle);
 
 	void ChangeSize(const vec3& newSize); 
 
@@ -48,7 +59,8 @@ public:
 
 //Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
 	GraphObject(const Shader& sh, const Texture2D& tex, const vec3& pos = vec3(0), 
-							const vec3& size = vec3(1), const vec3& speed = vec3(0));
+				const vec3& size = vec3(1), const vec3& speed = vec3(0),
+				const vec3& slVec = { 0.0, 0.0, 1.0 }, const float slAng = 0.0);
 
 	virtual ~GraphObject() {}
 

@@ -34,7 +34,8 @@ void FirstLevel::Load()
 		vec3(0.0, -1.0, 0.0), vec3(1.0, 1.0, 1.0) }, 
 
 	{ 200, 2, resources.GetShader("plane"), resources.GetTexture("box"),
-		vec3(10.0, 20.0, 0.0), vec3(2.0, 2.0, 1.0) },
+		vec3(10.0, 20.0, 0.0), vec3(2.0, 2.0, 1.0), vec3(0),
+		vec3(0.0, 0.0, 1.0), (float)(M_PI/3) },
 
 	{ 50, 8, resources.GetShader("plane"), resources.GetTexture("box"),
 		vec3(20.0, 1.0, 0.0), vec3(0.5, 0.5, 1.0) },

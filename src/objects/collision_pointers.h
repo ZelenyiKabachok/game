@@ -4,6 +4,7 @@
 #include "collision.h"
 #include "../utility/list.h"
 
+//Хранит все объекты типа collision.
 class PCollisions {
 
 	List<Collision> collis;
@@ -16,7 +17,9 @@ public:
 
 	void Delete(int index);
 
-	PCollisions(glm::vec2 *shapes, int points);
+	void Init(glm::vec2 *shapes, int points);
+	
+	PCollisions() {}
 
 	~PCollisions() {}	
 

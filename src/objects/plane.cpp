@@ -12,9 +12,9 @@ void Plane::ChangePosParts()
 	tail.ChangePosition(body.ObPosition + 
 		vec3(RotateMatrix * glm::vec4(body.StartTailsPos[RustTail], 1.0)));
 
-	engine.Move(0.0, vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
-	wings.Move(0.0, vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
-	tail.Move(0.0, vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
+	engine.Rotate(vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
+	wings.Rotate(vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
+	tail.Rotate(vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
 }
 
 void Plane::PrintPlaneState() const

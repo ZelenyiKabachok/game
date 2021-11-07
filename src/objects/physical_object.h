@@ -18,9 +18,10 @@ protected:
 
 public:
 
-	PhysicObject(float m, float coof, const Shader& sh, 
-					const Texture2D& tex, const vec3& pos = vec3(0),
-					const vec3& size = vec3(1), const vec3& speed = vec3(0));
+	PhysicObject(float m, float coof, const Shader& sh
+					, const Texture2D& tex, const vec3& pos = vec3(0)
+					, const vec3& size = vec3(1), const vec3& speed = vec3(0)
+					, const vec3& slVec = { 0.0, 0.0, 1.0 }, const float angle = 0);
 
 	virtual ~PhysicObject() {}
 
