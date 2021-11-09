@@ -23,6 +23,7 @@ add_executable(game 					src/main.cpp
 
 	src/objects/physical_object.cpp		src/objects/physical_object.h
 	src/objects/graphic_object.cpp		src/objects/graphic_object.h
+	src/objects/shape.cpp				src/objects/shape.h
 	src/objects/collision.cpp			src/objects/collision.h	
 	src/objects/collision_pointers.cpp	src/objects/collision_pointers.h
 

@@ -2,9 +2,13 @@
 #define PLANE_H
 
 #include "aircraft_parts.h"
+#include "collision.h"
 
 //Класс Plane создаёт самолёт.
 //Управляющий для классов Body, Engine, Wing, Tail.
+
+//enum PlaneParts = {	BODY, ENGINE, WINGS, TAIL };
+
 class Plane {
 
 	Body body;
@@ -12,6 +16,7 @@ class Plane {
 	Wings wings;
 	Tail tail;
 
+	//Collision& collision;
 
 	float TotalWeight = 0; 		//Вес самолёта.
 	float AverResistCoof = 0; 	//Средний коэффициент сопротивления воздуха.

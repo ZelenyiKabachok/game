@@ -1,7 +1,7 @@
 #include "graphic_object.h"
 
 void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
-								 int DataVert, int IndicesQuantity)
+								 int DataVert, int IndicesQuantity, bool mode)
 {
 	unsigned int VBO, EBO;
     glGenVertexArrays(1, &VAO);
@@ -29,7 +29,8 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 
     glBindVertexArray(0);
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if(mode)
+	{ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
 
 }
 

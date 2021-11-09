@@ -4,6 +4,9 @@
 #include "../aircraft_parts.h"
 
 class RustyTail : public Tail {
+
+	//virtual void InitCollision(const Shape& form);
+
 public:
 
 	RustyTail(const Shader& shader);

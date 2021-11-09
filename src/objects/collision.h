@@ -3,23 +3,22 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "shape.h"
 
-//Класс содержит форму, для которой расчитываются столкновения.
+//Класс cодержит форму, для которой расчитываются столкновения.
 class Collision {
 	friend class PCollisions;
 
-	glm::vec2 *shape;	//Массив точек.
-	glm::vec2 center;	//Центр фигуры.
+//Массив указателей не класс Shape.
+	Shape **shapes;
 
-	const int points;	//Количество точек.
+	const unsigned int numOfShapes; 	//Размер массива.
 
-	//Хранит нижнюю левую и верхнюю правую точки прямоугольника.
+//Хранит нижнюю левую и верхнюю правую точки прямоугольника.
 	glm::vec2 AABB[2];
 
-//При создании объекта CollisOb центр находится в точке (0; 0).
 //Создаётся классом PCollisions.
-//Форма должна быть выпуклой.
-	Collision(glm::vec2 *nShape, int nPoints);
+	Collision(Shape *arrayOfShapes, const unsigned int num);
 
 	void find_AABB_points();
 

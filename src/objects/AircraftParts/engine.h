@@ -3,7 +3,7 @@
 
 #include "../physical_object.h"
 
-enum planeEngines { RustEngine };
+enum planeEngines { RUST_ENGINE };
 
 //Двигатель для самолёта.
 //Расчитывает силу тяги.

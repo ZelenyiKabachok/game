@@ -2,15 +2,14 @@
 
 void Plane::ChangePosParts()
 {
-//Матрица наклона.
 	glm::mat4 RotateMatrix = glm::rotate(mat4(1.0), tail.PlaneAngle, vec3(0.0, 0.0, 1.0));
 
 	engine.ChangePosition(body.ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body.StartEnginesPos[RustEngine], 1.0)));
+		vec3(RotateMatrix * glm::vec4(body.StartEnginesPos[engine.Name], 1.0)));
 	wings.ChangePosition(body.ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body.StartWingsPos[RustWings], 1.0)));
+		vec3(RotateMatrix * glm::vec4(body.StartWingsPos[wings.Name], 1.0)));
 	tail.ChangePosition(body.ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body.StartTailsPos[RustTail], 1.0)));
+		vec3(RotateMatrix * glm::vec4(body.StartTailsPos[tail.Name], 1.0)));
 
 	engine.Rotate(vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
 	wings.Rotate(vec3(0.0, 0.0, 1.0), tail.PlaneAngle);
@@ -102,6 +101,8 @@ Plane::Plane(const Body& Abody, const Engine& Aengine, const Wings& Awing,
 {
 	body.ObPosition = pos;
 	body.ObSpeed = PlaneSpeed;
+//	Shape forms[4] = { body.
+//	collision(
 	Build();
 	Init();
 }

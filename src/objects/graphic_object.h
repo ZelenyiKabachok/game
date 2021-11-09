@@ -34,7 +34,7 @@ public:
 
 //Инициализация шейдера
 	void initShaderData(const float *Data, const unsigned int *indices,
-						int DataVert, int IndicesQuantity);	
+						int DataVert, int IndicesQuantity, bool mode = false);	
 
 	void Draw(const Camera& camera) const;  //Отрисовывает объект
 

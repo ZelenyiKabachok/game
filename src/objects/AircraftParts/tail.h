@@ -3,7 +3,7 @@
 
 #include "../physical_object.h"
 
-enum planeTail { RustTail };
+enum planeTail { RUST_TAIL };
 
 //Хвост для самолёта.
 //Направляет самолёт.
@@ -19,6 +19,8 @@ class Tail : public PhysicObject {
 //Изменяет вектор направления самолёта.
 //Управление мышью.
 	void FindDirect(float alpha);
+
+//	virtual void InitCollision(const Shape& form) {};
 
 //Находит угол наклона cамолёта.
 	void FindAngle(const vec3& PlaneSpeed);

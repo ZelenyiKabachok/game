@@ -3,7 +3,7 @@
 
 #include "../physical_object.h"
 
-enum planeWings { RustWings };
+enum planeWings { RUST_WINGS };
 
 //Крылья самолёта.
 //Расчитывает силу подъёма.

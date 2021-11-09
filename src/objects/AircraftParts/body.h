@@ -3,7 +3,7 @@
 
 #include "../physical_object.h"
 
-enum planeBodies { RustBody };
+enum planeBodies { RUST_BODY };
 
 //Корпус для самолёта.
 //Содержит информация о количестве топлива.

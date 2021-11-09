@@ -17,6 +17,8 @@ class FirstLevel : public ILevel {
 
 	List<PhysicObject> PhObjects;
 
+	PCollisions CollObjects;	
+
 	Plane *plane;
 	
 

@@ -52,7 +52,6 @@ void FirstLevel::Load()
 	plane = new Plane(body, engine, wings, tail, vec3(-50.0, 0.0, 0.0), 
 						vec3(30.0, 0.0, 0.0));
 
-
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
 	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);

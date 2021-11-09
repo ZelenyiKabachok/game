@@ -1,11 +1,11 @@
 #include "collision.h"
 
-Collision::Collision(glm::vec2 *nShape, int nPoints)
-							: center(glm::vec2(0.0)), points(nPoints)
+Collision::Collision(Shape *arrayOfShapes, const unsigned int num) : numOfShapes(num)
 {
-	shape = new glm::vec2[points];
-	for(int i = 0; i < points; i++) {
-		shape[i] = nShape[i];
+	//Создание массива указателей на Shape.
+	shapes = new Shape*[numOfShapes];
+	for(unsigned int i = 0; i < numOfShapes; i++) {
+		shapes[i] = new Shape(arrayOfShapes[i]);
 	}
 	find_AABB_points();
 }
@@ -14,22 +14,28 @@ void Collision::find_AABB_points()
 {
 	enum Faces { left, down, right, up };
 	float faces[4] = { 
-			shape[0].x, shape[0].y, 
-			shape[0].x, shape[0].y
+			shapes[0]->points[0].x, shapes[0]->points[0].y, 
+			shapes[0]->points[0].x, shapes[0]->points[0].y
 	};
 
-	for(int i = 0; i < points; i++) {
-		if(shape[i].x < faces[left])
-		{ faces[left] = shape[i].x; }
+	for(unsigned int n = 0; n < numOfShapes; n++) {
+		const Shape& cur_shape = *(shapes[n]);	
+	
+		for(unsigned int i = 0; i < cur_shape.num_points; i++) {
+			const glm::vec2& cur_point = cur_shape.points[i];
 
-		if(shape[i].y < faces[down])
-		{ faces[down] = shape[i].y; }
+			if(cur_point.x < faces[left])
+			{ faces[left] = cur_point.x; }
 
-		if(shape[i].x > faces[right])
-		{ faces[right] = shape[i].x; }
+			if(cur_point.y < faces[down])
+			{ faces[down] = cur_point.y; }
 
-		if(shape[i].y > faces[up])
-		{ faces[up] = shape[i].y; }
+			if(cur_point.x > faces[right])
+			{ faces[right] = cur_point.x; }
+
+			if(cur_point.y > faces[up])
+			{ faces[up] = cur_point.y; }
+		}
 	}
 
 	AABB[0].x = faces[left];
@@ -41,14 +47,20 @@ void Collision::find_AABB_points()
 
 Collision::~Collision()
 {
-	delete[] shape;
+	delete[] shapes;
 }
 
 void Collision::Movement(glm::mat4 matrix)
 {
-	center = glm::vec2(glm::vec4(center, 0.0f, 0.0f) * matrix);
-	for(int i = 0; i < points; i++) {
-		shape[i] = glm::vec2(glm::vec4(shape[i], 0.0f, 0.0f) * matrix);
+	for(unsigned int i = 0; i < numOfShapes; i++) {
+		Shape& cur_shape = *(shapes[i]);
+		cur_shape.center = glm::vec2(glm::vec4(cur_shape.center, 0.0f, 0.0f) * matrix);
+
+		for(unsigned int j = 0; j < cur_shape.num_points; j++) {
+				glm::vec2& cur_vec = cur_shape.points[j];
+
+				cur_vec = glm::vec2(glm::vec4(cur_vec, 0.0f, 0.0f) * matrix);
+		}
 	}
 	AABB[0] = glm::vec2(glm::vec4(AABB[0], 0.0f, 0.0f) * matrix);
 	AABB[1] = glm::vec2(glm::vec4(AABB[1], 0.0f, 0.0f) * matrix);
@@ -56,8 +68,13 @@ void Collision::Movement(glm::mat4 matrix)
 
 void Collision::Rotation(glm::mat4 matrix)
 {
-	for(int i = 0; i < points; i++) {
-		shape[i] = glm::vec2(glm::vec4(shape[i], 0.0f, 0.0f) * matrix);
+	for(unsigned int i = 0; i < numOfShapes; i++) {
+		Shape& cur_shape = *(shapes[i]);
+
+		for(unsigned int j = 0; j < cur_shape.num_points; j++) {
+			glm::vec2& cur_vec = cur_shape.points[j];
+			cur_vec = glm::vec2(glm::vec4(cur_vec, 0.0f, 0.0f) * matrix);
+		}
 	}
 	find_AABB_points();
 }
