@@ -85,7 +85,7 @@ List<Type>::~List()
 template <class Type>
 void List<Type>::Create(const Type *var, int len)
 {
-	first = new Item(var[0], NULL, NULL);
+	first = new Item(*var, NULL, NULL);
 	last = first;
 	for(int i = 1; i < len; i++) {
 		NewLast(var[i]);	

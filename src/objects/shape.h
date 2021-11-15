@@ -7,7 +7,7 @@
 //просчёта столкновения алгоритмом gjk.
 class Shape {
 public:
-	glm::vec2 *points;				//Массив точек.
+	glm::vec2 *pPoints;				//Массив точек.
 //Центр фигуры. Как правило, при создании находится в начале координат.
 	glm::vec2 center;		
 	const unsigned int num_points;	//Количество точек.

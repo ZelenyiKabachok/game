@@ -1,11 +1,12 @@
 #include "tail.h"
 
-Tail::Tail(enum planeTail name, float DirAlpha, float m, float coof, 
+Tail::Tail(enum planeTails name, unsigned int nshapes,
+					float DirAlpha, float m, float coof, 
 					const Shader& sh, const Texture2D& tex, 
 					const vec3& pos, const vec3& size,
 					const vec3& speed) : 
 				PhysicObject(m, coof, sh, tex, pos, size, speed), 
-				Name(name), DirAngle(DirAlpha) {}
+				Name(name), num_shapes(nshapes), DirAngle(DirAlpha) {}
 
 void Tail::FindDirect(float alpha)
 {

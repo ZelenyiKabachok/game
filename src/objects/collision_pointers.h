@@ -9,6 +9,7 @@
 class PCollisions {
 
 	List<Collision> collis;
+	bool init = false;
 
 //Обноруживает столкновения алгоритмом gjk
 //Вызывается для двух объектов, у которых обнаружилось столкновение
@@ -19,13 +20,16 @@ class PCollisions {
 
 public:
 
-	Collision& Add(Shape *shapes, int points);
+	unsigned int Add(const Shape* const shapes, int numShapes);
+
+//принимает массив указателей на Shape.
+	Collision* Add(Shape** shapes, int numShapes);
 
 	Collision& Get(int index);
 
-	void Delete(int index);
+	void PrintState();
 
-	void Init(Shape *shapes, int points);
+	void Delete(int index);
 
 //Обнаруживает столкновения.
 	void DetectCollision();

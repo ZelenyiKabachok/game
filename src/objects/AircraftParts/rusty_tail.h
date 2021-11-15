@@ -5,7 +5,7 @@
 
 class RustyTail : public Tail {
 
-	//virtual void InitCollision(const Shape& form);
+	virtual void GetShapes(Shape** const planeShapes, unsigned int& pos);
 
 public:
 

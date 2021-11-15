@@ -2,6 +2,7 @@
 #define BODY_H
 
 #include "../physical_object.h"
+#include "../shape.h"
 
 enum planeBodies { RUST_BODY };
 
@@ -11,6 +12,7 @@ class Body : public PhysicObject {
 	friend class Plane;
 
 	const enum planeBodies Name;
+	const unsigned int num_shapes; //количество фигур самолёта для коллизии.
 
 //Максимальный объём топливного бака
 	const float fualTankSize;
@@ -31,9 +33,12 @@ private:
 //Сжегает топливо.
 	void BurnFuel(float fuelConsumption);
 
+	virtual void GetShapes(Shape** planeShapes, unsigned int& pos) {}
+
 public:
 
-	Body(enum planeBodies name, float fualSize, float m, float coof, 
+	Body(enum planeBodies name, unsigned int nshapes,
+					float fualSize, float m, float coof, 
 					const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),
 					const vec3& speed = vec3(0));

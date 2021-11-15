@@ -1,21 +1,32 @@
 #include "collision_pointers.h"
 
-void PCollisions::Init(Shape *shapes, int points)
-{
-	Collision tmp(shapes, points);
-	Collision *ptr = &tmp;
-	collis.Create(ptr, points);
-}
-
 void PCollisions::Delete(int index)
 {
 	collis.DeleteItem(index);
 }
 
-Collision& PCollisions::Add(Shape *shapes, int points)
+unsigned int PCollisions::Add(const Shape* const shapes, int numShapes)
 {
-	collis.NewLast(Collision(shapes, points));
-	return collis[collis.Size()];
+	if(!init) {	
+		Collision tmp(shapes, numShapes);
+		Collision *ptr = &tmp;
+		collis.Create(ptr, 1);
+		init = true;
+	} 
+	else { collis.NewLast(Collision(shapes, numShapes)); }
+	return collis.Size();
+}
+
+Collision* PCollisions::Add(Shape** shapes, int numShapes)
+{
+	if(!init) {
+		Collision tmp(shapes, numShapes);
+		Collision *ptr = &tmp;
+		collis.Create(ptr, 1);
+		init = true;
+	} 
+	else { collis.NewLast(Collision(shapes, numShapes)); }
+	return &collis[collis.Size()-1];
 }
 
 Collision& PCollisions::Get(int index)
@@ -30,20 +41,20 @@ bool PCollisions::GJKcollision(const Collision& obj1, const Collision& obj2)
 
 bool PCollisions::AABBcollision(const Collision& obj1, const Collision& obj2)
 {
-	if(obj1.AABB[0].x > obj2.AABB[0].x
-	   && obj1.AABB[0].x < obj2.AABB[1].x)
+	if(obj1.pAABB[0].x > obj2.pAABB[0].x
+	   && obj1.pAABB[0].x < obj2.pAABB[1].x)
 	{
-		if((obj1.AABB[0].y > obj2.AABB[0].y && obj1.AABB[0].y < obj2.AABB[1].y)
-		|| (obj1.AABB[1].y > obj2.AABB[0].y && obj1.AABB[1].y < obj2.AABB[1].y))
+		if((obj1.pAABB[0].y > obj2.pAABB[0].y && obj1.pAABB[0].y < obj2.pAABB[1].y)
+		|| (obj1.pAABB[1].y > obj2.pAABB[0].y && obj1.pAABB[1].y < obj2.pAABB[1].y))
 		{
 			return true;
 		}
 	}
-	if(obj1.AABB[1].x > obj2.AABB[0].x
-	   && obj1.AABB[1].x < obj2.AABB[1].x)
+	if(obj1.pAABB[1].x > obj2.pAABB[0].x
+	   && obj1.pAABB[1].x < obj2.pAABB[1].x)
 	{
-		if((obj1.AABB[0].y > obj2.AABB[0].y && obj1.AABB[0].y < obj2.AABB[1].y)
-		|| (obj1.AABB[1].y > obj2.AABB[0].y && obj1.AABB[1].y < obj2.AABB[1].y))
+		if((obj1.pAABB[0].y > obj2.pAABB[0].y && obj1.pAABB[0].y < obj2.pAABB[1].y)
+		|| (obj1.pAABB[1].y > obj2.pAABB[0].y && obj1.pAABB[1].y < obj2.pAABB[1].y))
 		{
 			return true;
 		}

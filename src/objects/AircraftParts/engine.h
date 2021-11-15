@@ -2,6 +2,7 @@
 #define ENGINE_H
 
 #include "../physical_object.h"
+#include "../shape.h"
 
 enum planeEngines { RUST_ENGINE };
 
@@ -11,6 +12,7 @@ class Engine : public PhysicObject {
 	friend class Plane;
 
 	const enum planeEngines Name;
+	const unsigned int num_shapes; 	//количество фигур самолёта для коллизии.
 
 	const float maxThrustForce; 	//Максимальная сила тяги двигателя
 
@@ -29,6 +31,8 @@ class Engine : public PhysicObject {
 	virtual void Work(const float delta_time, float angle, 
 									bool gas = 0, bool brake = 0);
 
+	virtual void GetShapes(Shape** const planeShapes, unsigned int& pos) {}
+
 	virtual void SideEffect();
 
 	//void ChangeAverFuelConsumption(float newConsumption)
@@ -39,7 +43,8 @@ class Engine : public PhysicObject {
 
 public:
 
-	Engine(enum planeEngines name, float maxForce, vec3 startForce, 
+	Engine(enum planeEngines name, unsigned int nshapes,
+					float maxForce, vec3 startForce, 
 					vec3 Ppulse, float pulse, float consumption, float m, 
 					float coof, const Shader& sh, const Texture2D& tex, 
 					const vec3& pos = vec3(0), const vec3& size = vec3(1),

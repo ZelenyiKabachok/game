@@ -44,13 +44,9 @@ void FirstLevel::Load()
 	GrObjects.Create(grobj, 1);
 	PhObjects.Create(phobj, 3);
 
-	RustyBody body(resources.GetShader("plane"));
-	RustyEngine engine(resources.GetShader("plane"));
-	RustyWings wings(resources.GetShader("plane"));
-	RustyTail tail(resources.GetShader("plane"));
-
-	plane = new Plane(body, engine, wings, tail, vec3(-50.0, 0.0, 0.0), 
-						vec3(30.0, 0.0, 0.0));
+	plane = new Plane(RUST_BODY, RUST_ENGINE, RUST_WINGS, RUST_TAIL,
+						vec3(-50.0, 0.0, 0.0), vec3(30.0, 0.0, 0.0), 
+						CollObjects, resources.GetShader("plane"));
 
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 

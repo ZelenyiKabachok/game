@@ -1,12 +1,13 @@
 #include "engine.h"
 
-Engine::Engine(enum planeEngines name, float maxForce, vec3 startForce, 
+Engine::Engine(enum planeEngines name, unsigned int nshapes,
+					float maxForce, vec3 startForce, 
 					vec3 Ppulse, float pulse, float consumption, float m, 
 					float coof, const Shader& sh, const Texture2D& tex, 
 					const vec3& pos, const vec3& size,
 					const vec3& speed) : 
 				PhysicObject(m, coof, sh, tex, pos, size, speed),
-				Name(name), maxThrustForce(maxForce),
+				Name(name), num_shapes(nshapes), maxThrustForce(maxForce),
 				ThrustForce(startForce),
 				PowerPulse(Ppulse), Pulse(pulse),
 				averFuelConsumption(consumption) {}
