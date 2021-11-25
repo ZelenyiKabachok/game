@@ -21,6 +21,7 @@ class FirstLevel : public ILevel {
 
 	Plane *plane;
 	
+	GraphObject **ppGraphic;
 
 public:
 

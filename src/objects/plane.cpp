@@ -3,7 +3,6 @@
 void Plane::ChangePosParts()
 {
 	glm::mat4 RotateMatrix = glm::rotate(mat4(1.0), tail->PlaneAngle, vec3(0.0, 0.0, 1.0));
-	glm::mat4 PositionMatrix = glm::translate(mat4(1.0), body->ObPosition);
 
 	engine->ChangePosition(body->ObPosition + 
 		vec3(RotateMatrix * glm::vec4(body->StartEnginesPos[engine->Name], 1.0)));
@@ -12,16 +11,11 @@ void Plane::ChangePosParts()
 	tail->ChangePosition(body->ObPosition + 
 		vec3(RotateMatrix * glm::vec4(body->StartTailsPos[tail->Name], 1.0)));
 
-	glm::vec4 vec(0.0, 0.0, 0.0, 1.0);
-	vec = PositionMatrix * vec;
-	printf("\nMy { %f; %f; %f }\n", vec.x, vec.y, vec.z);
-	printf("Plane { %f; %f; %f }\n\n", body->ObPosition.x, body->ObPosition.y, body->ObPosition.z);
-
 	engine->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
 	wings->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
 	tail->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
 	collision->Movement(body->ObPosition);
-	//collision->Rotation(RotateMatrix);
+	collision->Rotation(tail->PlaneAngle);
 }
 
 void Plane::PrintPlaneState() const
@@ -45,6 +39,7 @@ void Plane::Render(const Camera& camera) const
 	engine->Draw(camera);
 	wings->Draw(camera);
 	tail->Draw(camera);
+	collision->Draw(camera);
 }
 
 void Plane::Fly(float delta_time, bool gas, bool brake, float angle)
@@ -65,6 +60,7 @@ void Plane::Fly(float delta_time, bool gas, bool brake, float angle)
 	vec3 ResultantForce = engine->ThrustForce + wings->liftingForce;
 	body->AttractAndMove(delta_time, ResultantForce,
 						vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
+
 
 	ChangePosParts();
 }		
@@ -100,13 +96,12 @@ void Plane::InitCollision(PCollisions& collObj)
 	wings->GetShapes(shapes, pos);
 	tail->GetShapes(shapes, pos);
 
-	//collDescriptor = collObj.Add(shapes, max_shapes);
 	collision = collObj.Add(shapes, max_shapes);
+//	collision->PrepareForDraw();
 
 	for(unsigned int i = 0; i < max_shapes; i++) {
 		delete shapes[i];
 	}
-
 	delete[] shapes;
 }
 

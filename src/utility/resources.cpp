@@ -2,9 +2,9 @@
 #include "resources.h"
 
 const Shader& ResourceManager::LoadShader(const char *name, const char *VertShader,
-														const char *FragShader)
+										  const char *FragShader, const char *GeomShader)
 {
-	Shaders[name] = LoadShaderFromFile(VertShader, FragShader);
+	Shaders[name] = LoadShaderFromFile(VertShader, FragShader, GeomShader);
 	return Shaders[name];
 }
 
@@ -46,13 +46,17 @@ ResourceManager::~ResourceManager()
 }
 
 Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
-												const char *FragShader)
+										   const char *FragShader,
+										   const char *GeomShader)
 {
 	const char *VertCode = loadShaderAsString(VertexShader);
 	const char *FragCode = loadShaderAsString(FragShader);
+	const char *GeomCode = NULL;
+	if(GeomShader)
+	{ GeomCode = loadShaderAsString(GeomShader); }
 
 	Shader shader;
-	shader.Generate(VertCode, FragCode);
+	shader.Generate(VertCode, FragCode, GeomCode);
 
 	delete[] VertCode;
 	delete[] FragCode;
@@ -62,14 +66,20 @@ Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
 
 const char* ResourceManager::loadShaderAsString(const char *file)
 {
-	FILE *fd;
-	fd = fopen(file, "r");
+	unsigned int file_size;
+	FILE *fd = fopen(file, "r");
 	if(!fd) {
-		printf("Can't open file: %s\n", file);
+		fprintf(stderr, "Can't open file: %s\n", file);
 		exit(0);
 	}
-	char *code = new char[1024];
-	fread(code, 1, 1024, fd);
+	
+	fseek(fd, 0, SEEK_END);
+	file_size = ftello(fd);
+	fseek(fd, 0, SEEK_SET);
+
+	char *code = new char[file_size+1];
+	fread(code, 1, file_size, fd);
+	code[file_size] = EOF; //Без ручного указания конца файла шейдеры не компилируются.
 	fclose(fd);
 	return code;
 }
@@ -79,6 +89,3 @@ const Texture2D& ResourceManager::GetTexture(const char *name)
 
 const Shader& ResourceManager::GetShader(const char *name)
 { return Shaders[name]; }
-
-
-

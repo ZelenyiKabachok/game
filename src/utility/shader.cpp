@@ -1,16 +1,21 @@
 #include <cstdio>
 #include "shader.h"
 
-void Shader::Generate(const char *VertCode, const char *FragCode)
+void Shader::Generate(const char *VertCode, const char *FragCode, const char *GeomCode)
 {
 	GLint vertShader;
 	GLint fragShader;
+	GLint geomShader = 0;
 	CompileShader(VertCode, vertShader, GL_VERTEX_SHADER);
 	CompileShader(FragCode, fragShader, GL_FRAGMENT_SHADER);
-	CompoundShader(vertShader, fragShader);
+	if(GeomCode) {
+		CompileShader(GeomCode, geomShader, GL_GEOMETRY_SHADER);
+	}
+	CompoundShader(vertShader, fragShader, geomShader);
 
 	glDeleteShader(vertShader);
 	glDeleteShader(fragShader);
+	glDeleteShader(geomShader);
 }
 
 void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix) const
@@ -20,6 +25,14 @@ void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix) const
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
+void Shader::SetVector3(const char *varName, const glm::vec3 &vector) const
+{
+	GLuint location = glGetUniformLocation(programHandle, varName);
+	float arr[3] = { vector.x, vector.y, vector.z };
+	if(location >= 0)
+		glUniform3fv(location, 1, arr);
+}
+
 void Shader::SetInt(const char *varName, const int var) const
 {
 	GLuint location = glGetUniformLocation(programHandle, varName);
@@ -27,7 +40,7 @@ void Shader::SetInt(const char *varName, const int var) const
 		glUniform1i(location, var);
 }
 
-void Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
+void Shader::CompoundShader(GLint& vertShader, GLint& fragShader, GLint& geomShader)
 {
 	programHandle = glCreateProgram();
 	if(!programHandle) {
@@ -36,6 +49,9 @@ void Shader::CompoundShader(GLint& vertShader, GLint& fragShader)
 	
 	glAttachShader(programHandle, vertShader);
 	glAttachShader(programHandle, fragShader);
+	if(geomShader) {
+		glAttachShader(programHandle, geomShader);
+	}
 	
 	glLinkProgram(programHandle);
 
@@ -73,6 +89,7 @@ void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderT
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 	if(result == GL_FALSE) {
 		printf("Error, shader compilation faild\n");
+		//printf("Shader Code:\n%s", shaderCode);
 		GLint logLen;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
 		

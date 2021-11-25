@@ -41,20 +41,29 @@ bool PCollisions::GJKcollision(const Collision& obj1, const Collision& obj2)
 
 bool PCollisions::AABBcollision(const Collision& obj1, const Collision& obj2)
 {
-	if(obj1.pAABB[0].x > obj2.pAABB[0].x
-	   && obj1.pAABB[0].x < obj2.pAABB[1].x)
-	{
-		if((obj1.pAABB[0].y > obj2.pAABB[0].y && obj1.pAABB[0].y < obj2.pAABB[1].y)
-		|| (obj1.pAABB[1].y > obj2.pAABB[0].y && obj1.pAABB[1].y < obj2.pAABB[1].y))
+	glm::mat4 matPosObj1 = translate(mat4(1.0), obj1.Position);
+	glm::mat4 matPosObj2 = translate(mat4(1.0), obj2.Position);
+
+	glm::vec2 AABB1[2] = {
+		glm::vec2(matPosObj1 * glm::vec4(obj1.pAABB[0], 0.0f, 1.0f)),
+		glm::vec2(matPosObj1 * glm::vec4(obj1.pAABB[1], 0.0f, 1.0f)),
+	};
+	glm::vec2 AABB2[2] = {
+		glm::vec2(matPosObj2 * glm::vec4(obj2.pAABB[0], 0.0f, 1.0f)),
+		glm::vec2(matPosObj2 * glm::vec4(obj2.pAABB[1], 0.0f, 1.0f)),
+	};
+
+	if(AABB1[0].x > AABB2[0].x && AABB1[0].x < AABB2[1].x) {
+		if((AABB1[0].y > AABB2[0].y && AABB1[0].y < AABB2[1].y)
+		|| (AABB1[1].y > AABB2[0].y && AABB1[1].y < AABB2[1].y))
 		{
 			return true;
 		}
 	}
-	if(obj1.pAABB[1].x > obj2.pAABB[0].x
-	   && obj1.pAABB[1].x < obj2.pAABB[1].x)
+	if(AABB1[1].x > AABB2[0].x && AABB1[1].x < AABB2[1].x)
 	{
-		if((obj1.pAABB[0].y > obj2.pAABB[0].y && obj1.pAABB[0].y < obj2.pAABB[1].y)
-		|| (obj1.pAABB[1].y > obj2.pAABB[0].y && obj1.pAABB[1].y < obj2.pAABB[1].y))
+		if((AABB1[0].y > AABB2[0].y && AABB1[0].y < AABB2[1].y)
+		|| (AABB1[1].y > AABB2[0].y && AABB1[1].y < AABB2[1].y))
 		{
 			return true;
 		}

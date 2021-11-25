@@ -1,8 +1,11 @@
 #include "graphic_object.h"
 
 void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
-								 int DataVert, int IndicesQuantity, bool mode)
+								 int DataVert, unsigned int IndicesQuantity,
+								 GLenum DrawType)
 {
+	type = DrawType;
+	points = IndicesQuantity;
 	unsigned int VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -29,9 +32,6 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 
     glBindVertexArray(0);
 
-	if(mode)
-	{ glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
-
 }
 
 void GraphObject::Draw(const Camera& camera) const
@@ -45,9 +45,10 @@ void GraphObject::Draw(const Camera& camera) const
 
 	shader.SetMatrix4("CameraMatrix", camera.GetCameraMatrix());
 	shader.SetMatrix4("ModelMatrix", ModelMatrix);
+	shader.SetVector3("Color", color);
 	
 	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(type, points, GL_UNSIGNED_INT, 0);
 }
 
 void GraphObject::Move(const float delta_time)
@@ -81,6 +82,9 @@ GraphObject::GraphObject(const Shader& sh, const Texture2D& tex,
 void GraphObject::ChangeTexture(const Texture2D& tex)
 { texture = tex; }
 
+void GraphObject::ChangeColor(const glm::vec3& newColor)
+{ color = newColor; }
+
 void GraphObject::ChangeSlantVector(const vec3& newSlVec)
 { SlantVector = newSlVec; Rotate(); }
 
@@ -98,3 +102,5 @@ void GraphObject::ChangePosition(const vec3& newPos)
 
 vec3 GraphObject::GetSpeed() const { return ObSpeed; }
 vec3 GraphObject::GetPosition() const { return ObPosition; }
+const Shader& GraphObject::GetShader() const { return shader; }
+const Texture2D& GraphObject::GetTexture() const { return texture; }

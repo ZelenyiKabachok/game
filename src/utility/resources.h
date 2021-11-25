@@ -13,7 +13,7 @@ class ResourceManager {
 public:
 
 	const Shader& LoadShader(const char *name, const char *VertShader, 
-														const char *FragShader);
+							 const char *FragShader, const char *GeomShader = NULL);
 
 	const Texture2D& LoadTexture(const char *name, const char *ImageFile);
 
@@ -33,7 +33,7 @@ public:
 private:
 
 	Shader LoadShaderFromFile(const char *VertShader, 
-												const char *FragShader);
+							  const char *FragShader, const char *GeomShader);
 
 	Texture2D LoadTextureFromFile(const char *ImageFile);
 
