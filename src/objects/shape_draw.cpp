@@ -9,7 +9,6 @@ ShapeDraw::ShapeDraw(const Shader& sh, const Texture2D& tex,
 void ShapeDraw::initShaderData(const float *Data, const glm::vec3& Color, 
 								 unsigned int vertexes, GLenum DrawType)
 {
-	type = GL_LINE_LOOP;
 	type = DrawType;
 	points = vertexes;
 	color = Color;
@@ -53,6 +52,7 @@ void ShapeDraw::Draw(const Camera& camera, float width) const
 	glLineWidth(width);
 	glPointSize(width);
 	glDrawArrays(type, 0, points);
+	//glDrawElements(type, points, GL_UNSIGNED_INT, 0);
 }
 
 void ShapeDraw::Move(const char *uniPos, const vec3& pos)

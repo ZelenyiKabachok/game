@@ -16,6 +16,8 @@ public:
 
 	void Init(Shape **ppShape, unsigned int numOfShapes, const glm::vec2 *pAABB);
 
+    void DrawAABB(const Camera& camera, const glm::vec2 *pAABB);
+
 	void Draw(const Camera& camera, const glm::vec3& pos, float angle);
 
 	~CollDraw();

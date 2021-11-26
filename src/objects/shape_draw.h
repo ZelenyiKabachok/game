@@ -11,6 +11,8 @@
 extern Camera camera;
 
 class ShapeDraw : public GraphObject {
+
+    friend class CollDraw;
 	
 public:
 

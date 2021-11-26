@@ -89,7 +89,7 @@ void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderT
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 	if(result == GL_FALSE) {
 		printf("Error, shader compilation faild\n");
-		//printf("Shader Code:\n%s", shaderCode);
+		printf("Shader Code:\n%s", shaderCode);
 		GLint logLen;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
 		

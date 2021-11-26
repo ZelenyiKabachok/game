@@ -19,6 +19,8 @@ class FirstLevel : public ILevel {
 
 	PCollisions CollObjects;	
 
+    CollDraw Collis;
+
 	Plane *plane;
 	
 	GraphObject **ppGraphic;

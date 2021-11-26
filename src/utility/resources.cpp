@@ -60,6 +60,8 @@ Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
 
 	delete[] VertCode;
 	delete[] FragCode;
+	if(GeomShader)
+    { delete[] GeomCode; }
 
 	return shader;
 }	
@@ -79,7 +81,7 @@ const char* ResourceManager::loadShaderAsString(const char *file)
 
 	char *code = new char[file_size+1];
 	fread(code, 1, file_size, fd);
-	code[file_size] = EOF; //Без ручного указания конца файла шейдеры не компилируются.
+//	code[file_size] = EOF; //Без ручного указания конца файла шейдеры не компилируются.
 	fclose(fd);
 	return code;
 }
