@@ -1,25 +1,27 @@
 #include <cstdio>
 #include "resources.h"
 
-const Shader& ResourceManager::LoadShader(const char *name, const char *VertShader,
-										  const char *FragShader, const char *GeomShader)
+const Graphic::Shader& ResourceManager::LoadShader(
+                      const char *sName, const char *fVertShader
+				    , const char *fFragShader, const char *fGeomShader)
 {
-	Shaders[name] = LoadShaderFromFile(VertShader, FragShader, GeomShader);
-	return Shaders[name];
+	Shaders[sName] = LoadShaderFromFile(fVertShader, fFragShader, fGeomShader);
+	return Shaders[sName];
 }
 
-const Texture2D& ResourceManager::LoadTexture(const char *name, const char *ImageFile)
+const Graphic::Texture2D& ResourceManager::LoadTexture(const char *sName
+                                                , const char *fImageFile)
 {
-	Textures[name] = LoadTextureFromFile(ImageFile);
-	return Textures[name];
+	Textures[sName] = LoadTextureFromFile(fImageFile);
+	return Textures[sName];
 }	
 
-Texture2D ResourceManager::LoadTextureFromFile(const char *ImageFile)
+Graphic::Texture2D ResourceManager::LoadTextureFromFile(const char *fImageFile)
 {
-	Texture2D texture;
+	Graphic::Texture2D texture;
 	int width, height, nrChannels;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char *pixels = stbi_load(ImageFile, &width, &height, &nrChannels, 0);
+	unsigned char *pixels = stbi_load(fImageFile, &width, &height, &nrChannels, 0);
 
 	if(nrChannels == 4) {
 		texture.InternalFormat = GL_RGBA;
@@ -27,7 +29,7 @@ Texture2D ResourceManager::LoadTextureFromFile(const char *ImageFile)
 	}
 
 	if(!pixels) {
-		printf("Error load texture %s\n", ImageFile);
+		printf("Error load texture %s\n", fImageFile);
 	}
 	texture.Generate(width, height, pixels);
 
@@ -45,33 +47,33 @@ ResourceManager::~ResourceManager()
 	}
 }
 
-Shader ResourceManager::LoadShaderFromFile(const char *VertexShader,
-										   const char *FragShader,
-										   const char *GeomShader)
+Graphic::Shader ResourceManager::LoadShaderFromFile(const char *fVertexShader
+										            , const char *fFragShader
+										            , const char *fGeomShader)
 {
-	const char *VertCode = loadShaderAsString(VertexShader);
-	const char *FragCode = loadShaderAsString(FragShader);
-	const char *GeomCode = NULL;
-	if(GeomShader)
-	{ GeomCode = loadShaderAsString(GeomShader); }
+	const char *sVertCode = loadShaderAsString(fVertexShader);
+	const char *sFragCode = loadShaderAsString(fFragShader);
+	const char *sGeomCode = NULL;
+	if(fGeomShader)
+	{ sGeomCode = loadShaderAsString(fGeomShader); }
 
-	Shader shader;
-	shader.Generate(VertCode, FragCode, GeomCode);
+	Graphic::Shader shader;
+	shader.Generate(sVertCode, sFragCode, sGeomCode);
 
-	delete[] VertCode;
-	delete[] FragCode;
-	if(GeomShader)
-    { delete[] GeomCode; }
+	delete[] sVertCode;
+	delete[] sFragCode;
+	if(fGeomShader)
+    { delete[] sGeomCode; }
 
 	return shader;
 }	
 
-const char* ResourceManager::loadShaderAsString(const char *file)
+const char* ResourceManager::loadShaderAsString(const char *fFile)
 {
 	unsigned int file_size;
-	FILE *fd = fopen(file, "r");
+	FILE *fd = fopen(fFile, "rw");
 	if(!fd) {
-		fprintf(stderr, "Can't open file: %s\n", file);
+		fprintf(stderr, "Can't open file: %s\n", fFile);
 		exit(0);
 	}
 	
@@ -79,15 +81,24 @@ const char* ResourceManager::loadShaderAsString(const char *file)
 	file_size = ftello(fd);
 	fseek(fd, 0, SEEK_SET);
 
-	char *code = new char[file_size+1];
-	fread(code, 1, file_size, fd);
-//	code[file_size] = EOF; //Без ручного указания конца файла шейдеры не компилируются.
+//  printf("File '%s' size = %u\n", fFile, file_size);
+
+	char *sCode = new char[file_size];
+	fread(sCode, 1, file_size, fd);
 	fclose(fd);
-	return code;
+	return sCode;
 }
 
-const Texture2D& ResourceManager::GetTexture(const char *name)
-{ return Textures[name]; }
+const Graphic::Texture2D& ResourceManager::GetTexture(const char *sName)
+{ return Textures[sName]; }
 
-const Shader& ResourceManager::GetShader(const char *name)
-{ return Shaders[name]; }
+const Graphic::Shader& ResourceManager::GetShader(const char *sName)
+{ return Shaders[sName]; }
+
+void ResourceManager::DeleteShader(const char *sName)
+{ glDeleteProgram(Shaders[sName].programHandle); }
+	
+void ResourceManager::DeleteTexture(const char *sName)
+{ glDeleteTextures(1, &(Textures[sName].texID)); }
+
+

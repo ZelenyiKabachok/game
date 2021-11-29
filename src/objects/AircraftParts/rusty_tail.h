@@ -3,14 +3,17 @@
 
 #include "../aircraft_parts.h"
 
+namespace Aircraft {
+
 class RustyTail : public Tail {
 
-	virtual void GetShapes(Shape** const planeShapes, unsigned int& pos);
+	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos);
 
 public:
 
-	RustyTail(const Shader& shader);
+	RustyTail(const Graphic::Shader& shader);
 
 };
+}
 
 #endif

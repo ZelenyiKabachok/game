@@ -7,8 +7,7 @@
 
 class Camera;
 
-using glm::vec3;
-using glm::mat4;
+namespace Graphic {
 
 // Класс GraphObject отображает спрайт на экране
 class GraphObject {
@@ -16,64 +15,68 @@ class GraphObject {
 protected:
 	Shader shader;
 	Texture2D texture;
-	vec3 color = vec3(1.0, 1.0, 1.0);
+	glm::vec3 v3Color = glm::vec3(1.0, 1.0, 1.0);
 	GLuint VAO;
 	GLenum type;
 	unsigned int points;
 
-	mat4 PositionMatrix;
-	mat4 RotateMatrix;
-	mat4 SizeMatrix;
-	vec3 ObPosition; //Позиция объекта в мировых координатах
-	vec3 ObSize;	 //Размер обекта
-	vec3 ObSpeed;	 //Скорость объекта
+	glm::mat4 matPosition;
+	glm::mat4 matRotation;
+	glm::mat4 matSize;
+	glm::vec3 v3Position;   //Позиция объекта в мировых координатах
+	glm::vec3 v3Size;	    //Размер обекта
+	glm::vec3 v3Speed;	//Скорость объекта
 
-	vec3 SlantVector; 	//Вектор, относительно которого наклонён объект.
-	float SlantAngle;	//Угол наклона.
+	glm::vec3 v3Slant; 	    //Вектор, относительно которого наклонён объект.
+	float SlantAngle;	    //Угол наклона.
 
 public:
 
 //Инициализация шейдера
 //инициализация без текстуры
-	virtual void initShaderData(const float *Data, const unsigned int *indices,
-						int DataVert, unsigned int IndicesQuantity,
-						GLenum DrawType = GL_TRIANGLES);	
+	virtual void initShaderData(const float *pData, const unsigned int *pIndices
+                            , int numOfVert, unsigned int numOfInd
+						    , GLenum DrawType = GL_TRIANGLES);	
 //Отрисовывает объект
 	virtual void Draw(const Camera& camera) const;  
 //Обновляет позицию объектa.
 	virtual void Move(const float delta_time);
 //Поворачивает объект.
-	void Rotate(const vec3& rotateVec = vec3(1), const float angle = 0);
+	void Rotate(const glm::vec3& v3Rotate = glm::vec3(1)
+                            , const float angle = 0);
 //Масштабирует объект.
 	void Scale();
 
 	void ChangeTexture(const Texture2D& tex);
 
-	void ChangeColor(const vec3& newColor);
+	void ChangeColor(const glm::vec3& v3NewColor);
 	
-	void ChangeSlantVector(const vec3& newSlVec);
+	void ChangeSlantVector(const glm::vec3& v3NewSlVec);
 
 	void ChangeSlantAngle(float angle);
 
-	void ChangeSize(const vec3& newSize); 
+	void ChangeSize(const glm::vec3& v3NewSize); 
 
-	void ChangeSpeed(const vec3& newSpeed);
+	void ChangeSpeed(const glm::vec3& v3NewSpeed);
 	
-	void ChangePosition(const vec3& newPos);
+	void ChangePosition(const glm::vec3& v3NewPos);
 
 //Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
-	GraphObject(const Shader& sh, const Texture2D& tex, const vec3& pos = vec3(0), 
-				const vec3& size = vec3(1), const vec3& speed = vec3(0),
-				const vec3& slVec = { 0.0, 0.0, 1.0 }, const float slAng = 0.0);
+	GraphObject(const Shader& sh, const Texture2D& tex
+                            , const glm::vec3& v3Pos = glm::vec3(0)
+				            , const glm::vec3& v3Scale = glm::vec3(1)
+                            , const glm::vec3& v3Spd = glm::vec3(0)
+				            , const glm::vec3& v3sl = { 0.0, 0.0, 1.0 }
+                            , const float slAng = 0.0);
 
 	virtual ~GraphObject() {}
 
-	vec3 GetSpeed() const;
-	
-	vec3 GetPosition() const;
+	glm::vec3 GetSpeed() const;
+	glm::vec3 GetPosition() const;
 
-	const Shader& GetShader() const;
-	const Texture2D& GetTexture() const;
+	const Graphic::Shader& GetShader() const;
+	const Graphic::Texture2D& GetTexture() const;
 };
+}
 
 #endif

@@ -3,52 +3,35 @@
 layout (lines) in;
 layout (line_strip, max_vertices = 5) out;
 
-uniform vec3 First;
-uniform vec3 Second;
-uniform mat4 Camera;
+uniform vec3 v3First;
+uniform vec3 v3Second;
+uniform mat4 matPosition;
+uniform mat4 matCamera;
+
+void Emit(vec4 v4Point)
+{
+    gl_Position = v4Point;
+    EmitVertex();
+}
 
 void main()
 {
 
-	vec4 first = Camera * vec4(First, 1.0f);
-	vec4 second = Camera * vec4(Second, 1.0f);
+	vec4 v4First = matCamera * matPosition * vec4(v3First, 1.0f);
+	vec4 v4Second = matCamera * matPosition * vec4(v3Second, 1.0f);
 
-	vec4 tmp = first;
-	tmp.x = second.x;
+	vec4 v4Bottom = v4First;
+	v4Bottom.x = v4Second.x;
 
-	gl_Position = first;
-	EmitVertex();
+	vec4 v4Up = v4First;
+	v4Up.y = v4Second.y;
 
-	gl_Position = tmp;
-	EmitVertex();
-
-	gl_Position = second;
-	EmitVertex();
-
-	tmp = first;
-	tmp.y = second.y;
-
-	gl_Position = tmp;
-	EmitVertex();
-
-    gl_Position = first;
-    EmitVertex();
-/*
-    gl_Position = Camera*gl_in[0].gl_Position;
-    EmitVertex();
-    
-    gl_Position = Camera*gl_in[1].gl_Position;
-    EmitVertex();
-
-    gl_Position = Camera*(gl_in[0].gl_Position + vec4(2.0, 0.0, 0.0, 0.0));
-    EmitVertex();
-*/
+    Emit(v4First);
+    Emit(v4Bottom);
+    Emit(v4Second);
+    Emit(v4Up);
+    Emit(v4First);
 
 	EndPrimitive();
 }
-
-
-
-
-
 

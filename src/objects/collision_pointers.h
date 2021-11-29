@@ -5,25 +5,27 @@
 #include "collision.h"
 #include "../utility/list.h"
 
+namespace Physic {
+
 //Хранит все объекты типа collision.
 class PCollisions {
 
 	List<Collision> collis;
 	bool init = false;
 
-//Обноруживает столкновения алгоритмом gjk
 //Вызывается для двух объектов, у которых обнаружилось столкновение
 //алгоритмом AABB.
 	bool GJKcollision(const Collision& obj1, const Collision& obj2); 
 
+//Обнаруживает столкновения алгоритмом AABB
 	bool AABBcollision(const Collision& obj1, const Collision& obj2);
 
 public:
 
-	unsigned int Add(const Shape* const shapes, int numShapes);
+	Collision* Add(const Shape* pShapes, int numShapes);
 
 //принимает массив указателей на Shape.
-	Collision* Add(Shape** shapes, int numShapes);
+	Collision* Add(Shape** ppShapes, int numShapes);
 
 	Collision& Get(int index);
 
@@ -39,5 +41,6 @@ public:
 	~PCollisions() {}	
 
 };
+}
 
 #endif

@@ -4,11 +4,13 @@
 #include "../physical_object.h"
 #include "../shape.h"
 
+namespace Aircraft {
+
 enum planeBodies { RUST_BODY };
 
 //Корпус для самолёта.
 //Содержит информация о количестве топлива.
-class Body : public PhysicObject {
+class Body : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeBodies Name;
@@ -25,26 +27,29 @@ class Body : public PhysicObject {
 
 //Расположение всех существующий частей самолёта относительно копруса.
 protected:
-	vec3 StartEnginesPos[1];
-	vec3 StartWingsPos[1];
-	vec3 StartTailsPos[1];
+	glm::vec3 StartEnginesPos[1];
+	glm::vec3 StartWingsPos[1];
+	glm::vec3 StartTailsPos[1];
 
 private:
 //Сжегает топливо.
 	void BurnFuel(float fuelConsumption);
 
-	virtual void GetShapes(Shape** planeShapes, unsigned int& pos) {}
+	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos)
+        {}
 
 public:
 
-	Body(enum planeBodies name, unsigned int nshapes,
-					float fualSize, float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
-					const vec3& pos = vec3(0), const vec3& size = vec3(1),
-					const vec3& speed = vec3(0));
+	Body(enum planeBodies name, unsigned int nshapes
+					, float fualSize, float m, float coof
+					, const Graphic::Shader& sh, const Graphic::Texture2D& tex
+					, const glm::vec3& v3Pos = glm::vec3(0)
+                    , const glm::vec3& v3Size = glm::vec3(1)
+					, const glm::vec3& v3Speed = glm::vec3(0));
 	
 	virtual ~Body() {}
 
 };
+}
 
 #endif

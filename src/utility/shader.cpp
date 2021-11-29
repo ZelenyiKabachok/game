@@ -1,15 +1,17 @@
 #include <cstdio>
 #include "shader.h"
 
-void Shader::Generate(const char *VertCode, const char *FragCode, const char *GeomCode)
+void Graphic::Shader::Generate(const char *sVertCode
+                                , const char *sFragCode
+                                , const char *sGeomCode)
 {
 	GLint vertShader;
 	GLint fragShader;
 	GLint geomShader = 0;
-	CompileShader(VertCode, vertShader, GL_VERTEX_SHADER);
-	CompileShader(FragCode, fragShader, GL_FRAGMENT_SHADER);
-	if(GeomCode) {
-		CompileShader(GeomCode, geomShader, GL_GEOMETRY_SHADER);
+	CompileShader(sVertCode, vertShader, GL_VERTEX_SHADER);
+	CompileShader(sFragCode, fragShader, GL_FRAGMENT_SHADER);
+	if(sGeomCode) {
+		CompileShader(sGeomCode, geomShader, GL_GEOMETRY_SHADER);
 	}
 	CompoundShader(vertShader, fragShader, geomShader);
 
@@ -18,29 +20,33 @@ void Shader::Generate(const char *VertCode, const char *FragCode, const char *Ge
 	glDeleteShader(geomShader);
 }
 
-void Shader::SetMatrix4(const char *varName, const glm::mat4 &matrix) const
+void Graphic::Shader::SetMatrix4(const char *sVarName
+                                , const glm::mat4 &matVar) const
 {
-	GLuint location = glGetUniformLocation(programHandle, varName);
+	GLuint location = glGetUniformLocation(programHandle, sVarName);
 	if(location >= 0)
-		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matVar));
 }
 
-void Shader::SetVector3(const char *varName, const glm::vec3 &vector) const
+void Graphic::Shader::SetVector3(const char *sVarName
+                                , const glm::vec3& v3Var) const
 {
-	GLuint location = glGetUniformLocation(programHandle, varName);
-	float arr[3] = { vector.x, vector.y, vector.z };
+	GLuint location = glGetUniformLocation(programHandle, sVarName);
+	float pArr[3] = { v3Var.x, v3Var.y, v3Var.z };
 	if(location >= 0)
-		glUniform3fv(location, 1, arr);
+		glUniform3fv(location, 1, pArr);
 }
 
-void Shader::SetInt(const char *varName, const int var) const
+void Graphic::Shader::SetInt(const char *sVarName, const int var) const
 {
-	GLuint location = glGetUniformLocation(programHandle, varName);
+	GLuint location = glGetUniformLocation(programHandle, sVarName);
 	if(location >= 0)
 		glUniform1i(location, var);
 }
 
-void Shader::CompoundShader(GLint& vertShader, GLint& fragShader, GLint& geomShader)
+void Graphic::Shader::CompoundShader(GLint& vertShader
+                                , GLint& fragShader
+                                , GLint& geomShader)
 {
 	programHandle = glCreateProgram();
 	if(!programHandle) {
@@ -63,15 +69,17 @@ void Shader::CompoundShader(GLint& vertShader, GLint& fragShader, GLint& geomSha
 		GLint logLen;
 		glGetProgramiv(programHandle, GL_INFO_LOG_LENGTH, &logLen);
 		if(logLen > 0) {
-			char *log = new char[logLen];
-			glGetProgramInfoLog(programHandle, logLen, NULL, log);
-			printf("Program log:\n%s\n", log);
-			delete[] log;
+			char *sLog = new char[logLen];
+			glGetProgramInfoLog(programHandle, logLen, NULL, sLog);
+			printf("Program log:\n%s\n", sLog);
+			delete[] sLog;
 		}
 	}
 }
 
-void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderType)
+void Graphic::Shader::CompileShader(const char *sShaderCode
+                                    , GLint& shader
+                                    , GLenum shaderType)
 {
 	shader = glCreateShader(shaderType);
 
@@ -80,27 +88,27 @@ void Shader::CompileShader(const char *shaderCode, GLint& shader, GLenum shaderT
 		return;
 	}
 	
-	const GLchar *codeArray[] = {shaderCode};
+	const GLchar *sCodeArray[] = {sShaderCode};
 
-	glShaderSource(shader, 1, codeArray, NULL);
+	glShaderSource(shader, 1, sCodeArray, NULL);
 	glCompileShader(shader);
 
 	GLint result;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 	if(result == GL_FALSE) {
 		printf("Error, shader compilation faild\n");
-		printf("Shader Code:\n%s", shaderCode);
+		printf("Shader Code:\n%s", sShaderCode);
 		GLint logLen;
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLen);
 		
 		if(logLen > 0) {
-			char *log = new char[logLen];
+			char *sLog = new char[logLen];
 
-			glGetShaderInfoLog(shader, logLen, NULL, log);
-			printf("Shader log:\n%s\n", log);
-			delete[] log;
+			glGetShaderInfoLog(shader, logLen, NULL, sLog);
+			printf("Shader log:\n%s\n", sLog);
+			delete[] sLog;
 		}
 	}
 }
 
-void Shader::Use() const { glUseProgram(programHandle); }
+void Graphic::Shader::Use() const { glUseProgram(programHandle); }

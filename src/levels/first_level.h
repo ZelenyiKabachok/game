@@ -13,18 +13,14 @@ class FirstLevel : public ILevel {
 
 	Camera *camera;
 
-	List<GraphObject> GrObjects;
+	List<Graphic::GraphObject> GrObjects;
 
-	List<PhysicObject> PhObjects;
+	List<Physic::PhysicObject> PhObjects;
 
-	PCollisions CollObjects;	
+	Physic::PCollisions CollObjects;	
 
-    CollDraw Collis;
-
-	Plane *plane;
+	Aircraft::Plane *plane;
 	
-	GraphObject **ppGraphic;
-
 public:
 
 	FirstLevel(); 

@@ -4,11 +4,13 @@
 #include "../physical_object.h"
 #include "../shape.h"
 
+namespace Aircraft {
+
 enum planeWings { RUST_WINGS };
 
 //Крылья самолёта.
 //Расчитывает силу подъёма.
-class Wings : public PhysicObject {
+class Wings : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeWings Name;
@@ -22,24 +24,28 @@ class Wings : public PhysicObject {
 	const float coofResNorm = coofResistance;
 
 //Подъёмная сила.
-	vec3 liftingForce = liftingCoof * ObSpeed;
+	glm::vec3 v3LiftingForce;// = liftingCoof * v3Speed;
 
 //Меняет коэфициент силы сопротивления воздуха.
 //При торможении coofResistance устанавливается в coofResBrake.
-	void CalcLiftForce(const vec3& PlaneSpeed, float PlaneAngle, bool gas, bool brake);
+	void CalcLiftForce(const glm::vec3& v3PlaneSpeed, float PlaneAngle
+                                                , bool gas, bool brake);
 
-	virtual void GetShapes(Shape** const planeShapes, unsigned int& pos) {}
+	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos) {}
 
 public:
 
-	Wings(enum planeWings name, unsigned int nshapes,
-					float coofBrake, float lCoof, float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
-					const vec3& pos = vec3(0), const vec3& size = vec3(1),
-					const vec3& speed = vec3(0)); 
+	Wings(enum planeWings name, unsigned int nshapes
+					, float coofBrake, float lCoof, float m, float coof
+					, const Graphic::Shader& sh
+                    , const Graphic::Texture2D& tex
+					, const glm::vec3& v3Pos = glm::vec3(0)
+                    , const glm::vec3& v3Size = glm::vec3(1)
+					, const glm::vec3& v3Speed = glm::vec3(0)); 
 
 	virtual ~Wings() {}
 
 };
+}
 
 #endif

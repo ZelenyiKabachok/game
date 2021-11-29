@@ -1,24 +1,24 @@
 #include "shape.h"
 
-Shape::Shape(glm::vec2 *pnts, glm::vec2 cntr, unsigned int quant)
-			: center(cntr), num_points(quant)
+Physic::Shape::Shape(glm::vec2 *pV2Pnts, glm::vec2 v2Cntr, unsigned int quant)
+			        : v2Center(v2Cntr), num_points(quant)
 {
-	pPoints = new glm::vec2[num_points];
+	pV2Points = new glm::vec2[num_points];
 	for(unsigned int i = 0; i < num_points; i++) {
-		pPoints[i] = pnts[i];
+		pV2Points[i] = pV2Pnts[i];
 	}
 }
 
-Shape::Shape(const Shape& other)
-			: center(other.center), num_points(other.num_points)
+Physic::Shape::Shape(const Shape& other)
+			  : v2Center(other.v2Center), num_points(other.num_points)
 {
-	pPoints = new glm::vec2[num_points];
+	pV2Points = new glm::vec2[num_points];
 	for(unsigned int i = 0; i < num_points; i++) {
-		pPoints[i] = other.pPoints[i];
+		pV2Points[i] = other.pV2Points[i];
 	}
 }
 
-Shape::~Shape()
+Physic::Shape::~Shape()
 {
-	delete[] pPoints;
+	delete[] pV2Points;
 }

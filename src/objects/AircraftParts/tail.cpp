@@ -1,29 +1,33 @@
 #include "tail.h"
 
-Tail::Tail(enum planeTails name, unsigned int nshapes,
-					float DirAlpha, float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
-					const vec3& pos, const vec3& size,
-					const vec3& speed) : 
-				PhysicObject(m, coof, sh, tex, pos, size, speed), 
-				Name(name), num_shapes(nshapes), DirAngle(DirAlpha) {}
+Aircraft::Tail::Tail(enum planeTails name, unsigned int nshapes
+					, float m, float coof 
+					, const Graphic::Shader& sh
+                    , const Graphic::Texture2D& tex 
+					, const glm::vec3& v3Pos, const glm::vec3& v3Size
+					, const glm::vec3& v3Speed)
+				: PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
+				, Name(name), num_shapes(nshapes) {}
 
-void Tail::FindDirect(float alpha)
+
+void Aircraft::Tail::FindDirect(float alpha)
 {
 	DirAngle += alpha;
-
+    printf("\t\nDirAngle = %f\n", DirAngle);
+    printf("\t\nAlpha = %f\n", alpha);
+/*
 	if(DirAngle > M_PI/2)  { DirAngle = M_PI/2; }
 	if(DirAngle < -M_PI/2) { DirAngle = -M_PI/2; }
 
 	direction.x = cos(DirAngle);
 	direction.y = sin(DirAngle);
-
+*/
 }
 
-void Tail::FindAngle(const vec3& PlaneSpeed)
+void Aircraft::Tail::FindAngle(const glm::vec3& v3PlaneSpeed)
 {
-	PlaneAngle = acos((PlaneSpeed.x)/
-		(sqrt(PlaneSpeed.x*PlaneSpeed.x + PlaneSpeed.y*PlaneSpeed.y + 
-			  							PlaneSpeed.z*PlaneSpeed.z)));
-	if(PlaneSpeed.y < 0) { PlaneAngle *= -1; }
+	PlaneAngle = acos((v3PlaneSpeed.x)/
+	(sqrt(v3PlaneSpeed.x*v3PlaneSpeed.x + v3PlaneSpeed.y*v3PlaneSpeed.y
+			  							+ v3PlaneSpeed.z*v3PlaneSpeed.z)));
+	if(v3PlaneSpeed.y < 0) { PlaneAngle *= -1; }
 }	

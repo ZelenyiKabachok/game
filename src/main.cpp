@@ -5,8 +5,6 @@ const int Width = 1920;
 
 ResourceManager resources;
 
-//Camera camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
-
 Game game;
 
 static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
@@ -61,7 +59,8 @@ int main()
 	glClearColor(0.21, 0.21, 0.21, 1);
 
 	while(!glfwWindowShouldClose(pWindow)) {
-		
+
+	   		
 		current_time = glfwGetTime();
 		delta_time = (current_time - last_time);
 		last_time = current_time;

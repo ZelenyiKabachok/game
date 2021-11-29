@@ -9,15 +9,15 @@ class List {
 
 	struct Item {
 		Type data;
-		Item *next;
-		Item *prev;
+		Item *pNext;
+		Item *pPrev;
 
-		Item(const Type& d, Item *n, Item *p) : data(d), next(n), prev(p) {}
+		Item(const Type& d, Item *n, Item *p) : data(d), pNext(n), pPrev(p) {}
 	};
 	
 	unsigned int size = 1;
-	Item *first = NULL;			
-	Item *last = NULL;
+	Item *pFirst = NULL;			
+	Item *pLast = NULL;
 
 public:
 

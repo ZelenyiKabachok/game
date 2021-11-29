@@ -7,24 +7,25 @@
 
 class ResourceManager {
 	
-	std::map <const char*, Shader> Shaders;
-	std::map <const char*, Texture2D> Textures;
+	std::map <const char*, Graphic::Shader> Shaders;
+	std::map <const char*, Graphic::Texture2D> Textures;
 	
 public:
 
-	const Shader& LoadShader(const char *name, const char *VertShader, 
-							 const char *FragShader, const char *GeomShader = NULL);
+	const Graphic::Shader& LoadShader(const char *sName
+                            , const char *fVertShader
+							, const char *fFragShader
+                            , const char *fGeomShader = NULL);
 
-	const Texture2D& LoadTexture(const char *name, const char *ImageFile);
+	const Graphic::Texture2D& LoadTexture(const char *name
+                                        , const char *fImageFile);
 
-	void DeleteShader(const char *name)
-	{ glDeleteProgram(Shaders[name].programHandle); }
+	void DeleteShader(const char *sName);
 	
-	void DeleteTexture(const char *name)
-	{ glDeleteTextures(1, &(Textures[name].texID)); }
+	void DeleteTexture(const char *sName);
 
-	const Shader& GetShader(const char *name);
-	const Texture2D& GetTexture(const char *name);
+	const Graphic::Shader& GetShader(const char *sName);
+	const Graphic::Texture2D& GetTexture(const char *sName);
 
 	ResourceManager() {}
 	
@@ -32,12 +33,13 @@ public:
 
 private:
 
-	Shader LoadShaderFromFile(const char *VertShader, 
-							  const char *FragShader, const char *GeomShader);
+	Graphic::Shader LoadShaderFromFile(const char *fVertShader
+							           , const char *fFragShader
+                                       , const char *fGeomShader);
 
-	Texture2D LoadTextureFromFile(const char *ImageFile);
+	Graphic::Texture2D LoadTextureFromFile(const char *fImageFile);
 
-	const char* loadShaderAsString(const char *fileName);
+	const char* loadShaderAsString(const char *sFileName);
 };
 
 #endif

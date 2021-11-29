@@ -5,33 +5,39 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "graphic_object.h"
 
+namespace Physic {
+
 //Класс PhysicObject наследуется от класса GraphObject.
 //Учитывает коллизию объекта и силы, действующие на него.
-class PhysicObject : public GraphObject {
+class PhysicObject : public Graphic::GraphObject {
 
 protected:
 	float mass;
 //Коэфициент для расчёта силы сопротивления воздуха.
 //Зависит от полощади и обтекаемости объекта, но программист сам его задаёт.
 	float coofResistance; 
-	vec3 ForceOfAttract = vec3(0);
+	glm::vec3 v3ForceOfAttract = glm::vec3(0);
 
 public:
 
-	PhysicObject(float m, float coof, const Shader& sh
-					, const Texture2D& tex, const vec3& pos = vec3(0)
-					, const vec3& size = vec3(1), const vec3& speed = vec3(0)
-					, const vec3& slVec = { 0.0, 0.0, 1.0 }, const float angle = 0);
+	PhysicObject(float m, float coof, const Graphic::Shader& sh
+					, const Graphic::Texture2D& tex
+                    , const glm::vec3& v3Pos = glm::vec3(0)
+                    , const glm::vec3& v3Size = glm::vec3(1)
+                    , const glm::vec3& v3Speed = glm::vec3(0)
+					, const glm::vec3& v3Slant = { 0.0, 0.0, 1.0 }
+                    , const float angle = 0);
 
 	virtual ~PhysicObject() {}
 
-	PhysicObject(float m, float coof, GraphObject object);
+	PhysicObject(float m, float coof, Graphic::GraphObject object);
 
 //Вычисляя равнодеёствующую всех сил, изменяет вектор скорости объекта.
 //Вызывает метод void Move(const float, const vec3&, const float).
-	void AttractAndMove(float delta_time, const vec3& Force = vec3(0),
-						const vec3& RotationVec = vec3(1), float angle = 0);
+	void AttractAndMove(float delta_time
+                    , const glm::vec3& v3Force = glm::vec3(0));
 
 };
+}
 
 #endif

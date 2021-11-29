@@ -1,11 +1,12 @@
 #include "graphic_object.h"
 
-void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
-								 int DataVert, unsigned int IndicesQuantity,
-								 GLenum DrawType)
+void Graphic::GraphObject::initShaderData(const float *pData
+                                , const unsigned int *pIndices
+								, int numOfVert, unsigned int numOfInd
+								, GLenum DrawType)
 {
 	type = DrawType;
-	points = IndicesQuantity;
+	points = numOfInd;
 	unsigned int VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -14,11 +15,12 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, DataVert * sizeof(float), Data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, numOfVert * sizeof(float), pData
+                                                  , GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, IndicesQuantity * sizeof(float),
-													indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, numOfInd * sizeof(float),
+													pIndices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), NULL);
@@ -34,73 +36,81 @@ void GraphObject::initShaderData(const float *Data, const unsigned int *indices,
 
 }
 
-void GraphObject::Draw(const Camera& camera) const
+void Graphic::GraphObject::Draw(const Camera& camera) const
 {
 	shader.Use();
 
 	glActiveTexture(GL_TEXTURE0);
 	texture.Bind();
 
-	glm::mat4 ModelMatrix = PositionMatrix * RotateMatrix * SizeMatrix;
-
-	shader.SetMatrix4("CameraMatrix", camera.GetCameraMatrix());
-	shader.SetMatrix4("ModelMatrix", ModelMatrix);
-	shader.SetVector3("Color", color);
+	shader.SetMatrix4("matCamera", camera.GetMatrix());
+	shader.SetMatrix4("matPosition", matPosition);
+    shader.SetMatrix4("matRotation", matRotation);
+    shader.SetMatrix4("matScale", matSize);
+	shader.SetVector3("v3Color", v3Color);
 	
 	glBindVertexArray(VAO);
 	glDrawElements(type, points, GL_UNSIGNED_INT, 0);
 }
 
-void GraphObject::Move(const float delta_time)
+void Graphic::GraphObject::Move(const float delta_time)
 {
-	ObPosition += ObSpeed * delta_time;
-	PositionMatrix = glm::translate(glm::mat4(1.0f), ObPosition);
+	v3Position += v3Speed * delta_time;
+	matPosition = glm::translate(glm::mat4(1.0f), v3Position);
 }
 
-void GraphObject::Rotate(const vec3& rotateVector, const float angle)
+void Graphic::GraphObject::Rotate(const glm::vec3& v3Rotate, const float angle)
 {
-	RotateMatrix = glm::rotate(mat4(1.0f), SlantAngle, SlantVector);
-	RotateMatrix *= glm::rotate(mat4(1.0f), angle, rotateVector);
+	matRotation = glm::rotate(glm::mat4(1.0f), SlantAngle, v3Slant);
+	matRotation *= glm::rotate(glm::mat4(1.0f), angle, v3Rotate);
 }
 
-void GraphObject::Scale()
+void Graphic::GraphObject::Scale()
 {
-	SizeMatrix = glm::scale(mat4(1.0f), ObSize);
+	matSize = glm::scale(glm::mat4(1.0f), v3Size);
 }
 
-GraphObject::GraphObject(const Shader& sh, const Texture2D& tex, 
-						 const vec3& pos, const vec3& size, const vec3& speed,
-						 const vec3& slVec, const float slAng)
-		: shader(sh), texture(tex), ObPosition(pos)
-		, ObSize(size), ObSpeed(speed), SlantVector(slVec), SlantAngle(slAng)
+Graphic::GraphObject::GraphObject(const Graphic::Shader& sh
+                                , const Graphic::Texture2D& tex
+						        , const glm::vec3& v3Pos
+                                , const glm::vec3& v3Scale
+                                , const glm::vec3& v3Spd
+						        , const glm::vec3& v3Sl
+                                , const float slAng)
+		: shader(sh), texture(tex), v3Position(v3Pos)
+		, v3Size(v3Scale), v3Speed(v3Spd), v3Slant(v3Sl), SlantAngle(slAng)
 {
 	Move(0.0);
 	Rotate();
 	Scale();
 }
 
-void GraphObject::ChangeTexture(const Texture2D& tex)
+void Graphic::GraphObject::ChangeTexture(const Graphic::Texture2D& tex)
 { texture = tex; }
 
-void GraphObject::ChangeColor(const glm::vec3& newColor)
-{ color = newColor; }
+void Graphic::GraphObject::ChangeColor(const glm::vec3& v3NewColor)
+{ v3Color = v3NewColor; }
 
-void GraphObject::ChangeSlantVector(const vec3& newSlVec)
-{ SlantVector = newSlVec; Rotate(); }
+void Graphic::GraphObject::ChangeSlantVector(const glm::vec3& v3NewSlant)
+{ v3Slant = v3NewSlant; Rotate(); }
 
-void GraphObject::ChangeSlantAngle(float angle)
+void Graphic::GraphObject::ChangeSlantAngle(float angle)
 { SlantAngle = angle; Rotate(); }
 
-void GraphObject::ChangeSize(const vec3& newSize)
-{ ObSize = newSize; Scale(); }
+void Graphic::GraphObject::ChangeSize(const glm::vec3& v3NewSize)
+{ v3Size = v3NewSize; Scale(); }
 
-void GraphObject::ChangeSpeed(const vec3& newSpeed)
-{ ObSpeed = newSpeed; }
+void Graphic::GraphObject::ChangeSpeed(const glm::vec3& v3NewSpeed)
+{ v3Speed = v3NewSpeed; }
 
-void GraphObject::ChangePosition(const vec3& newPos)
-{ ObPosition = newPos; Move(0.0); }
+void Graphic::GraphObject::ChangePosition(const glm::vec3& v3NewPos)
+{ v3Position = v3NewPos; Move(0.0); }
 
-vec3 GraphObject::GetSpeed() const { return ObSpeed; }
-vec3 GraphObject::GetPosition() const { return ObPosition; }
-const Shader& GraphObject::GetShader() const { return shader; }
-const Texture2D& GraphObject::GetTexture() const { return texture; }
+glm::vec3 Graphic::GraphObject::GetSpeed() const
+{ return v3Speed; }
+glm::vec3 Graphic::GraphObject::GetPosition() const
+{ return v3Position; }
+const Graphic::Shader& Graphic::GraphObject::GetShader() const
+{ return shader; }
+const Graphic::Texture2D& Graphic::GraphObject::GetTexture() const
+{ return texture; }

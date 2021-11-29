@@ -1,14 +1,16 @@
 #include "texture.h"
 
 
-Texture2D::Texture2D() : Width(0), Height(0), InternalFormat(GL_RGB), ImageFormat(GL_RGB),
-		Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT), FilterMin(GL_LINEAR), FilterMax(GL_LINEAR)
+Graphic::Texture2D::Texture2D() : Width(0), Height(0)
+                                , InternalFormat(GL_RGB), ImageFormat(GL_RGB)
+		                        , Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT)
+                                , FilterMin(GL_LINEAR), FilterMax(GL_LINEAR)
 {
 	glGenTextures(1, &texID);
 }
 
-void Texture2D::Generate(unsigned int width, unsigned int height, 
-									const unsigned char *data)
+void Graphic::Texture2D::Generate(unsigned int width, unsigned int height 
+								    , const unsigned char *pData)
 {	
 	Width = width;
 	Height = height;
@@ -16,7 +18,7 @@ void Texture2D::Generate(unsigned int width, unsigned int height,
 	glBindTexture(GL_TEXTURE_2D, texID);
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	glTexImage2D(GL_TEXTURE_2D, 0, InternalFormat, width, height, 0, 
-								ImageFormat, GL_UNSIGNED_BYTE, data);
+								ImageFormat, GL_UNSIGNED_BYTE, pData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, Wrap_S);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, Wrap_T);	
@@ -26,7 +28,7 @@ void Texture2D::Generate(unsigned int width, unsigned int height,
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 		
-void Texture2D::Bind() const
+void Graphic::Texture2D::Bind() const
 {
 	glBindTexture(GL_TEXTURE_2D, texID);
 }

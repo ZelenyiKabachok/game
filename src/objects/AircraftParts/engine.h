@@ -4,11 +4,13 @@
 #include "../physical_object.h"
 #include "../shape.h"
 
+namespace Aircraft {
+
 enum planeEngines { RUST_ENGINE };
 
 //Двигатель для самолёта.
 //Расчитывает силу тяги.
-class Engine : public PhysicObject {
+class Engine : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeEngines Name;
@@ -18,20 +20,21 @@ class Engine : public PhysicObject {
 
 //Вектор текущей силы тяги двигателя.
 //Всегда сонаправлен вектору скорости самолёта.
-	vec3 ThrustForce; 				
+	glm::vec3 v3ThrustForce; 				
 
 //Вектор изменения силы тигя двигателя.
 //Сонаправлен вектору силы тяги двигателя.
-	vec3 PowerPulse;
+	glm::vec3 v3PowerPulse;
 	const float Pulse; //Длина векторы PowerPulse.
 	const float averFuelConsumption;//Средний расход топлива при нормальной работе
 	float fuelConsumption;			//Расход топлива
 
 	//Обновляет состояние объекта.
-	virtual void Work(const float delta_time, float angle, 
-									bool gas = 0, bool brake = 0);
+	virtual void Work(const float delta_time, float angle
+						    , bool gas = 0, bool brake = 0);
 
-	virtual void GetShapes(Shape** const planeShapes, unsigned int& pos) {}
+	virtual void GetShapes(Physic::Shape** const planeShapes
+                                        , unsigned int& pos) {}
 
 	virtual void SideEffect();
 
@@ -43,16 +46,20 @@ class Engine : public PhysicObject {
 
 public:
 
-	Engine(enum planeEngines name, unsigned int nshapes,
-					float maxForce, vec3 startForce, 
-					vec3 Ppulse, float pulse, float consumption, float m, 
-					float coof, const Shader& sh, const Texture2D& tex, 
-					const vec3& pos = vec3(0), const vec3& size = vec3(1),
-					const vec3& speed = vec3(0));
+	Engine(enum planeEngines name, unsigned int nshapes
+					, float maxForce, const glm::vec3& startForce
+					, const glm::vec3& Ppulse, float pulse
+                    , float consumption, float m 
+					, float coof, const Graphic::Shader& sh
+                    , const Graphic::Texture2D& tex
+					, const glm::vec3& v3Pos = glm::vec3(0)
+                    , const glm::vec3& v3Size = glm::vec3(1)
+					, const glm::vec3& v3Speed = glm::vec3(0));
 
 
 	virtual ~Engine() {}
 
 };
+}
 
 #endif

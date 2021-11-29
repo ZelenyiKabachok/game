@@ -1,69 +1,69 @@
 #include "collision_pointers.h"
 
-void PCollisions::Delete(int index)
+void Physic::PCollisions::Delete(int index)
 {
 	collis.DeleteItem(index);
 }
 
-unsigned int PCollisions::Add(const Shape* const shapes, int numShapes)
+Physic::Collision* Physic::PCollisions::Add(const Shape* pShapes, int numShapes)
 {
 	if(!init) {	
-		Collision tmp(shapes, numShapes);
+		Collision tmp(pShapes, numShapes);
 		Collision *ptr = &tmp;
 		collis.Create(ptr, 1);
 		init = true;
-	} 
-	else { collis.NewLast(Collision(shapes, numShapes)); }
-	return collis.Size();
-}
-
-Collision* PCollisions::Add(Shape** shapes, int numShapes)
-{
-	if(!init) {
-		Collision tmp(shapes, numShapes);
-		Collision *ptr = &tmp;
-		collis.Create(ptr, 1);
-		init = true;
-	} 
-	else { collis.NewLast(Collision(shapes, numShapes)); }
+	} else { collis.NewLast(Collision(pShapes, numShapes)); }
 	return &collis[collis.Size()-1];
 }
 
-Collision& PCollisions::Get(int index)
+Physic::Collision* Physic::PCollisions::Add(Shape** ppShapes, int numShapes)
+{
+	if(!init) {
+		Collision tmp(ppShapes, numShapes);
+		Collision *ptr = &tmp;
+		collis.Create(ptr, 1);
+		init = true;
+    } else { collis.NewLast(Collision(ppShapes, numShapes)); }
+	return &collis[collis.Size()-1];
+}
+
+Physic::Collision& Physic::PCollisions::Get(int index)
 {
 	return collis[index];
 }
 
-bool PCollisions::GJKcollision(const Collision& obj1, const Collision& obj2)
+bool Physic::PCollisions::GJKcollision(const Physic::Collision& obj1
+                                     , const Physic::Collision& obj2)
 {
 	return false;
 }
 
-bool PCollisions::AABBcollision(const Collision& obj1, const Collision& obj2)
+bool Physic::PCollisions::AABBcollision(const Physic::Collision& obj1
+                              , const Physic::Collision& obj2)
 {
-	glm::mat4 matPosObj1 = translate(mat4(1.0), obj1.Position);
-	glm::mat4 matPosObj2 = translate(mat4(1.0), obj2.Position);
+	glm::mat4 matPosObj1 = translate(glm::mat4(1.0), obj1.v3Position);
+	glm::mat4 matPosObj2 = translate(glm::mat4(1.0), obj2.v3Position);
 
-	glm::vec2 AABB1[2] = {
-		glm::vec2(matPosObj1 * glm::vec4(obj1.pAABB[0], 0.0f, 1.0f)),
-		glm::vec2(matPosObj1 * glm::vec4(obj1.pAABB[1], 0.0f, 1.0f)),
+	glm::vec2 pV2AABB1[2] = {
+		glm::vec2(matPosObj1 * glm::vec4(obj1.pV2AABB[0], 0.0f, 1.0f)),
+		glm::vec2(matPosObj1 * glm::vec4(obj1.pV2AABB[1], 0.0f, 1.0f)),
 	};
-	glm::vec2 AABB2[2] = {
-		glm::vec2(matPosObj2 * glm::vec4(obj2.pAABB[0], 0.0f, 1.0f)),
-		glm::vec2(matPosObj2 * glm::vec4(obj2.pAABB[1], 0.0f, 1.0f)),
+	glm::vec2 pV2AABB2[2] = {
+		glm::vec2(matPosObj2 * glm::vec4(obj2.pV2AABB[0], 0.0f, 1.0f)),
+		glm::vec2(matPosObj2 * glm::vec4(obj2.pV2AABB[1], 0.0f, 1.0f)),
 	};
 
-	if(AABB1[0].x > AABB2[0].x && AABB1[0].x < AABB2[1].x) {
-		if((AABB1[0].y > AABB2[0].y && AABB1[0].y < AABB2[1].y)
-		|| (AABB1[1].y > AABB2[0].y && AABB1[1].y < AABB2[1].y))
+	if(pV2AABB1[0].x > pV2AABB2[0].x && pV2AABB1[0].x < pV2AABB2[1].x) {
+		if((pV2AABB1[0].y > pV2AABB2[0].y && pV2AABB1[0].y < pV2AABB2[1].y)
+		|| (pV2AABB1[1].y > pV2AABB2[0].y && pV2AABB1[1].y < pV2AABB2[1].y))
 		{
 			return true;
 		}
 	}
-	if(AABB1[1].x > AABB2[0].x && AABB1[1].x < AABB2[1].x)
+	if(pV2AABB1[1].x > pV2AABB2[0].x && pV2AABB1[1].x < pV2AABB2[1].x)
 	{
-		if((AABB1[0].y > AABB2[0].y && AABB1[0].y < AABB2[1].y)
-		|| (AABB1[1].y > AABB2[0].y && AABB1[1].y < AABB2[1].y))
+		if((pV2AABB1[0].y > pV2AABB2[0].y && pV2AABB1[0].y < pV2AABB2[1].y)
+		|| (pV2AABB1[1].y > pV2AABB2[0].y && pV2AABB1[1].y < pV2AABB2[1].y))
 		{
 			return true;
 		}
@@ -71,7 +71,7 @@ bool PCollisions::AABBcollision(const Collision& obj1, const Collision& obj2)
 	return false;
 }
 
-void PCollisions::DetectCollision()
+void Physic::PCollisions::DetectCollision()
 {
 	for(int i = 0; i < collis.Size(); i++) {
 		for(int j = 0; j < collis.Size() - i; j++) {

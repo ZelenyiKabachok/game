@@ -6,44 +6,45 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "objects/graphic_object.h"
 
-using glm::vec3;
-using glm::mat4;
-
+namespace Graphic {
 class GraphObject;
+}
 
 class Camera {
 	
-	vec3 cameraPos;
-	vec3 cameraSpeed;
+	glm::vec3 v3Position;
+	glm::vec3 v3Speed;
 
-	mat4 Model;
-	mat4 View;
-	mat4 Projection;
+	glm::mat4 matModel;
+	glm::mat4 matView;
+	glm::mat4 matProjection;
 
-	const GraphObject *target = NULL; //в ~Camera не уничтожается.
-	bool focus = false;
+	const Graphic::GraphObject *pTarget = NULL; //в '~Camera' не уничтожается.
 
-	const float cameraZoom = M_PI/4;
+	const float Zoom = M_PI/4;
 
 public:
 
 //Начинает следовать за указанным объектом.
 //Нужно быть очень аккуратным.
-	void FocusOnTheObject(const GraphObject *obj);
+	void FocusOnTheObject(const Graphic::GraphObject *obj);
 
 //Вызывается если нужно отменить фокус,
 //или перед уничтожением объекта, за которым следует камера.
 	void CancelFocus();
 
-	mat4 MoveCamera(float delta_time);
+	void Move(float delta_time);
 
-	Camera(const vec3& Position = vec3(0), const vec3& Speed = vec3(0));
+	Camera(const glm::vec3& v3Pos = glm::vec3(0)
+         , const glm::vec3& v3Sp = glm::vec3(0));
 	
-	mat4 GetCameraMatrix() const;
+	glm::mat4 GetMatrix() const;
 
-	void ChangeCameraSpeed(const vec3& NewSpeed);
+    void Follow(float delta_time);
 
-	vec3 GetPosition() const;
+	void ChangeSpeed(const glm::vec3& v3NewSpeed);
+
+	glm::vec3 GetPosition() const;
 
 };
 

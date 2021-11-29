@@ -4,6 +4,8 @@
 #include <glad/glad.h>
 #include "../../external/stb_image/stb_image.h"
 
+namespace Graphic {
+
 class Texture2D {
 public:
 
@@ -19,9 +21,11 @@ public:
 
 	Texture2D();
 	
-	void Generate(unsigned int width, unsigned int height, const unsigned char *data);
+	void Generate(unsigned int width, unsigned int height
+                    , const unsigned char *pData);
 
 	void Bind() const;
 };
+}
 
 #endif

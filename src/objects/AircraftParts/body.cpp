@@ -1,14 +1,14 @@
 #include "body.h"
 
-Body::Body(enum planeBodies name, unsigned int nshapes, float fualSize,
-					float m, float coof, 
-					const Shader& sh, const Texture2D& tex, 
-					const vec3& pos, const vec3& size,
-					const vec3& speed) : 
-				PhysicObject(m, coof, sh, tex, pos, size, speed),
+Aircraft::Body::Body(enum planeBodies name, unsigned int nshapes, float fualSize
+					 , float m, float coof
+					 , const Graphic::Shader& sh, const Graphic::Texture2D& tex
+					 , const glm::vec3& v3Pos, const glm::vec3& v3Size
+					 , const glm::vec3& v3Speed) : 
+				PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed),
 				Name(name), num_shapes(nshapes), fualTankSize(fualSize) {}
 
-void Body::BurnFuel(float fuelConsumption)
+void Aircraft::Body::BurnFuel(float fuelConsumption)
 {
 	curFuelQuantity -= fuelConsumption;
 }

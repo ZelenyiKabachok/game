@@ -1,103 +1,106 @@
 #include "plane.h"
 
-void Plane::ChangePosParts()
+void Aircraft::Plane::ChangePosParts()
 {
-	glm::mat4 RotateMatrix = glm::rotate(mat4(1.0), tail->PlaneAngle, vec3(0.0, 0.0, 1.0));
+	glm::mat4 matRotate = glm::rotate(glm::mat4(1.0), pTail->PlaneAngle
+                                      , glm::vec3(0.0, 0.0, 1.0));
 
-	engine->ChangePosition(body->ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body->StartEnginesPos[engine->Name], 1.0)));
-	wings->ChangePosition(body->ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body->StartWingsPos[wings->Name], 1.0)));
-	tail->ChangePosition(body->ObPosition + 
-		vec3(RotateMatrix * glm::vec4(body->StartTailsPos[tail->Name], 1.0)));
+	pEngine->ChangePosition(pBody->v3Position + 
+		glm::vec3(matRotate * glm::vec4(pBody->StartEnginesPos[pEngine->Name], 1.0)));
+	pWings->ChangePosition(pBody->v3Position + 
+		glm::vec3(matRotate * glm::vec4(pBody->StartWingsPos[pWings->Name], 1.0)));
+	pTail->ChangePosition(pBody->v3Position + 
+		glm::vec3(matRotate * glm::vec4(pBody->StartTailsPos[pTail->Name], 1.0)));
 
-	engine->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
-	wings->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
-	tail->Rotate(vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
-	collision->Movement(body->ObPosition);
-	collision->Rotation(tail->PlaneAngle);
+	pEngine->Rotate(glm::vec3(0.0, 0.0, 1.0), pTail->PlaneAngle);
+	pWings->Rotate(glm::vec3(0.0, 0.0, 1.0), pTail->PlaneAngle);
+	pTail->Rotate(glm::vec3(0.0, 0.0, 1.0), pTail->PlaneAngle);
+	pCollision->Movement(pBody->v3Position);
+	pCollision->Rotation(pTail->PlaneAngle);
 }
 
-void Plane::PrintPlaneState() const
+void Aircraft::Plane::PrintPlaneState() const
 {
-	printf("DirAngle = %f\n", tail->DirAngle);
-	printf("PlaneAngle = %f\n\n", tail->PlaneAngle);
-	printf("Speed { %f; %f; %f }\n", PlaneSpeed.x, PlaneSpeed.y, PlaneSpeed.z);
-	printf("Plane Position = { %f; %f; 0 }\n\n", body->ObPosition.x, body->ObPosition.y);
-	printf("Plane Thust Force = { %f; %f; %f }\n", engine->ThrustForce.x, 
-								engine->ThrustForce.y, engine->ThrustForce.z);
-	printf("Plane Boost ThrustForce = { %f; %f; 0.0 }\n", 
-						engine->PowerPulse.x, engine->PowerPulse.y);
-	printf("Plane Lifting Force = { %f; %f; 0.0 }\n",
-						wings->liftingForce.x, wings->liftingForce.y);
+//	printf("DirAngle = %f\n", pTail->DirAngle);
+	printf("PlaneAngle = %f\n\n", pTail->PlaneAngle);
+	printf("Speed { %f; %f; 0 }\n", v3PlaneSpeed.x, v3PlaneSpeed.y);
+	printf("Plane Position = { %f; %f; 0 }\n\n", pBody->v3Position.x
+                                               , pBody->v3Position.y);
+	printf("Plane Thust Force = { %f; %f; 0 }\n", pEngine->v3ThrustForce.x
+								                , pEngine->v3ThrustForce.y);
+	printf("Plane Boost ThrustForce = { %f; %f; 0.0 }\n" 
+						, pEngine->v3PowerPulse.x, pEngine->v3PowerPulse.y);
+	printf("Plane Lifting Force = { %f; %f; 0.0 }\n"
+						, pWings->v3LiftingForce.x, pWings->v3LiftingForce.y);
 	printf("\n ----------------------------------------------------------------- \n");
 }
 
-void Plane::Render(const Camera& camera) const
+void Aircraft::Plane::Render(const Camera& camera) const
 {
-	body->Draw(camera);
-	engine->Draw(camera);
-	wings->Draw(camera);
-	tail->Draw(camera);
-	collision->Draw(camera);
+	pBody->Draw(camera);
+	pEngine->Draw(camera);
+	pWings->Draw(camera);
+	pTail->Draw(camera);
+	pCollision->Draw(camera);
 }
 
-void Plane::Fly(float delta_time, bool gas, bool brake, float angle)
+void Aircraft::Plane::Fly(float delta_time, bool gas, bool brake, float angle)
 {
-	PlaneSpeed = body->ObSpeed;
-	tail->FindDirect(angle);
-	tail->FindAngle(PlaneSpeed);
-	engine->Work(delta_time, tail->DirAngle, gas, brake);
-	wings->CalcLiftForce(PlaneSpeed, tail->PlaneAngle, gas, brake);
-	body->BurnFuel(engine->fuelConsumption);
+ //   printf("\tUser Angle = %f\n", angle);
+	v3PlaneSpeed = pBody->v3Speed;
+	pTail->FindDirect(angle);
+	pTail->FindAngle(v3PlaneSpeed);
+	pEngine->Work(delta_time, pTail->DirAngle, gas, brake);
+	pWings->CalcLiftForce(v3PlaneSpeed, pTail->PlaneAngle, gas, brake);
+	pBody->BurnFuel(pEngine->fuelConsumption);
 
 //Скорость, позиция, силы и т.д всего самолёта будут
 //расчитываться объектом body.
 //Он примет все харктеристики самолёта.
-	body->mass = TotalWeight;
-	body->coofResistance = AverResistCoof;
+	pBody->mass = TotalWeight;
+	pBody->coofResistance = AverResistCoof;
 
-	vec3 ResultantForce = engine->ThrustForce + wings->liftingForce;
-	body->AttractAndMove(delta_time, ResultantForce,
-						vec3(0.0, 0.0, 1.0), tail->PlaneAngle);
+	glm::vec3 v3ResultantForce = pEngine->v3ThrustForce + pWings->v3LiftingForce;
+	pBody->AttractAndMove(delta_time, v3ResultantForce);
+	pBody->Rotate(glm::vec3(0.0, 0.0, 1.0), pTail->PlaneAngle);
 
 
 	ChangePosParts();
+    PrintPlaneState();
 }		
 
-void Plane::Build()
+void Aircraft::Plane::Build()
 {
 	ChangePosParts();
 
-	TotalWeight += body->mass;
-	TotalWeight += engine->mass;
-	TotalWeight += wings->mass;
-	TotalWeight += tail->mass;
+	TotalWeight += pBody->mass;
+	TotalWeight += pEngine->mass;
+	TotalWeight += pWings->mass;
+	TotalWeight += pTail->mass;
 
-	AverResistCoof += body->coofResistance;
-	AverResistCoof += engine->coofResistance;
-	AverResistCoof += wings->coofResistance;
-	AverResistCoof += tail->coofResistance;
+	AverResistCoof += pBody->coofResistance;
+	AverResistCoof += pEngine->coofResistance;
+	AverResistCoof += pWings->coofResistance;
+	AverResistCoof += pTail->coofResistance;
 	AverResistCoof /= 4;	
 }
 
-void Plane::InitCollision(PCollisions& collObj)
+void Aircraft::Plane::InitCollision(Physic::PCollisions& collObj)
 {
 	unsigned int max_shapes = 0;
-	max_shapes += body->num_shapes;	
-	max_shapes += engine->num_shapes;
-	max_shapes += wings->num_shapes;
-	max_shapes += tail->num_shapes;
+	max_shapes += pBody->num_shapes;	
+	max_shapes += pEngine->num_shapes;
+	max_shapes += pWings->num_shapes;
+	max_shapes += pTail->num_shapes;
 
-	Shape** const shapes = new Shape*[max_shapes];
+	Physic::Shape** shapes = new Physic::Shape*[max_shapes];
 	unsigned int pos = 0;
-	body->GetShapes(shapes, pos);
-	engine->GetShapes(shapes, pos);
-	wings->GetShapes(shapes, pos);
-	tail->GetShapes(shapes, pos);
+	pBody->GetShapes(shapes, pos);
+	pEngine->GetShapes(shapes, pos);
+	pWings->GetShapes(shapes, pos);
+	pTail->GetShapes(shapes, pos);
 
-	collision = collObj.Add(shapes, max_shapes);
-//	collision->PrepareForDraw();
+	pCollision = collObj.Add(shapes, max_shapes);
 
 	for(unsigned int i = 0; i < max_shapes; i++) {
 		delete shapes[i];
@@ -105,11 +108,12 @@ void Plane::InitCollision(PCollisions& collObj)
 	delete[] shapes;
 }
 
-Plane::Plane(planeBodies body_name, planeEngines engine_name,
-			 planeWings wings_name, planeTails tail_name,
-			 const vec3& pos, const vec3& speed, PCollisions& collObj,
-			 const Shader& planeShader)
-				: shader(planeShader), PlaneSpeed(speed)
+Aircraft::Plane::Plane(planeBodies body_name, planeEngines engine_name
+			    , planeWings wings_name, planeTails tail_name
+			    , const glm::vec3& v3Pos, const glm::vec3& v3Speed
+                , Physic::PCollisions& collObj
+			    , const Graphic::Shader& planeShader)
+				    : shader(planeShader), v3PlaneSpeed(v3Speed)
 {
 	float vertexes[] = { 
        -1.0, -1.0, 0.0,     0.0, 0.0, 
@@ -126,58 +130,66 @@ Plane::Plane(planeBodies body_name, planeEngines engine_name,
 	InitEngine(engine_name, vertexes, indices);
 	InitWings(wings_name, vertexes, indices);
 	InitTail(tail_name, vertexes, indices);
-	body->ObPosition = pos;
-	body->ObSpeed = PlaneSpeed;
-
+	pBody->v3Position = v3Pos;
+	pBody->v3Speed = v3PlaneSpeed;
 	InitCollision(collObj);
 	Build();
 }
 
-Plane::~Plane()
+Aircraft::Plane::~Plane()
 {
-	delete body;
-	delete engine;
-	delete wings;
-	delete tail;
+	delete pBody;
+	delete pEngine;
+	delete pWings;
+	delete pTail;
 }
 
-const Body& Plane::GetBody() const
+const Aircraft::Body& Aircraft::Plane::GetBody() const
 {
-	return *body;
+	return *pBody;
 }
 
-void Plane::InitBody(planeBodies body_name, float *vertexes, unsigned int *indices)
+void Aircraft::Plane::InitBody(planeBodies body_name, float *vertexes
+                                                , unsigned int *indices)
 {
 	switch(body_name) {
 	case RUST_BODY:
-		body = new RustyBody(shader);
+		pBody = new RustyBody(shader);
 	}
-    body->initShaderData(vertexes, indices, 20, 6);
+    pBody->initShaderData(vertexes, indices, 20, 6);
 }
 
-void Plane::InitEngine(planeEngines engine_name, float *vertexes, unsigned int *indices)
+void Aircraft::Plane::InitEngine(planeEngines engine_name, float *vertexes
+                                                , unsigned int *indices)
 {
 	switch(engine_name) {
 	case RUST_ENGINE:
-		engine = new RustyEngine(shader);
+		pEngine = new RustyEngine(shader);
 	}
-	engine->initShaderData(vertexes, indices, 20, 6);
+	pEngine->initShaderData(vertexes, indices, 20, 6);
 }
 
-void Plane::InitWings(planeWings wings_name, float *vertexes, unsigned int *indices)
+void Aircraft::Plane::InitWings(planeWings wings_name, float *vertexes
+                                                , unsigned int *indices)
 {
 	switch(wings_name) {
 	case RUST_WINGS:
-		wings = new RustyWings(shader);
+		pWings = new RustyWings(shader);
 	}
-	wings->initShaderData(vertexes, indices, 20, 6);
+	pWings->initShaderData(vertexes, indices, 20, 6);
 }
 
-void Plane::InitTail(planeTails tail_name, float *vertexes, unsigned int *indices)
+void Aircraft::Plane::InitTail(planeTails tail_name, float *vertexes
+                                                , unsigned int *indices)
 {
 	switch(tail_name) {
 	case RUST_TAIL:
-		tail = new RustyTail(shader);
+		pTail = new RustyTail(shader);
 	}
-	tail->initShaderData(vertexes, indices, 20, 6);
+	pTail->initShaderData(vertexes, indices, 20, 6);
 }
+
+void Aircraft::Plane::InitDrawColl(Graphic::Shader coll
+                                    , Graphic::Shader aabb
+                                    , Graphic::Texture2D collTex)
+{ pCollision->BeginDraw(coll, aabb, collTex); }

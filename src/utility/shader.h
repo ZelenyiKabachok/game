@@ -5,6 +5,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+namespace Graphic {
+
 class Shader {
 public:
 
@@ -12,23 +14,23 @@ public:
 
 	Shader() {}
 
-	//~Shader() { glDeleteProgram(programHandle); }
-
-	void Generate(const char *VertCode, const char *FragCode, const char *GeomCode);
+	void Generate(const char *sVertCode, const char *sFragCode
+                                        , const char *sGeomCode);
 
 	void Use() const;
 
-	void SetMatrix4(const char *varName, const glm::mat4 &matrix) const;
+	void SetMatrix4(const char *sVarName, const glm::mat4& matVar) const;
 
-	void SetVector3(const char *varName, const glm::vec3 &vector) const;
+	void SetVector3(const char *sVarName, const glm::vec3& v3Var) const;
 
-	void SetInt(const char *varName, const int var) const;
+	void SetInt(const char *sVarName, const int var) const;
 
 private:	
 
-	void CompileShader(const char *ShaderCode, GLint& shader, GLenum shaderType);
+	void CompileShader(const char *sShaderCode, GLint& shader, GLenum shaderType);
 	
 	void CompoundShader(GLint& vertShader, GLint& fragShader, GLint& geomShader);
 };
+}
 
 #endif

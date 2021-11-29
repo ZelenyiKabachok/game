@@ -3,27 +3,27 @@
 template<class Type>
 void List<Type>::NewLast(const Type& var)
 {
-	Item *tmp = last;
-	last = new Item(var, NULL, tmp);
-	tmp->next = last;
+	Item *tmp = pLast;
+	pLast = new Item(var, NULL, tmp);
+	tmp->pNext = pLast;
 	size++;
 }
 
 template<class Type>
 void List<Type>::NewFirst(const Type& var)
 {
-	Item *tmp = first;
-	first = new Item(var, tmp, NULL);
-	tmp->prev = first;
+	Item *tmp = pFirst;
+	pFirst = new Item(var, tmp, NULL);
+	tmp->pPrev = pFirst;
 	size++;
 }
 
 template<class Type>
 void List<Type>::DeleteLast()
 {
-	Item *tmp = last;
-	last = last->prev;
-	last->next = NULL;
+	Item *tmp = pLast;
+	pLast = pLast->pPrev;
+	pLast->pNext = NULL;
 	delete tmp;
 	size--;
 }
@@ -31,9 +31,9 @@ void List<Type>::DeleteLast()
 template<class Type>
 void List<Type>::DeleteFirst()
 {
-	Item *tmp = first;
-	first = first->next;
-	first->prev = NULL;
+	Item *tmp = pFirst;
+	pFirst = pFirst->pNext;
+	pFirst->pPrev = NULL;
 	delete tmp;
 	size--;
 }
@@ -41,21 +41,21 @@ void List<Type>::DeleteFirst()
 template<class Type>
 bool List<Type>::DeleteItem(int index)
 {
-	Item *tmp = first;
-	for(int i = 0; i < index && tmp; i++, tmp = tmp->next)
+	Item *tmp = pFirst;
+	for(int i = 0; i < index && tmp; i++, tmp = tmp->pNext)
 		{}	
 	if(tmp == NULL) { return false; }
 
-	if(!tmp->prev) { 
+	if(!tmp->pPrev) { 
 		DeleteFirst();
 		return true;
-	} else if(!tmp->next) {
+	} else if(!tmp->pNext) {
 		DeleteLast();
 		return true;
 	} else {
-		Item *pv = tmp->prev;
-		pv->next = tmp->next;
-		tmp->next->prev = pv;
+		Item *pv = tmp->pPrev;
+		pv->pNext = tmp->pNext;
+		tmp->pNext->pPrev = pv;
 	}
 	delete tmp;
 	size--;
@@ -65,8 +65,8 @@ bool List<Type>::DeleteItem(int index)
 template<class Type>
 Type& List<Type>::operator[](int index)
 {
-	Item *tmp = first;
-	for(int i = 0; i < index; i++, tmp = tmp->next)
+	Item *tmp = pFirst;
+	for(int i = 0; i < index; i++, tmp = tmp->pNext)
 		{}
 	return tmp->data;
 }
@@ -74,10 +74,10 @@ Type& List<Type>::operator[](int index)
 template <class Type>
 List<Type>::~List()
 {
-	Item *tmp = first;
-	while(first) {
-		tmp	= first;
-		first = first->next;
+	Item *tmp = pFirst;
+	while(pFirst) {
+		tmp	= pFirst;
+		pFirst = pFirst->pNext;
 		delete tmp;
 	}
 }
@@ -85,8 +85,8 @@ List<Type>::~List()
 template <class Type>
 void List<Type>::Create(const Type *var, int len)
 {
-	first = new Item(*var, NULL, NULL);
-	last = first;
+	pFirst = new Item(*var, NULL, NULL);
+	pLast = pFirst;
 	for(int i = 1; i < len; i++) {
 		NewLast(var[i]);	
 	}

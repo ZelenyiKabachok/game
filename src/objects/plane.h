@@ -7,31 +7,30 @@
 //Класс Plane создаёт самолёт.
 //Управляющий для классов Body, Engine, Wing, Tail.
 
-//enum PlaneParts = {	BODY, ENGINE, WINGS, TAIL };
+namespace Aircraft {
 
 class Plane {
 
-	Body *body;
-	Engine *engine;
-	Wings *wings;
-	Tail *tail;
+	Body *pBody;
+	Engine *pEngine;
+	Wings *pWings;
+	Tail *pTail;
 
 //Дескриптор объекта Collision
-	unsigned int collDescriptor;
-	const Shader& shader;
-	Collision *collision;
+	const Graphic::Shader& shader;
+	Physic::Collision *pCollision;
 
 	float TotalWeight = 0; 		//Вес самолёта.
 	float AverResistCoof = 0; 	//Средний коэффициент сопротивления воздуха.
 
-	vec3 PlaneSpeed;
+	glm::vec3 v3PlaneSpeed;
 
 private:
 //Расставляет части самолёта по местам.
 //Считает общий вес самолёта и коэффициент сопротивления воздуха.
 	void Build();
 
-	void InitCollision(PCollisions& collObj);
+	void InitCollision(Physic::PCollisions& collObj);
 
 //Меняет расположение частей самолёта относительно
 //его корпуса.
@@ -45,10 +44,11 @@ private:
 
 public:
 	
-	Plane(planeBodies body_name, planeEngines engine_name,
-			 planeWings wings_name, planeTails tail_name,
-			 const vec3& pos, const vec3& speed,
-			 PCollisions& collObj, const Shader& planeShader);
+	Plane(planeBodies body_name, planeEngines engine_name
+			, planeWings wings_name, planeTails tail_name
+			, const glm::vec3& v3Pos, const glm::vec3& v3Speed
+			, Physic::PCollisions& collObj
+            , const Graphic::Shader& planeShader);
 
 	~Plane();
 		
@@ -60,10 +60,13 @@ public:
 
 	const Body& GetBody() const;
 
+    void InitDrawColl(Graphic::Shader coll, Graphic::Shader aabb
+                        , Graphic::Texture2D collTex);
+
 	void ChangeBody(Body& Abody);
 	void ChangeEngine(Engine& Aengine);
 	void ChangeWings(Wings& Awing);
 	void ChangeTail(Tail& Atail);
 };
-
+}
 #endif
