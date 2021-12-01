@@ -1,20 +1,20 @@
 #include "tail.h"
 
-Aircraft::Tail::Tail(enum planeTails name, unsigned int nshapes
+Aircraft::Tail::Tail(enum planeTails name, const char* fCollis
 					, float m, float coof 
-					, const Graphic::Shader& sh
-                    , const Graphic::Texture2D& tex 
+					, Graphic::Shader& sh
+                    , Graphic::Texture2D& tex 
 					, const glm::vec3& v3Pos, const glm::vec3& v3Size
 					, const glm::vec3& v3Speed)
 				: PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
-				, Name(name), num_shapes(nshapes) {}
+				, Name(name)
+                , collision(ResourceManager::Instance().LoadCollision(fCollis))
+                {}
 
 
 void Aircraft::Tail::FindDirect(float alpha)
 {
 	DirAngle += alpha;
-    printf("\t\nDirAngle = %f\n", DirAngle);
-    printf("\t\nAlpha = %f\n", alpha);
 /*
 	if(DirAngle > M_PI/2)  { DirAngle = M_PI/2; }
 	if(DirAngle < -M_PI/2) { DirAngle = -M_PI/2; }

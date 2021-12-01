@@ -33,6 +33,8 @@ Physic::Collision::Collision(const Collision& obj)
 	find_AABB_points();
 }
 
+//Physic::Collision::Collision(const char *sCollis)
+
 void Physic::Collision::find_AABB_points()
 {
 	enum Faces { left, down, right, up };
@@ -106,9 +108,9 @@ void Physic::Collision::Draw(const Camera& camera)
     ShRender.DrawAABB(camera, pV2AABB, v3Position);
 }
 
-void Physic::Collision::BeginDraw(Graphic::Shader coll
-                                  , Graphic::Shader aabb
-                                  , Graphic::Texture2D collTex)
+void Physic::Collision::BeginDraw(Graphic::Shader& coll
+                                  , Graphic::Shader& aabb
+                                  , Graphic::Texture2D& collTex)
 {
 	ShRender.Init(ppShapes, numOfShapes, pV2AABB, coll, aabb, collTex);
 }

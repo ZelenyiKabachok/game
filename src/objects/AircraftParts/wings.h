@@ -2,7 +2,7 @@
 #define WINGS_H
 
 #include "../physical_object.h"
-#include "../shape.h"
+#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +14,7 @@ class Wings : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeWings Name;
-	const unsigned int num_shapes; //количество фигур самолёта для коллизии.
+    Physic::Collision collision;
 
 //Коэфициент силы подъёма, чем больше тем быстрее поднимает высоту.
 	const float liftingCoof;
@@ -31,14 +31,12 @@ class Wings : public Physic::PhysicObject {
 	void CalcLiftForce(const glm::vec3& v3PlaneSpeed, float PlaneAngle
                                                 , bool gas, bool brake);
 
-	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos) {}
-
 public:
 
-	Wings(enum planeWings name, unsigned int nshapes
+	Wings(enum planeWings name, const char* fCollis
 					, float coofBrake, float lCoof, float m, float coof
-					, const Graphic::Shader& sh
-                    , const Graphic::Texture2D& tex
+					, Graphic::Shader& sh
+                    , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)
 					, const glm::vec3& v3Speed = glm::vec3(0)); 

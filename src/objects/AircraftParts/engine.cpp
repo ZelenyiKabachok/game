@@ -1,15 +1,17 @@
 #include "engine.h"
 
-Aircraft::Engine::Engine(enum planeEngines name, unsigned int nshapes
+Aircraft::Engine::Engine(enum planeEngines name, const char* fCollis
 					, float maxForce, const glm::vec3& v3StartForce
 					, const glm::vec3& v3Pulse, float pulse
                     , float consumption, float m
-					, float coof, const Graphic::Shader& sh
-                    , const Graphic::Texture2D& tex
+					, float coof, Graphic::Shader& sh
+                    , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos, const glm::vec3& v3Size
 					, const glm::vec3& v3Speed) 
 				: PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
-				, Name(name), num_shapes(nshapes), maxThrustForce(maxForce)
+				, Name(name)
+                , collision(ResourceManager::Instance().LoadCollision(fCollis))
+                , maxThrustForce(maxForce)
 				, v3ThrustForce(v3StartForce)
 				, v3PowerPulse(v3Pulse), Pulse(pulse)
 				, averFuelConsumption(consumption) {}

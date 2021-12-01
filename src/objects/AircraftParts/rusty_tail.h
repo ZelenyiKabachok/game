@@ -6,12 +6,9 @@
 namespace Aircraft {
 
 class RustyTail : public Tail {
-
-	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos);
-
 public:
 
-	RustyTail(const Graphic::Shader& shader);
+	RustyTail(Graphic::Shader& shader);
 
 };
 }

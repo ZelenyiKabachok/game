@@ -61,12 +61,12 @@ void Aircraft::Plane::Fly(float delta_time, bool gas, bool brake, float angle)
 	pBody->coofResistance = AverResistCoof;
 
 	glm::vec3 v3ResultantForce = pEngine->v3ThrustForce + pWings->v3LiftingForce;
-	pBody->AttractAndMove(delta_time, v3ResultantForce);
+	pBody->Move(delta_time, v3ResultantForce);
 	pBody->Rotate(glm::vec3(0.0, 0.0, 1.0), pTail->PlaneAngle);
 
 
 	ChangePosParts();
-    PrintPlaneState();
+    //PrintPlaneState();
 }		
 
 void Aircraft::Plane::Build()
@@ -87,32 +87,44 @@ void Aircraft::Plane::Build()
 
 void Aircraft::Plane::InitCollision(Physic::PCollisions& collObj)
 {
-	unsigned int max_shapes = 0;
-	max_shapes += pBody->num_shapes;	
-	max_shapes += pEngine->num_shapes;
-	max_shapes += pWings->num_shapes;
-	max_shapes += pTail->num_shapes;
+//	Physic::Shape** shapes = new Physic::Shape*[max_shapes];
+//	unsigned int pos = 0;
+//	pBody->GetShapes(shapes, pos);
+//	pEngine->GetShapes(shapes, pos);
+//	pWings->GetShapes(shapes, pos);
+//	pTail->GetShapes(shapes, pos);
 
-	Physic::Shape** shapes = new Physic::Shape*[max_shapes];
-	unsigned int pos = 0;
-	pBody->GetShapes(shapes, pos);
-	pEngine->GetShapes(shapes, pos);
-	pWings->GetShapes(shapes, pos);
-	pTail->GetShapes(shapes, pos);
+    /*
+    const char *sCollis = 
+       "n_shapes=2\n"
+       "points=4\n"
+       "0.0 0.0\n"
+       "-2.236 -1.0\n"
+       "-2.236 1.0\n"
+       "2.236 1.0\n"
+       "2.236 -1.0\n"
+       "points=4\n" 
+       "2.0 0.0\n" 
+       "-0.236 -1.0\n"
+       "-0.236 1.0\n" 
+       "4.236 1.0\n" 
+       "4.236 -1.0";
+    */
+	pCollision = collObj.Add(pBody->collision);
 
-	pCollision = collObj.Add(shapes, max_shapes);
-
+/*
 	for(unsigned int i = 0; i < max_shapes; i++) {
 		delete shapes[i];
 	}
 	delete[] shapes;
+*/
 }
 
 Aircraft::Plane::Plane(planeBodies body_name, planeEngines engine_name
 			    , planeWings wings_name, planeTails tail_name
 			    , const glm::vec3& v3Pos, const glm::vec3& v3Speed
                 , Physic::PCollisions& collObj
-			    , const Graphic::Shader& planeShader)
+			    , Graphic::Shader& planeShader)
 				    : shader(planeShader), v3PlaneSpeed(v3Speed)
 {
 	float vertexes[] = { 
@@ -126,6 +138,7 @@ Aircraft::Plane::Plane(planeBodies body_name, planeEngines engine_name
         0, 2, 3 
     }; 
 
+    ResourceManager::Instance().GetTexture("back");
 	InitBody(body_name, vertexes, indices);
 	InitEngine(engine_name, vertexes, indices);
 	InitWings(wings_name, vertexes, indices);
@@ -189,7 +202,7 @@ void Aircraft::Plane::InitTail(planeTails tail_name, float *vertexes
 	pTail->initShaderData(vertexes, indices, 20, 6);
 }
 
-void Aircraft::Plane::InitDrawColl(Graphic::Shader coll
-                                    , Graphic::Shader aabb
-                                    , Graphic::Texture2D collTex)
+void Aircraft::Plane::InitDrawColl(Graphic::Shader& coll
+                                    , Graphic::Shader& aabb
+                                    , Graphic::Texture2D& collTex)
 { pCollision->BeginDraw(coll, aabb, collTex); }

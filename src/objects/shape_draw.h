@@ -3,10 +3,6 @@
 
 #include "shape.h"
 #include "graphic_object.h"
-#include "../camera.h"
-#include "../utility/shader.h"
-#include "../utility/texture.h"
-#include "../utility/resources.h"
 
 extern Camera camera;
 
@@ -19,7 +15,7 @@ class ShapeDraw : public GraphObject {
 	
 public:
 
-	ShapeDraw(const Shader& sh, const Texture2D& tex
+	ShapeDraw(Shader& sh, Texture2D& tex
                 , const glm::vec3& v3Pos = glm::vec3(0) 
 				, const glm::vec3& v3Size = glm::vec3(1)
                 , const glm::vec3& v3Speed = glm::vec3(0)

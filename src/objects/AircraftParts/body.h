@@ -2,7 +2,7 @@
 #define BODY_H
 
 #include "../physical_object.h"
-#include "../shape.h"
+#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +14,7 @@ class Body : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeBodies Name;
-	const unsigned int num_shapes; //количество фигур самолёта для коллизии.
+    Physic::Collision collision;
 
 //Максимальный объём топливного бака
 	const float fualTankSize;
@@ -35,14 +35,11 @@ private:
 //Сжегает топливо.
 	void BurnFuel(float fuelConsumption);
 
-	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos)
-        {}
-
 public:
 
-	Body(enum planeBodies name, unsigned int nshapes
-					, float fualSize, float m, float coof
-					, const Graphic::Shader& sh, const Graphic::Texture2D& tex
+	Body(enum planeBodies name, const char* fCollis
+					, float fual, float m, float coof
+					, Graphic::Shader& sh, Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)
 					, const glm::vec3& v3Speed = glm::vec3(0));

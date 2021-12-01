@@ -33,12 +33,13 @@ add_executable(game 					src/main.cpp
 	src/utility/texture.cpp 			src/utility/texture.h
 	src/utility/resources.cpp 			src/utility/resources.h
 	src/utility/list.cpp				src/utility/list.h		src/utility/temp_list.cpp
+    src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp 						src/camera.h
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -lGL -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -lGL -std=c++11")
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)

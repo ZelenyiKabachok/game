@@ -15,6 +15,7 @@ class List {
 		Item(const Type& d, Item *n, Item *p) : data(d), pNext(n), pPrev(p) {}
 	};
 	
+    bool init = false;
 	unsigned int size = 1;
 	Item *pFirst = NULL;			
 	Item *pLast = NULL;

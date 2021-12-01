@@ -6,12 +6,9 @@
 namespace Aircraft {
 
 class RustyBody : public Body {
-
-	virtual void GetShapes(Physic::Shape** ppPlaneShapes, unsigned int& pos); 
-
 public:
 
-	RustyBody(const Graphic::Shader& shader);
+	RustyBody(Graphic::Shader& shader);
 
 };
 }

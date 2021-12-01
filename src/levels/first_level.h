@@ -5,13 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "level.h"
 
-using glm::vec3;
-
-extern ResourceManager resources;
-
 class FirstLevel : public ILevel {
 
-	Camera *camera;
+	Camera *pCamera;
 
 	List<Graphic::GraphObject> GrObjects;
 
@@ -19,7 +15,7 @@ class FirstLevel : public ILevel {
 
 	Physic::PCollisions CollObjects;	
 
-	Aircraft::Plane *plane;
+	Aircraft::Plane *pPlane;
 	
 public:
 
@@ -27,7 +23,7 @@ public:
 
 	virtual void Load();
 
-	virtual void UpDate(float delta_time, const bool *keys, const float angle);
+	virtual void UpDate(float delta_time, const bool *pKeys, const float angle);
 
 	virtual void Render();
 

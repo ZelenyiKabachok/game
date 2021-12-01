@@ -7,24 +7,26 @@ void Physic::PCollisions::Delete(int index)
 
 Physic::Collision* Physic::PCollisions::Add(const Shape* pShapes, int numShapes)
 {
-	if(!init) {	
-		Collision tmp(pShapes, numShapes);
-		Collision *ptr = &tmp;
-		collis.Create(ptr, 1);
-		init = true;
-	} else { collis.NewLast(Collision(pShapes, numShapes)); }
+	collis.NewLast(Collision(pShapes, numShapes));
 	return &collis[collis.Size()-1];
 }
 
 Physic::Collision* Physic::PCollisions::Add(Shape** ppShapes, int numShapes)
 {
-	if(!init) {
-		Collision tmp(ppShapes, numShapes);
-		Collision *ptr = &tmp;
-		collis.Create(ptr, 1);
-		init = true;
-    } else { collis.NewLast(Collision(ppShapes, numShapes)); }
+    collis.NewLast(Collision(ppShapes, numShapes));
 	return &collis[collis.Size()-1];
+}
+
+Physic::Collision* Physic::PCollisions::Add(const char *sCollis)
+{
+    Collision collision = readCollision(sCollis);
+    return Add(collision);
+}
+
+Physic::Collision* Physic::PCollisions::Add(Collision& collision)
+{
+    collis.NewLast(collision);
+    return &collis[collis.Size()-1];
 }
 
 Physic::Collision& Physic::PCollisions::Get(int index)

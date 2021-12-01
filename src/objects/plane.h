@@ -16,8 +16,7 @@ class Plane {
 	Wings *pWings;
 	Tail *pTail;
 
-//Дескриптор объекта Collision
-	const Graphic::Shader& shader;
+	Graphic::Shader& shader;
 	Physic::Collision *pCollision;
 
 	float TotalWeight = 0; 		//Вес самолёта.
@@ -48,10 +47,10 @@ public:
 			, planeWings wings_name, planeTails tail_name
 			, const glm::vec3& v3Pos, const glm::vec3& v3Speed
 			, Physic::PCollisions& collObj
-            , const Graphic::Shader& planeShader);
+            , Graphic::Shader& planeShader);
 
 	~Plane();
-		
+
 	void Fly(float delta_time, bool gas, bool brake, float angle);
 
 	void Render(const Camera& camera) const;
@@ -60,8 +59,8 @@ public:
 
 	const Body& GetBody() const;
 
-    void InitDrawColl(Graphic::Shader coll, Graphic::Shader aabb
-                        , Graphic::Texture2D collTex);
+    void InitDrawColl(Graphic::Shader& coll, Graphic::Shader& aabb
+                        , Graphic::Texture2D& collTex);
 
 	void ChangeBody(Body& Abody);
 	void ChangeEngine(Engine& Aengine);

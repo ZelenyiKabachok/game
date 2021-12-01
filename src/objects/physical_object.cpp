@@ -1,6 +1,6 @@
 #include "physical_object.h"
 
-void Physic::PhysicObject::AttractAndMove(float delta_time 
+void Physic::PhysicObject::Move(float delta_time 
                                 , const glm::vec3& v3Force)
 {
  	//Равнодействующая силы притяжения и остальных сил, кроме силы сопротивления воздуха.
@@ -15,12 +15,14 @@ void Physic::PhysicObject::AttractAndMove(float delta_time
 	glm::vec3 v3Boost = v3FinalForce/mass; //Вектор ускорения.
 	this->v3Speed += v3Boost * delta_time; 
 
-	Move(delta_time);
+	this->v3Position += this->v3Speed * delta_time;
+	this->matPosition = glm::translate(glm::mat4(1.0f), this->v3Position);
+
 }
 
 Physic::PhysicObject::PhysicObject(float m, float coof
-                , const Graphic::Shader& sh 
-			 	, const Graphic::Texture2D& tex
+                , Graphic::Shader& sh 
+			 	, Graphic::Texture2D& tex
                 , const glm::vec3& v3Pos
 				, const glm::vec3& v3Size
                 , const glm::vec3& v3Speed

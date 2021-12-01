@@ -3,11 +3,10 @@
 const int Height = 1080;
 const int Width = 1920;
 
-ResourceManager resources;
-
 Game game;
 
-static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action, int modes)
+static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action
+                                                               , int modes)
 {
 	game.KeyboardInput(pWindow, key, scancode, action, modes);
 }	

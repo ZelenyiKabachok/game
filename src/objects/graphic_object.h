@@ -2,7 +2,8 @@
 #define SPRITE_H
 
 #include <glad/glad.h>
-#include "../utility/resources.h"
+#include "../utility/shader.h"
+#include "../utility/texture.h"
 #include "../camera.h"
 
 class Camera;
@@ -13,8 +14,8 @@ namespace Graphic {
 class GraphObject {
 
 protected:
-	Shader shader;
-	Texture2D texture;
+	Shader& shader;
+	Texture2D& texture;
 	glm::vec3 v3Color = glm::vec3(1.0, 1.0, 1.0);
 	GLuint VAO;
 	GLenum type;
@@ -62,7 +63,7 @@ public:
 	void ChangePosition(const glm::vec3& v3NewPos);
 
 //Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
-	GraphObject(const Shader& sh, const Texture2D& tex
+	GraphObject(Shader& sh, Texture2D& tex
                             , const glm::vec3& v3Pos = glm::vec3(0)
 				            , const glm::vec3& v3Scale = glm::vec3(1)
                             , const glm::vec3& v3Spd = glm::vec3(0)

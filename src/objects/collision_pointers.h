@@ -2,7 +2,7 @@
 #define COLLISION_POINTERS_H
 
 #include <cstdio>
-#include "collision.h"
+#include "../utility/collision_in_files.h"
 #include "../utility/list.h"
 
 namespace Physic {
@@ -11,7 +11,6 @@ namespace Physic {
 class PCollisions {
 
 	List<Collision> collis;
-	bool init = false;
 
 //Вызывается для двух объектов, у которых обнаружилось столкновение
 //алгоритмом AABB.
@@ -26,6 +25,10 @@ public:
 
 //принимает массив указателей на Shape.
 	Collision* Add(Shape** ppShapes, int numShapes);
+
+    Collision* Add(const char *sCollis);
+
+    Collision* Add(Collision& collision);
 
 	Collision& Get(int index);
 

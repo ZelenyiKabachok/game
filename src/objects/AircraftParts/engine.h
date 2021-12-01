@@ -2,7 +2,7 @@
 #define ENGINE_H
 
 #include "../physical_object.h"
-#include "../shape.h"
+#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +14,7 @@ class Engine : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeEngines Name;
-	const unsigned int num_shapes; 	//количество фигур самолёта для коллизии.
+    Physic::Collision collision;
 
 	const float maxThrustForce; 	//Максимальная сила тяги двигателя
 
@@ -33,9 +33,6 @@ class Engine : public Physic::PhysicObject {
 	virtual void Work(const float delta_time, float angle
 						    , bool gas = 0, bool brake = 0);
 
-	virtual void GetShapes(Physic::Shape** const planeShapes
-                                        , unsigned int& pos) {}
-
 	virtual void SideEffect();
 
 	//void ChangeAverFuelConsumption(float newConsumption)
@@ -46,12 +43,12 @@ class Engine : public Physic::PhysicObject {
 
 public:
 
-	Engine(enum planeEngines name, unsigned int nshapes
+	Engine(enum planeEngines name, const char* fCollis
 					, float maxForce, const glm::vec3& startForce
 					, const glm::vec3& Ppulse, float pulse
                     , float consumption, float m 
-					, float coof, const Graphic::Shader& sh
-                    , const Graphic::Texture2D& tex
+					, float coof, Graphic::Shader& sh
+                    , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)
 					, const glm::vec3& v3Speed = glm::vec3(0));

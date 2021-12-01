@@ -1,7 +1,10 @@
 #include <cstdio>
 #include "resources.h"
 
-const Graphic::Shader& ResourceManager::LoadShader(
+std::map <const char*, Graphic::Shader> ResourceManager::Shaders;
+std::map <const char*, Graphic::Texture2D> ResourceManager::Textures;
+
+Graphic::Shader& ResourceManager::LoadShader(
                       const char *sName, const char *fVertShader
 				    , const char *fFragShader, const char *fGeomShader)
 {
@@ -9,12 +12,18 @@ const Graphic::Shader& ResourceManager::LoadShader(
 	return Shaders[sName];
 }
 
-const Graphic::Texture2D& ResourceManager::LoadTexture(const char *sName
+Graphic::Texture2D& ResourceManager::LoadTexture(const char *sName
                                                 , const char *fImageFile)
 {
 	Textures[sName] = LoadTextureFromFile(fImageFile);
 	return Textures[sName];
 }	
+
+Physic::Collision ResourceManager::LoadCollision(const char *fName)
+{
+    const char* sCollis = loadFileAsString(fName);
+    return readCollision(sCollis);
+}
 
 Graphic::Texture2D ResourceManager::LoadTextureFromFile(const char *fImageFile)
 {
@@ -37,6 +46,12 @@ Graphic::Texture2D ResourceManager::LoadTextureFromFile(const char *fImageFile)
 	return texture;
 }
 
+ResourceManager& ResourceManager::Instance()
+{
+    static ResourceManager res;
+    return res;
+}
+
 ResourceManager::~ResourceManager()
 {
 	for(auto item : Shaders) {
@@ -51,11 +66,11 @@ Graphic::Shader ResourceManager::LoadShaderFromFile(const char *fVertexShader
 										            , const char *fFragShader
 										            , const char *fGeomShader)
 {
-	const char *sVertCode = loadShaderAsString(fVertexShader);
-	const char *sFragCode = loadShaderAsString(fFragShader);
+	const char *sVertCode = loadFileAsString(fVertexShader);
+	const char *sFragCode = loadFileAsString(fFragShader);
 	const char *sGeomCode = NULL;
 	if(fGeomShader)
-	{ sGeomCode = loadShaderAsString(fGeomShader); }
+	{ sGeomCode = loadFileAsString(fGeomShader); }
 
 	Graphic::Shader shader;
 	shader.Generate(sVertCode, sFragCode, sGeomCode);
@@ -68,7 +83,7 @@ Graphic::Shader ResourceManager::LoadShaderFromFile(const char *fVertexShader
 	return shader;
 }	
 
-const char* ResourceManager::loadShaderAsString(const char *fFile)
+const char* ResourceManager::loadFileAsString(const char *fFile)
 {
 	unsigned int file_size;
 	FILE *fd = fopen(fFile, "rw");
@@ -83,16 +98,16 @@ const char* ResourceManager::loadShaderAsString(const char *fFile)
 
 //  printf("File '%s' size = %u\n", fFile, file_size);
 
-	char *sCode = new char[file_size];
-	fread(sCode, 1, file_size, fd);
+	char *sStr = new char[file_size];
+	fread(sStr, 1, file_size, fd);
 	fclose(fd);
-	return sCode;
+	return sStr;
 }
 
-const Graphic::Texture2D& ResourceManager::GetTexture(const char *sName)
+Graphic::Texture2D& ResourceManager::GetTexture(const char *sName)
 { return Textures[sName]; }
 
-const Graphic::Shader& ResourceManager::GetShader(const char *sName)
+Graphic::Shader& ResourceManager::GetShader(const char *sName)
 { return Shaders[sName]; }
 
 void ResourceManager::DeleteShader(const char *sName)
@@ -100,5 +115,3 @@ void ResourceManager::DeleteShader(const char *sName)
 	
 void ResourceManager::DeleteTexture(const char *sName)
 { glDeleteTextures(1, &(Textures[sName].texID)); }
-
-

@@ -1,13 +1,14 @@
 #include "wings.h"
 
-Aircraft::Wings::Wings(enum planeWings name, unsigned int nshapes
+Aircraft::Wings::Wings(enum planeWings name, const char* fCollis
 					, float coofBrake, float lCoof, float m, float coof
-					, const Graphic::Shader& sh
-                    , const Graphic::Texture2D& tex
+					, Graphic::Shader& sh
+                    , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos, const glm::vec3& v3Size
 					, const glm::vec3& v3Speed)
 			    : PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
-				, Name(name), num_shapes(nshapes)
+				, Name(name)
+                , collision(ResourceManager::Instance().LoadCollision(fCollis))
 				, liftingCoof(lCoof), coofResBrake(coofBrake) {}
 
 void Aircraft::Wings::CalcLiftForce(const glm::vec3& v3PlaneSpeed

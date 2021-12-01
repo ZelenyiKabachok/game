@@ -31,8 +31,8 @@ public:
 
 	~Game() {}
 
-	void KeyboardInput(GLFWwindow *pWindow, int key, int scancode,
-											int action, int modes);
+	void KeyboardInput(GLFWwindow *pWindow, int key, int scancode
+										  , int action, int modes);
 
 	void MouseInput(float curY);
 

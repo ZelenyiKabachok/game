@@ -3,7 +3,7 @@
 
 #include "shape_draw.h"
 
-extern ResourceManager resources;
+//extern ResourceManager resources;
 
 namespace Graphic {
 
@@ -18,8 +18,8 @@ public:
 	CollDraw() {}
 
 	void Init(Physic::Shape **ppShape, unsigned int numOfShapes
-                , const glm::vec2 *pAABB, Shader shader
-                , Shader aabbShader, Texture2D collis);
+                , const glm::vec2 *pAABB, Shader& shader
+                , Shader& aabbShader, Texture2D& collis);
 
     void DrawAABB(const Camera& camera, const glm::vec2 *pAABB
                                       , const glm::vec3& v3Pos);

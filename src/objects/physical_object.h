@@ -1,8 +1,6 @@
 #ifndef GRAVITY_OBJECT_H
 #define GRAVITY_OBJECT_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include "graphic_object.h"
 
 namespace Physic {
@@ -20,8 +18,8 @@ protected:
 
 public:
 
-	PhysicObject(float m, float coof, const Graphic::Shader& sh
-					, const Graphic::Texture2D& tex
+	PhysicObject(float m, float coof, Graphic::Shader& sh
+					, Graphic::Texture2D& tex
                     , const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)
                     , const glm::vec3& v3Speed = glm::vec3(0)
@@ -34,7 +32,7 @@ public:
 
 //Вычисляя равнодеёствующую всех сил, изменяет вектор скорости объекта.
 //Вызывает метод void Move(const float, const vec3&, const float).
-	void AttractAndMove(float delta_time
+	virtual void Move(float delta_time
                     , const glm::vec3& v3Force = glm::vec3(0));
 
 };

@@ -1,6 +1,6 @@
 #include "shape_draw.h"
 
-Graphic::ShapeDraw::ShapeDraw(const Shader& sh, const Texture2D& tex
+Graphic::ShapeDraw::ShapeDraw(Shader& sh, Texture2D& tex
 					 , const glm::vec3& v3Pos
                      , const glm::vec3& v3Size
                      , const glm::vec3& v3Speed

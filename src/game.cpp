@@ -11,8 +11,8 @@ void Game::UpDate(float delta_time, ILevel& level) const
 	level.Render();
 }
 
-void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode,
-												int action, int modes)
+void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode
+											, int action, int modes)
 {
 	switch(key) {
 	case GLFW_KEY_ESCAPE:

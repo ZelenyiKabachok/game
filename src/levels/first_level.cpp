@@ -2,17 +2,16 @@
 
 void FirstLevel::Load()
 {
-
+    ResourceManager& resources = ResourceManager::Instance();
 	resources.LoadShader("plane", "../shaders/sprite.vert", 
 								  "../shaders/sprite.frag");
 	resources.LoadShader("aabb", "../shaders/aabb.vert", 
 						"../shaders/aabb.frag", "../shaders/aabb.geom");
 	
-	resources.LoadTexture("back", "../resources/Backgrounds/Back7.jpg");
-	resources.LoadTexture("box", "../resources/Others/wooden_container1.jpg");
-	resources.LoadTexture("collis", "../resources/Others/collis.jpg");
-		
-
+	resources.LoadTexture("back", "../resources/backgrounds/Back7.jpg");
+	resources.LoadTexture("box", "../resources/others/wooden_container1.jpg");
+	resources.LoadTexture("collis", "../resources/others/collis.jpg");
+    
 //	resources.GetShader("plane").Use();
 //	resources.GetShader("plane").SetInt("ourTexture", 0);
 
@@ -27,7 +26,7 @@ void FirstLevel::Load()
 		0, 2, 3
 	};
 
-	camera = new Camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
+	pCamera = new Camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
 
 	Graphic::GraphObject grobj[] = {
 		{ resources.GetShader("plane"), resources.GetTexture("back")
@@ -49,44 +48,44 @@ void FirstLevel::Load()
 	GrObjects.Create(grobj, 1);
 	PhObjects.Create(phobj, 3);
 
-	plane = new Aircraft::Plane(Aircraft::RUST_BODY, Aircraft::RUST_ENGINE
+
+	pPlane = new Aircraft::Plane(Aircraft::RUST_BODY, Aircraft::RUST_ENGINE
                         , Aircraft::RUST_WINGS, Aircraft::RUST_TAIL
 						, glm::vec3(-50.0, 0.0, 0.0), glm::vec3(30.0, 0.0, 0.0)
 						, CollObjects, resources.GetShader("plane"));
-	plane->InitDrawColl(resources.GetShader("plane")
+	pPlane->InitDrawColl(resources.GetShader("plane")
                         , resources.GetShader("aabb")
                         , resources.GetTexture("collis"));
 
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
-
 	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 	PhObjects[1].initShaderData(QuadData, QuadIndices, 20, 6);
+    printf("Ok\n");
 	//PhObjects[2].initShaderData(TriangleData, vec3(1.0f, 1.0f, 1.0f), 8);
 
-	camera->FocusOnTheObject(&(plane->GetBody()));
-
+	pCamera->FocusOnTheObject(&(pPlane->GetBody()));
 }
 
 void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 {
 
-	camera->Follow(delta_time);
+	pCamera->Follow(delta_time);
 
-	plane->Fly(delta_time, keys[W], keys[S], angle);	
+	pPlane->Fly(delta_time, keys[W], keys[S], angle);	
 
-	PhObjects[0].AttractAndMove(delta_time);
-	PhObjects[1].AttractAndMove(delta_time);
-	PhObjects[2].AttractAndMove(delta_time);
+	PhObjects[0].Move(delta_time);
+	PhObjects[1].Move(delta_time);
+	PhObjects[2].Move(delta_time);
 
 }
 
 void FirstLevel::Render()
 {
-	GrObjects[0].Draw(*camera);
-	plane->Render(*camera);
-	PhObjects[0].Draw(*camera);
-	PhObjects[1].Draw(*camera);
+	GrObjects[0].Draw(*pCamera);
+	pPlane->Render(*pCamera);
+	PhObjects[0].Draw(*pCamera);
+	PhObjects[1].Draw(*pCamera);
 
 //	PhObjects[2].DrawContour(*camera, 20);
 }
@@ -95,6 +94,6 @@ FirstLevel::FirstLevel() {}
 
 FirstLevel::~FirstLevel()
 {
-	camera->CancelFocus();
-	delete plane;
+	pCamera->CancelFocus();
+	delete pPlane;
 }

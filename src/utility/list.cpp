@@ -3,19 +3,23 @@
 template<class Type>
 void List<Type>::NewLast(const Type& var)
 {
-	Item *tmp = pLast;
-	pLast = new Item(var, NULL, tmp);
-	tmp->pNext = pLast;
-	size++;
+    if(init) {
+	    Item *tmp = pLast;
+	    pLast = new Item(var, NULL, tmp);
+	    tmp->pNext = pLast;
+	    size++;
+    } else { Create(&var, 1); }
 }
 
 template<class Type>
 void List<Type>::NewFirst(const Type& var)
 {
-	Item *tmp = pFirst;
-	pFirst = new Item(var, tmp, NULL);
-	tmp->pPrev = pFirst;
-	size++;
+    if(init) {
+	    Item *tmp = pFirst;
+	    pFirst = new Item(var, tmp, NULL);
+	    tmp->pPrev = pFirst;
+	    size++;
+    } else { Create(&var, 1); }
 }
 
 template<class Type>
@@ -26,6 +30,7 @@ void List<Type>::DeleteLast()
 	pLast->pNext = NULL;
 	delete tmp;
 	size--;
+    if(size == 0) { init = false; }
 }
 
 template<class Type>
@@ -36,6 +41,7 @@ void List<Type>::DeleteFirst()
 	pFirst->pPrev = NULL;
 	delete tmp;
 	size--;
+    if(size == 0) { init = false; }
 }
 
 template<class Type>
@@ -87,6 +93,7 @@ void List<Type>::Create(const Type *var, int len)
 {
 	pFirst = new Item(*var, NULL, NULL);
 	pLast = pFirst;
+    init = true;
 	for(int i = 1; i < len; i++) {
 		NewLast(var[i]);	
 	}

@@ -13,7 +13,7 @@ struct Shape {
 	glm::vec2 v2Center;		
 	const unsigned int num_points;	//Количество точек.
 
-	Shape(glm::vec2 *pV2Pnts, glm::vec2 v2Cntr, unsigned int num);
+	Shape(glm::vec2 *pV2Pnts, glm::vec2 v2Cntr, unsigned int quant);
 
 	Shape(const Shape& other);
 

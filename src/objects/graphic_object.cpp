@@ -70,8 +70,8 @@ void Graphic::GraphObject::Scale()
 	matSize = glm::scale(glm::mat4(1.0f), v3Size);
 }
 
-Graphic::GraphObject::GraphObject(const Graphic::Shader& sh
-                                , const Graphic::Texture2D& tex
+Graphic::GraphObject::GraphObject(Graphic::Shader& sh
+                                , Graphic::Texture2D& tex
 						        , const glm::vec3& v3Pos
                                 , const glm::vec3& v3Scale
                                 , const glm::vec3& v3Spd
