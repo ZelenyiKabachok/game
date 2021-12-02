@@ -18,6 +18,13 @@ Physic::Shape::Shape(const Shape& other)
 	}
 }
 
+void Physic::Shape::Shift(const glm::vec2& v2Offset)
+{
+    v2Center += v2Offset;
+    for(int i = 0; i < num_points; i++) {
+        pV2Points[i] += v2Offset;
+    } 
+}
 Physic::Shape::~Shape()
 {
 	delete[] pV2Points;

@@ -1,9 +1,6 @@
 #include <cstdio>
 #include "resources.h"
 
-std::map <const char*, Graphic::Shader> ResourceManager::Shaders;
-std::map <const char*, Graphic::Texture2D> ResourceManager::Textures;
-
 Graphic::Shader& ResourceManager::LoadShader(
                       const char *sName, const char *fVertShader
 				    , const char *fFragShader, const char *fGeomShader)
@@ -22,7 +19,9 @@ Graphic::Texture2D& ResourceManager::LoadTexture(const char *sName
 Physic::Collision ResourceManager::LoadCollision(const char *fName)
 {
     const char* sCollis = loadFileAsString(fName);
-    return readCollision(sCollis);
+    Physic::Collision collision = readCollision(sCollis);
+    delete[] sCollis;
+    return collision;
 }
 
 Graphic::Texture2D ResourceManager::LoadTextureFromFile(const char *fImageFile)
@@ -54,12 +53,14 @@ ResourceManager& ResourceManager::Instance()
 
 ResourceManager::~ResourceManager()
 {
+/*
 	for(auto item : Shaders) {
 		glDeleteProgram(item.second.programHandle);
 	}
 	for(auto item : Textures) {
 		glDeleteTextures(1, &(item.second.texID));
 	}
+*/
 }
 
 Graphic::Shader ResourceManager::LoadShaderFromFile(const char *fVertexShader

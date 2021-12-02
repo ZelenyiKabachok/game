@@ -87,37 +87,10 @@ void Aircraft::Plane::Build()
 
 void Aircraft::Plane::InitCollision(Physic::PCollisions& collObj)
 {
-//	Physic::Shape** shapes = new Physic::Shape*[max_shapes];
-//	unsigned int pos = 0;
-//	pBody->GetShapes(shapes, pos);
-//	pEngine->GetShapes(shapes, pos);
-//	pWings->GetShapes(shapes, pos);
-//	pTail->GetShapes(shapes, pos);
-
-    /*
-    const char *sCollis = 
-       "n_shapes=2\n"
-       "points=4\n"
-       "0.0 0.0\n"
-       "-2.236 -1.0\n"
-       "-2.236 1.0\n"
-       "2.236 1.0\n"
-       "2.236 -1.0\n"
-       "points=4\n" 
-       "2.0 0.0\n" 
-       "-0.236 -1.0\n"
-       "-0.236 1.0\n" 
-       "4.236 1.0\n" 
-       "4.236 -1.0";
-    */
 	pCollision = collObj.Add(pBody->collision);
-
-/*
-	for(unsigned int i = 0; i < max_shapes; i++) {
-		delete shapes[i];
-	}
-	delete[] shapes;
-*/
+    pCollision->Join(pEngine->collision, pBody->StartEnginesPos[pEngine->Name]);
+    pCollision->Join(pWings->collision, pBody->StartWingsPos[pWings->Name]);
+    pCollision->Join(pTail->collision, pBody->StartTailsPos[pTail->Name]);
 }
 
 Aircraft::Plane::Plane(planeBodies body_name, planeEngines engine_name

@@ -17,9 +17,9 @@ class Collision {
 
 //Массив указателей на класс Shape.
 	Shape **ppShapes;
-	Graphic::CollDraw ShRender;
+	Graphic::CollDraw *pShRender = NULL;
 
-	const unsigned int numOfShapes; 	//Размер массива.
+	unsigned int numOfShapes; 	//Размер массива.
 
 	float angle;
 	glm::vec3 v3Position = glm::vec3(0.0f);
@@ -43,16 +43,18 @@ public:
 	Collision(const Collision& obj);
 
 //Объединение двух коллизий в одну.
-    void Join(const Collision& obj, glm::vec3 v3Offset) {}
+    void Join(const Collision& obj, const glm::vec2& v2Offset = glm::vec2(0));
 
-	void Draw(const Camera& camera);
+	void Draw(const Camera& camera) const;
 
     void BeginDraw(Graphic::Shader& coll, Graphic::Shader& aabb
-                    , Graphic::Texture2D& collTex);
+                 , Graphic::Texture2D& collTex);
 
 	void Movement(glm::vec3 v3NewPos);
 
 	void Rotation(float angle);
+
+    int HowManyShapes() const;
 
 	~Collision();
 

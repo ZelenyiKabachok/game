@@ -22,7 +22,7 @@ void Graphic::CollDraw::Init(Physic::Shape **ppShapes
 
 void Graphic::CollDraw::DrawAABB(const Camera& camera
                                 , const glm::vec2 *pV2AABB
-                                , const glm::vec3& v3Pos)
+                                , const glm::vec3& v3Pos) const
 {
     const Shader &shader = ppGraphic[number]->GetShader(); 
     const Texture2D &texture = ppGraphic[number]->GetTexture();
@@ -45,7 +45,7 @@ void Graphic::CollDraw::DrawAABB(const Camera& camera
 }
 
 void Graphic::CollDraw::Draw(const Camera& camera
-                           , const glm::vec3& v3Pos, float angle)
+                           , const glm::vec3& v3Pos, float angle) const
 {
 	for(unsigned int i = 0; i < number; i++) {
 		ppGraphic[i]->ChangePosition(v3Pos);

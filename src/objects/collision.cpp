@@ -70,6 +70,30 @@ void Physic::Collision::find_AABB_points()
 	pV2AABB[1].y = pFaces[up];
 }
 
+void Physic::Collision::Join(const Physic::Collision& newCollis
+                           , const glm::vec2& v2Offset)
+{
+    unsigned int newSize = newCollis.numOfShapes;
+    Physic::Shape** ppNewShapes = new Physic::Shape*[numOfShapes+newSize];
+
+    for(unsigned int i = 0; i < numOfShapes; i++) {
+        ppNewShapes[i] = ppShapes[i];
+    }
+
+    for(unsigned int i = numOfShapes, j = 0; j < newSize; i++, j++) {
+        Physic::Shape newShape = *(newCollis.ppShapes[j]);
+        newShape.Shift(v2Offset);
+        ppNewShapes[i] = new Physic::Shape(newShape);
+    }
+
+    ppShapes = ppNewShapes;
+    numOfShapes += newSize;
+    if(pShRender) {
+        delete pShRender;
+        pShRender = NULL;
+    }
+}
+
 Physic::Collision::~Collision()
 {
 	for(unsigned int i = 0; i < numOfShapes; i++) {
@@ -102,23 +126,29 @@ void Physic::Collision::PrintState()
 */
 }
 
-void Physic::Collision::Draw(const Camera& camera)
+void Physic::Collision::Draw(const Camera& camera) const
 {
-    ShRender.Draw(camera, v3Position, angle); 
-    ShRender.DrawAABB(camera, pV2AABB, v3Position);
+    pShRender->Draw(camera, v3Position, angle); 
+    pShRender->DrawAABB(camera, pV2AABB, v3Position);
 }
 
 void Physic::Collision::BeginDraw(Graphic::Shader& coll
                                   , Graphic::Shader& aabb
                                   , Graphic::Texture2D& collTex)
 {
-	ShRender.Init(ppShapes, numOfShapes, pV2AABB, coll, aabb, collTex);
+    pShRender = new Graphic::CollDraw;
+	pShRender->Init(ppShapes, numOfShapes, pV2AABB, coll, aabb, collTex);
 }
 
 void Physic::Collision::Movement(glm::vec3 v3NewPos)
 {
 	v3Position = v3NewPos;
 //	PrintState();
+}
+
+int Physic::Collision::HowManyShapes() const
+{
+    return numOfShapes;
 }
 
 void Physic::Collision::Rotation(float new_angle)

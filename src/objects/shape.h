@@ -15,6 +15,8 @@ struct Shape {
 
 	Shape(glm::vec2 *pV2Pnts, glm::vec2 v2Cntr, unsigned int quant);
 
+    void Shift(const glm::vec2& v2Offest);
+
 	Shape(const Shape& other);
 
 	~Shape();

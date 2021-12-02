@@ -8,8 +8,8 @@
 
 class ResourceManager {
 	
-    static std::map <const char*, Graphic::Shader> Shaders;
-	static std::map <const char*, Graphic::Texture2D> Textures;
+    std::map <const char*, Graphic::Shader> Shaders;
+	std::map <const char*, Graphic::Texture2D> Textures;
 
 public:
 

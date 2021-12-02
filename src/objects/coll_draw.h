@@ -22,10 +22,10 @@ public:
                 , Shader& aabbShader, Texture2D& collis);
 
     void DrawAABB(const Camera& camera, const glm::vec2 *pAABB
-                                      , const glm::vec3& v3Pos);
+                                      , const glm::vec3& v3Pos) const;
 
 
-	void Draw(const Camera& camera, const glm::vec3& v3Pos, float angle);
+	void Draw(const Camera& camera, const glm::vec3& v3Pos, float angle) const;
 
 	~CollDraw();
 

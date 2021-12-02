@@ -20,13 +20,15 @@ int getInt(const char* sCollis, unsigned int& pos)
 
 float getFloat(const char* sCollis, unsigned int& pos)
 {
+    bool neg = false;
+    if(sCollis[pos] == '-') { neg = true; }
     float whole = getInt(sCollis, pos);
     pos++;
     float fractional = getInt(sCollis, pos);
     for(; fractional >= 1; fractional /= 10)
         {}
     float res;
-    if(whole < 0) { res = whole-fractional; }
+    if(neg) { res = whole-fractional; }
     else { res = whole+fractional; }
     return res;
 } 
@@ -66,12 +68,11 @@ Physic::Collision readCollision(const char* sCollis)
 {
     unsigned int pos = 9;
     int n_shapes = getInt(sCollis, pos); 
-    printf("n_shapes = %d\n", n_shapes);
     Physic::Shape* pShapes[n_shapes];
     for(int num = 0; num < n_shapes; num++) {
         pos++;
         pShapes[num] = new Physic::Shape(readShape(sCollis, pos));
-        printShape((*pShapes[num]));
+        //printShape((*pShapes[num]));
     }
     return Physic::Collision(pShapes, n_shapes);
 }

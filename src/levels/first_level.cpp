@@ -53,15 +53,16 @@ void FirstLevel::Load()
                         , Aircraft::RUST_WINGS, Aircraft::RUST_TAIL
 						, glm::vec3(-50.0, 0.0, 0.0), glm::vec3(30.0, 0.0, 0.0)
 						, CollObjects, resources.GetShader("plane"));
+
 	pPlane->InitDrawColl(resources.GetShader("plane")
                         , resources.GetShader("aabb")
                         , resources.GetTexture("collis"));
+
 
 	GrObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 
 	PhObjects[0].initShaderData(QuadData, QuadIndices, 20, 6);
 	PhObjects[1].initShaderData(QuadData, QuadIndices, 20, 6);
-    printf("Ok\n");
 	//PhObjects[2].initShaderData(TriangleData, vec3(1.0f, 1.0f, 1.0f), 8);
 
 	pCamera->FocusOnTheObject(&(pPlane->GetBody()));
