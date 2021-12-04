@@ -26,7 +26,8 @@ void FirstLevel::Load()
 		0, 2, 3
 	};
 
-	pCamera = new Camera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
+	pCamera = new GameCamera(glm::vec3(0.0, 0.0, 80.0), glm::vec3(0.0, 0.0, 0.0));
+	pFCamera = new FreeCamera(glm::vec3(0.0, 0.0, 80.0));
 
 	Graphic::GraphObject grobj[] = {
 		{ resources.GetShader("plane"), resources.GetTexture("back")
@@ -65,13 +66,15 @@ void FirstLevel::Load()
 	PhObjects[1].initShaderData(QuadData, QuadIndices, 20, 6);
 	//PhObjects[2].initShaderData(TriangleData, vec3(1.0f, 1.0f, 1.0f), 8);
 
-	pCamera->FocusOnTheObject(&(pPlane->GetBody()));
+	//pCamera->FocusOnTheObject(&(pPlane->GetBody()));
 }
 
-void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
+void FirstLevel::UpDate(float delta_time, const bool *keys
+                , const float angle, float scroll)
 {
 
-	pCamera->Follow(delta_time);
+	//pCamera->Follow(delta_time);
+	pFCamera->Move(delta_time, keys, scroll);
 
 	pPlane->Fly(delta_time, keys[W], keys[S], angle);	
 
@@ -83,10 +86,10 @@ void FirstLevel::UpDate(float delta_time, const bool *keys, const float angle)
 
 void FirstLevel::Render()
 {
-	GrObjects[0].Draw(*pCamera);
-	pPlane->Render(*pCamera);
-	PhObjects[0].Draw(*pCamera);
-	PhObjects[1].Draw(*pCamera);
+	GrObjects[0].Draw(*pFCamera);
+	pPlane->Render(*pFCamera);
+	PhObjects[0].Draw(*pFCamera);
+	PhObjects[1].Draw(*pFCamera);
 
 //	PhObjects[2].DrawContour(*camera, 20);
 }

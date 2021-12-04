@@ -2,9 +2,6 @@
 #define COLLISION_H
 
 #include <cstdio>
-#include <math.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include "coll_draw.h"
 
 namespace Physic {

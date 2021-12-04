@@ -5,9 +5,14 @@ void Game::Init(ILevel& level) const
 	level.Load();
 }
 
-void Game::UpDate(float delta_time, ILevel& level) const
+void Game::UpDate(float delta_time, ILevel& level)
 {
-	level.UpDate(delta_time, pressedKeys, angle);
+    if(haveScroll) {
+	    level.UpDate(delta_time, pressedKeys, angle, scroll);
+        haveScroll = false;
+    } else {
+	    level.UpDate(delta_time, pressedKeys, angle, 0.0);
+    }
 	level.Render();
 }
 
@@ -28,6 +33,14 @@ void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode
 			pressedKeys[W] = false;
 		}
 		break;
+	case GLFW_KEY_A:
+		if(action == GLFW_PRESS) {
+			pressedKeys[A] = true;
+		} 
+		if(action == GLFW_RELEASE) {
+			pressedKeys[A] = false;
+		}
+		break;
 	case GLFW_KEY_S:
 		if(action == GLFW_PRESS) {
 			pressedKeys[S] = true;
@@ -36,7 +49,15 @@ void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode
 			pressedKeys[S] = false;
 		}
 		break;
-	}
+    case GLFW_KEY_D:
+		if(action == GLFW_PRESS) {
+			pressedKeys[D] = true;
+		} 
+		if(action == GLFW_RELEASE) {
+			pressedKeys[D] = false;
+		}
+        break; 		
+    }
 }	
 
 void Game::MouseInput(float curY)
@@ -51,3 +72,8 @@ void Game::MouseInput(float curY)
 	angle = atan((delta_y/sensity));
 }	
 
+void Game::ScrollInput(float yOffset)
+{
+    haveScroll = true;
+    scroll = yOffset;
+}

@@ -1,13 +1,15 @@
 #ifndef FIRST_LEVEL_H
 #define FIRST_LEVEL_H
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include "level.h"
+#include "../game_camera.h"
+#include "../free_camera.h"
 
 class FirstLevel : public ILevel {
 
-	Camera *pCamera;
+	GameCamera *pCamera;
+    
+    FreeCamera *pFCamera;
 
 	List<Graphic::GraphObject> GrObjects;
 
@@ -23,7 +25,8 @@ public:
 
 	virtual void Load();
 
-	virtual void UpDate(float delta_time, const bool *pKeys, const float angle);
+	virtual void UpDate(float delta_time, const bool *pKeys
+                , const float angle, float scroll);
 
 	virtual void Render();
 

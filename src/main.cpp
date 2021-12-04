@@ -16,6 +16,11 @@ static void Mouse(GLFWwindow *pWindow, double x, double y)
 	game.MouseInput(y);
 }
 
+static void Scroll(GLFWwindow *pWindow, double xOffset, double yOffset)
+{
+    game.ScrollInput(yOffset);
+}  
+
 int main()
 {
 	GLFWwindow *pWindow;
@@ -43,6 +48,7 @@ int main()
 	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetKeyCallback(pWindow, Keyboard);
 	glfwSetCursorPosCallback(pWindow, Mouse);
+    glfwSetScrollCallback(pWindow, Scroll);
 
 	FirstLevel First;
 	game.Init(First);

@@ -4,7 +4,7 @@
 #include "shape.h"
 #include "graphic_object.h"
 
-extern Camera camera;
+//extern Camera camera;
 
 namespace Graphic {
 

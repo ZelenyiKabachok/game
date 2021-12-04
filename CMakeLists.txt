@@ -36,7 +36,9 @@ add_executable(game 					src/main.cpp
     src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
-	src/camera.cpp 						src/camera.h
+	src/camera.cpp                      src/camera.h
+    src/free_camera.cpp                 src/free_camera.h
+    src/game_camera.cpp                 src/game_camera.h
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -lGL -std=c++11")

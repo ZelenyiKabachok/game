@@ -14,16 +14,17 @@
 #include "objects.h"
 #include "camera.h"
 
-extern Camera camera;
 extern const int Width;
 extern const int Height;
 
 class Game {
 
-	bool pressedKeys[2];//Нажатые клавишы
+	bool pressedKeys[4];    //Нажатые клавишы
+    float scroll;
+    bool haveScroll;
 
-	float lastPosY; 	//Предыдущая Y-позиция мыши.
-	float angle;	//Угол смещение мыши.
+	float lastPosY; 	    //Предыдущая Y-позиция мыши.
+	float angle;	        //Угол смещение мыши.
 
 public:	
 
@@ -36,9 +37,11 @@ public:
 
 	void MouseInput(float curY);
 
+    void ScrollInput(float yOffset);
+
 	void Init(ILevel& level) const;
 
-	void UpDate(float delta_time, ILevel& level) const;
+	void UpDate(float delta_time, ILevel& level);
 
 };
 

@@ -1,12 +1,12 @@
-#ifndef GRAPHIC_OBJECT_H
-#define GRAPHIC_OBJECT_H
+#ifndef SPRITE_H
+#define SPRITE_H
 
 #include <glad/glad.h>
 #include "../utility/shader.h"
 #include "../utility/texture.h"
-#include "../camera.h"
+#include "../game_camera.h"
 
-class Camera;
+class ICamera;
 
 namespace Graphic {
 
@@ -39,7 +39,7 @@ public:
                             , int numOfVert, unsigned int numOfInd
 						    , GLenum DrawType = GL_TRIANGLES);	
 //Отрисовывает объект
-	virtual void Draw(const Camera& camera) const;  
+	virtual void Draw(const ICamera& camera) const;  
 //Обновляет позицию объектa.
 	virtual void Move(const float delta_time);
 //Поворачивает объект.
