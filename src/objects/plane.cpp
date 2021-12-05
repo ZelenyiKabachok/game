@@ -111,7 +111,6 @@ Aircraft::Plane::Plane(planeBodies body_name, planeEngines engine_name
         0, 2, 3 
     }; 
 
-    ResourceManager::Instance().GetTexture("back");
 	InitBody(body_name, vertexes, indices);
 	InitEngine(engine_name, vertexes, indices);
 	InitWings(wings_name, vertexes, indices);

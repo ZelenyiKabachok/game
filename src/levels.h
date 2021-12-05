@@ -3,5 +3,6 @@
 
 #include "levels/level.h"
 #include "levels/first_level.h"
+#include "levels/collisions_editor.h"
 
 #endif

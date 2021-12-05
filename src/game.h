@@ -14,6 +14,8 @@
 #include "objects.h"
 #include "camera.h"
 
+enum Levels { COLLISIONS_EDITOR, FIRST_LEVEL, NOTHING };
+
 extern const int Width;
 extern const int Height;
 
@@ -42,6 +44,8 @@ public:
 	void Init(ILevel& level) const;
 
 	void UpDate(float delta_time, ILevel& level);
+
+    ILevel* ChooseLevel(GLFWwindow *pWindow, int argc, char **argv);
 
 };
 

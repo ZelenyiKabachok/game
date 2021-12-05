@@ -9,8 +9,6 @@ class FirstLevel : public ILevel {
 
 	GameCamera *pCamera;
     
-    FreeCamera *pFCamera;
-
 	List<Graphic::GraphObject> GrObjects;
 
 	List<Physic::PhysicObject> PhObjects;
@@ -21,7 +19,7 @@ class FirstLevel : public ILevel {
 	
 public:
 
-	FirstLevel(); 
+	FirstLevel() {}
 
 	virtual void Load();
 

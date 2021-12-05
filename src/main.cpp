@@ -5,23 +5,24 @@ const int Width = 1920;
 
 Game game;
 
-static void Keyboard(GLFWwindow *pWindow, int key, int scancode, int action
+
+static void keyboard(GLFWwindow *pWindow, int key, int scancode, int action
                                                                , int modes)
 {
 	game.KeyboardInput(pWindow, key, scancode, action, modes);
 }	
 
-static void Mouse(GLFWwindow *pWindow, double x, double y)
+static void mouse(GLFWwindow *pWindow, double x, double y)
 {
 	game.MouseInput(y);
 }
 
-static void Scroll(GLFWwindow *pWindow, double xOffset, double yOffset)
+static void scroll(GLFWwindow *pWindow, double xOffset, double yOffset)
 {
     game.ScrollInput(yOffset);
-}  
+} 
 
-int main()
+int main(int argc, char **argv)
 {
 	GLFWwindow *pWindow;
 
@@ -45,13 +46,13 @@ int main()
         return -1;
     }
 
-	glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetKeyCallback(pWindow, Keyboard);
-	glfwSetCursorPosCallback(pWindow, Mouse);
-    glfwSetScrollCallback(pWindow, Scroll);
+	glfwSetKeyCallback(pWindow, keyboard);
+	glfwSetCursorPosCallback(pWindow, mouse);
+    glfwSetScrollCallback(pWindow, scroll);
 
-	FirstLevel First;
-	game.Init(First);
+    ILevel *Level = game.ChooseLevel(pWindow, argc, argv);
+
+	game.Init(*Level);
 
 	float current_time = 0.0;
 	float delta_time = 0.0;
@@ -72,7 +73,7 @@ int main()
 
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		game.UpDate(delta_time, First);
+		game.UpDate(delta_time, *Level);
 
 		glfwSwapBuffers(pWindow);
 		
