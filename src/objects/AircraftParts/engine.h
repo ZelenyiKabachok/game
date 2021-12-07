@@ -14,7 +14,6 @@ class Engine : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeEngines Name;
-    Physic::Collision collision;
 
 	const float maxThrustForce; 	//Максимальная сила тяги двигателя
 
@@ -28,6 +27,8 @@ class Engine : public Physic::PhysicObject {
 	const float Pulse; //Длина векторы PowerPulse.
 	const float averFuelConsumption;//Средний расход топлива при нормальной работе
 	float fuelConsumption;			//Расход топлива
+
+private:
 
 	//Обновляет состояние объекта.
 	virtual void Work(const float delta_time, float angle
@@ -43,10 +44,11 @@ class Engine : public Physic::PhysicObject {
 
 public:
 
-	Engine(enum planeEngines name, const char* fCollis
+	Engine(enum planeEngines name
 					, float maxForce, const glm::vec3& startForce
 					, const glm::vec3& Ppulse, float pulse
-                    , float consumption, float m 
+                    , float consumption
+                    , const char* fCollis, float m 
 					, float coof, Graphic::Shader& sh
                     , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)

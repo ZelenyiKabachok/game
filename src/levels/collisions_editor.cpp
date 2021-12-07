@@ -20,20 +20,20 @@ void CollisionsEditor::Load()
 						"../shaders/aabb.frag", "../shaders/aabb.geom");
 	
 	pCamera = new FreeCamera(glm::vec3(0.0, 0.0, 10.0));
-    Objects.NewLast(Aircraft::RustyBody(resources.GetShader("plane")));
-    Objects[0].initShaderData(vertexes, indices, 20, 6);
+    objects.New("body", new Aircraft::RustyBody(resources.GetShader("plane")));
+    objects.GetBody("body")->initShaderData(vertexes, indices, 20, 6);
 }
 
 void CollisionsEditor::UpDate(float delta_time, const bool *keys
                             , const float angle, float scroll)
 {
     pCamera->Move(delta_time, keys, scroll);
-    Objects[0].Move(delta_time);
+    objects.GetBody("body")->Graphic::GraphObject::Move(delta_time);
 }
 
 void CollisionsEditor::Render()
 {
-    Objects[0].Draw(*pCamera);
+    objects.GetBody("body")->Draw(*pCamera);
 }
 
 CollisionsEditor::~CollisionsEditor()

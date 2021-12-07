@@ -1,17 +1,17 @@
 #include "engine.h"
 
-Aircraft::Engine::Engine(enum planeEngines name, const char* fCollis
+Aircraft::Engine::Engine(enum planeEngines name
 					, float maxForce, const glm::vec3& v3StartForce
 					, const glm::vec3& v3Pulse, float pulse
-                    , float consumption, float m
+                    , float consumption 
+                    , const char* fCollis, float m
 					, float coof, Graphic::Shader& sh
                     , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos, const glm::vec3& v3Size
 					, const glm::vec3& v3Speed) 
-				: PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
-				, Name(name)
-                , collision(ResourceManager::Instance().LoadCollision(fCollis))
-                , maxThrustForce(maxForce)
+				: PhysicObject(fCollis, m, coof, sh, tex
+                             , v3Pos, v3Size, v3Speed)
+				, Name(name), maxThrustForce(maxForce)
 				, v3ThrustForce(v3StartForce)
 				, v3PowerPulse(v3Pulse), Pulse(pulse)
 				, averFuelConsumption(consumption) {}

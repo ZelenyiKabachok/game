@@ -2,7 +2,6 @@
 #define TAIL_H
 
 #include "../physical_object.h"
-#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +13,6 @@ class Tail : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeTails Name;
-    Physic::Collision collision;
 
 	float DirAngle = 0.0; //Угол для расчёта вектора направления.
 //	vec3 direction; //Еденичный вектор направления.

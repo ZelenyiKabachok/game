@@ -2,7 +2,6 @@
 #define BODY_H
 
 #include "../physical_object.h"
-#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +13,6 @@ class Body : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeBodies Name;
-    Physic::Collision collision;
 
 //Максимальный объём топливного бака
 	const float fualTankSize;
@@ -37,8 +35,8 @@ private:
 
 public:
 
-	Body(enum planeBodies name, const char* fCollis
-					, float fual, float m, float coof
+	Body(enum planeBodies name, float fual, const char* fCollis
+                    , float m, float coof
 					, Graphic::Shader& sh, Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)

@@ -47,6 +47,7 @@ void Graphic::CollDraw::DrawAABB(const Camera& camera
 void Graphic::CollDraw::Draw(const Camera& camera
                            , const glm::vec3& v3Pos, float angle) const
 {
+//    printf("Ok, %u\n", number);
 	for(unsigned int i = 0; i < number; i++) {
 		ppGraphic[i]->ChangePosition(v3Pos);
 		ppGraphic[i]->ChangeSlantAngle(angle);

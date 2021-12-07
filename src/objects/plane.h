@@ -3,6 +3,7 @@
 
 #include "aircraft_parts.h"
 #include "collision_pointers.h"
+#include "../levels/object_loader.h"
 
 //Класс Plane создаёт самолёт.
 //Управляющий для классов Body, Engine, Wing, Tail.
@@ -11,12 +12,12 @@ namespace Aircraft {
 
 class Plane {
 
+//Не создаются. 
 	Body *pBody;
 	Engine *pEngine;
 	Wings *pWings;
 	Tail *pTail;
 
-	Graphic::Shader& shader;
 	Physic::Collision *pCollision;
 
 	float TotalWeight = 0; 		//Вес самолёта.
@@ -36,20 +37,23 @@ private:
 	void ChangePosParts();
 
 //Создаёт объекты
-	void InitBody(planeBodies body_name, float *vertexes, unsigned int *indices);
-	void InitEngine(planeEngines engine_name, float *vertexes, unsigned int *indices);
-	void InitWings(planeWings wings_name, float *vertexes, unsigned int *indices);
-	void InitTail(planeTails tail_name, float *vectexes, unsigned int *indices);
+	void InitBody(planeBodies body_name, float *vertexes
+                , unsigned int *indices, ObjectLoader& objects);
+	void InitEngine(planeEngines engine_name, float *vertexes
+                , unsigned int *indices, ObjectLoader& objects);
+	void InitWings(planeWings wings_name, float *vertexes
+                , unsigned int *indices, ObjectLoader& objects);
+	void InitTail(planeTails tail_name, ObjectLoader& objects);
 
 public:
 	
-	Plane(planeBodies body_name, planeEngines engine_name
-			, planeWings wings_name, planeTails tail_name
-			, const glm::vec3& v3Pos, const glm::vec3& v3Speed
-			, Physic::PCollisions& collObj
-            , Graphic::Shader& planeShader);
+   
+    Plane(Aircraft::Body* body, Aircraft::Engine* engine
+			    , Aircraft::Wings* wings, Aircraft::Tail *tail
+			    , const glm::vec3& v3Pos, const glm::vec3& v3Speed
+                , Physic::PCollisions& collObj);
 
-	~Plane();
+	~Plane() {}
 
 	void Fly(float delta_time, bool gas, bool brake, float angle);
 
@@ -59,13 +63,9 @@ public:
 
 	const Body& GetBody() const;
 
-    void InitDrawColl(Graphic::Shader& coll, Graphic::Shader& aabb
+    void StartDrawCollision(Graphic::Shader& coll, Graphic::Shader& aabb
                         , Graphic::Texture2D& collTex);
 
-	void ChangeBody(Body& Abody);
-	void ChangeEngine(Engine& Aengine);
-	void ChangeWings(Wings& Awing);
-	void ChangeTail(Tail& Atail);
 };
 }
 #endif

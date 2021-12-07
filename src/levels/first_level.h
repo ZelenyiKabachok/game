@@ -4,15 +4,14 @@
 #include "level.h"
 #include "../game_camera.h"
 #include "../free_camera.h"
+#include "object_loader.h"
 
 class FirstLevel : public ILevel {
 
 	GameCamera *pCamera;
     
-	List<Graphic::GraphObject> GrObjects;
-
-	List<Physic::PhysicObject> PhObjects;
-
+    ObjectLoader objects; 
+    
 	Physic::PCollisions CollObjects;	
 
 	Aircraft::Plane *pPlane;

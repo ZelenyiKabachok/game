@@ -2,7 +2,6 @@
 #define WINGS_H
 
 #include "../physical_object.h"
-#include "../../utility/resources.h"
 
 namespace Aircraft {
 
@@ -14,7 +13,6 @@ class Wings : public Physic::PhysicObject {
 	friend class Plane;
 
 	const enum planeWings Name;
-    Physic::Collision collision;
 
 //Коэфициент силы подъёма, чем больше тем быстрее поднимает высоту.
 	const float liftingCoof;
@@ -33,8 +31,8 @@ class Wings : public Physic::PhysicObject {
 
 public:
 
-	Wings(enum planeWings name, const char* fCollis
-					, float coofBrake, float lCoof, float m, float coof
+	Wings(enum planeWings name, float coofBrake, float lCoof
+                    , const char* fCollis, float m, float coof
 					, Graphic::Shader& sh
                     , Graphic::Texture2D& tex
 					, const glm::vec3& v3Pos = glm::vec3(0)

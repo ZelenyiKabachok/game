@@ -18,11 +18,13 @@ class Collision {
 
 	unsigned int numOfShapes; 	//Размер массива.
 
-	float angle;
+	float angle = 0;
 	glm::vec3 v3Position = glm::vec3(0.0f);
 
 //Хранит нижнюю левую и верхнюю правую точки прямоугольника.
 	glm::vec2 pV2AABB[2];
+
+private:
 
 	void find_AABB_points();
 
@@ -34,8 +36,6 @@ public:
 	Collision(Shape** arrayOfShapes, const unsigned int num);
 
 	Collision(const Shape* arrayOfShapes, const unsigned int num);
-
-    //Collision(const char* sCollis) {}
 
 	Collision(const Collision& obj);
 

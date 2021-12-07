@@ -1,9 +1,7 @@
 #ifndef RESOURSES_H
 #define RESOURSES_H
 
-#include <cstdio>
 #include <map>
-#include "../objects/collision.h"
 #include "collision_in_files.h"
 
 class ResourceManager {

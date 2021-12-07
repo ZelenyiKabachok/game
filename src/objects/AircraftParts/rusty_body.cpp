@@ -2,8 +2,9 @@
 
 Aircraft::RustyBody::RustyBody(Graphic::Shader& shader) :
 		Body(
-		  RUST_BODY, "../resources/collisions/rusty_body.collis"
-        , 1000.0, 2000, 700, shader
+		  RUST_BODY, 1000
+        ,  "../resources/collisions/rusty_body.collis"
+        , 2000, 700, shader
         , ResourceManager::Instance().LoadTexture("body"
         , "../resources/aircraft_parts/rusty_body.png")
 		, glm::vec3(0.0, 0.0, 0.0), glm::vec3(2.236, 1.0, 1.0)

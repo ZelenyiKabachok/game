@@ -118,7 +118,7 @@ enum Levels whatLevel(const char* str)
 
 ILevel* Game::ChooseLevel(GLFWwindow *pWindow, int argc, char **argv)
 {
-    if(argc == 0) {
+    if(argc <= 1) {
 	    glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
         return new FirstLevel;
     }

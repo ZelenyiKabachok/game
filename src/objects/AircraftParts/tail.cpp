@@ -6,10 +6,9 @@ Aircraft::Tail::Tail(enum planeTails name, const char* fCollis
                     , Graphic::Texture2D& tex 
 					, const glm::vec3& v3Pos, const glm::vec3& v3Size
 					, const glm::vec3& v3Speed)
-				: PhysicObject(m, coof, sh, tex, v3Pos, v3Size, v3Speed)
-				, Name(name)
-                , collision(ResourceManager::Instance().LoadCollision(fCollis))
-                {}
+				: PhysicObject(fCollis, m, coof, sh, tex
+                             , v3Pos, v3Size, v3Speed)
+				, Name(name) {}
 
 
 void Aircraft::Tail::FindDirect(float alpha)

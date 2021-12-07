@@ -56,7 +56,7 @@ public:
 
 	void ChangeSlantAngle(float angle);
 
-	void ChangeSize(const glm::vec3& v3NewSize); 
+	void ChangeSize(float newSize); 
 
 	void ChangeSpeed(const glm::vec3& v3NewSpeed);
 	
@@ -65,7 +65,7 @@ public:
 //Передаётся шейдерный объект, текстура, позиция, размер объекта и его скорость.
 	GraphObject(Shader& sh, Texture2D& tex
                             , const glm::vec3& v3Pos = glm::vec3(0)
-				            , const glm::vec3& v3Scale = glm::vec3(1)
+				            , const glm::vec3& v3Ratio = glm::vec3(1)
                             , const glm::vec3& v3Spd = glm::vec3(0)
 				            , const glm::vec3& v3sl = { 0.0, 0.0, 1.0 }
                             , const float slAng = 0.0);

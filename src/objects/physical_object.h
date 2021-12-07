@@ -1,7 +1,7 @@
 #ifndef GRAVITY_OBJECT_H
 #define GRAVITY_OBJECT_H
 
-#include "graphic_object.h"
+#include "../utility/resources.h"
 
 namespace Physic {
 
@@ -12,13 +12,16 @@ class PhysicObject : public Graphic::GraphObject {
 protected:
 	float mass;
 //Коэфициент для расчёта силы сопротивления воздуха.
-//Зависит от полощади и обтекаемости объекта, но программист сам его задаёт.
+//Зависит от полощади и обтекаемости объекта, но пользователь сам его задаёт.
 	float coofResistance; 
-	glm::vec3 v3ForceOfAttract = glm::vec3(0);
+	glm::vec3 v3ForceOfAttract = glm::vec3(0.0);
+
+    Collision collision;
 
 public:
 
-	PhysicObject(float m, float coof, Graphic::Shader& sh
+	PhysicObject(const char *fCollis, float m
+                    , float coof, Graphic::Shader& sh
 					, Graphic::Texture2D& tex
                     , const glm::vec3& v3Pos = glm::vec3(0)
                     , const glm::vec3& v3Size = glm::vec3(1)
@@ -28,12 +31,20 @@ public:
 
 	virtual ~PhysicObject() {}
 
-	PhysicObject(float m, float coof, Graphic::GraphObject object);
+	PhysicObject(const char* fCollis,float m
+               , float coof, Graphic::GraphObject object);
 
-//Вычисляя равнодеёствующую всех сил, изменяет вектор скорости объекта.
+//Вызывается один раз перед началом отрисовки коллизии.
+    void StartDrawCollision(Graphic::Shader& coll
+                          , Graphic::Shader& aabb
+                          , Graphic::Texture2D& collTex);
+// Рисует как объект, так и его коллизию.
+    void Draw(const Camera& camera);
+
+//Вычисляя равнодействующую всех сил, изменяет вектор скорости объекта.
 //Вызывает метод void Move(const float, const vec3&, const float).
-	virtual void Move(float delta_time
-                    , const glm::vec3& v3Force = glm::vec3(0));
+	virtual void Move(float delta_time, const glm::vec3& v3Force
+                                                 = glm::vec3(0));
 
 };
 }

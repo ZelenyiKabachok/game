@@ -2,13 +2,14 @@
 #define COLLISIONS_EDITOR_H
 
 #include "level.h"
-#include "../game_camera.h"
 #include "../free_camera.h"
+#include "object_loader.h"
 
 
 class CollisionsEditor : public ILevel {
 
-    List<Graphic::GraphObject> Objects;
+    //List<Graphic::GraphObject> Objects;
+    ObjectLoader objects;
     FreeCamera *pCamera;
 
 public:

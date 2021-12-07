@@ -8,7 +8,8 @@ add_executable(game 					src/main.cpp
 	src/game.cpp						src/game.h
 	src/levels/level.h			
 	src/levels/first_level.cpp			src/levels/first_level.h
-    src/levels/collisions_editor.cpp   src/levels/collisions_editor.h
+    src/levels/collisions_editor.cpp    src/levels/collisions_editor.h
+    src/levels/object_loader.cpp        src/levels/object_loader.h
 
 	src/objects/AircraftParts/body.cpp			src/objects/AircraftParts/body.h
 	src/objects/AircraftParts/engine.cpp		src/objects/AircraftParts/engine.h	

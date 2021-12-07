@@ -73,12 +73,12 @@ void Graphic::GraphObject::Scale()
 Graphic::GraphObject::GraphObject(Graphic::Shader& sh
                                 , Graphic::Texture2D& tex
 						        , const glm::vec3& v3Pos
-                                , const glm::vec3& v3Scale
+                                , const glm::vec3& v3Ratio
                                 , const glm::vec3& v3Spd
 						        , const glm::vec3& v3Sl
                                 , const float slAng)
 		: shader(sh), texture(tex), v3Position(v3Pos)
-		, v3Size(v3Scale), v3Speed(v3Spd), v3Slant(v3Sl), SlantAngle(slAng)
+		, v3Size(v3Ratio), v3Speed(v3Spd), v3Slant(v3Sl), SlantAngle(slAng)
 {
 	Move(0.0);
 	Rotate();
@@ -97,8 +97,8 @@ void Graphic::GraphObject::ChangeSlantVector(const glm::vec3& v3NewSlant)
 void Graphic::GraphObject::ChangeSlantAngle(float angle)
 { SlantAngle = angle; Rotate(); }
 
-void Graphic::GraphObject::ChangeSize(const glm::vec3& v3NewSize)
-{ v3Size = v3NewSize; Scale(); }
+void Graphic::GraphObject::ChangeSize(float newSize)
+{ v3Size *= newSize; Scale(); }
 
 void Graphic::GraphObject::ChangeSpeed(const glm::vec3& v3NewSpeed)
 { v3Speed = v3NewSpeed; }
