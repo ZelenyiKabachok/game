@@ -4,6 +4,10 @@ set(PROJECT_NAME game)
 
 project(${PROJECT_NAME})
 
+set (CMAKE_BUILD_TYPE Debug)
+#set (CMAKE_BUILD_TYPE Release)
+
+
 add_executable(game 					src/main.cpp 
 	src/game.cpp						src/game.h
 	src/levels/level.h			
@@ -34,16 +38,20 @@ add_executable(game 					src/main.cpp
 	src/utility/shader.cpp 				src/utility/shader.h
 	src/utility/texture.cpp 			src/utility/texture.h
 	src/utility/resources.cpp 			src/utility/resources.h
-	src/utility/list.cpp				src/utility/list.h		src/utility/temp_list.cpp
+	src/utility/list.cpp				src/utility/list.h		
+    src/utility/temp_list.cpp
     src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
+
+    src/interface/button.cpp            src/interface/button.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp                      src/camera.h
     src/free_camera.cpp                 src/free_camera.h
     src/game_camera.cpp                 src/game_camera.h
+    src/input.cpp                       src/input.h
 )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -lGL -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -std=c++11")
 
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
@@ -55,5 +63,8 @@ target_link_libraries(${PROJECT_NAME} glfw)
 
 add_subdirectory(external/glad)
 target_link_libraries(${PROJECT_NAME} glad)
+
+add_subdirectory(external/freetype)
+target_link_libraries(${PROJECT_NAME} freetype)
 
 include_directories(external/glm)

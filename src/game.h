@@ -1,14 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <cstdio>
-#include <map>
-
+#include "input.h"
 #include "levels.h"
 #include "utility/resources.h"
 #include "objects.h"
@@ -21,23 +14,17 @@ extern const int Height;
 
 class Game {
 
-	bool pressedKeys[4];    //Нажатые клавишы
-    float scroll;
-    bool haveScroll;
-
-	float lastPosY; 	    //Предыдущая Y-позиция мыши.
-	float angle;	        //Угол смещение мыши.
+    Input input;    
 
 public:	
 
-	Game() : lastPosY(Height/2), angle(0) {}
+    Game() {};
 
 	~Game() {}
 
-	void KeyboardInput(GLFWwindow *pWindow, int key, int scancode
-										  , int action, int modes);
+	void KeyboardInput(int key, int scancode, int action, int modes);
 
-	void MouseInput(float curY);
+	void MouseInput(float curX, float curY);
 
     void ScrollInput(float yOffset);
 

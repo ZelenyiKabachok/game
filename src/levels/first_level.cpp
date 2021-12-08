@@ -70,6 +70,7 @@ void FirstLevel::Load()
                         , resources.GetTexture("collis"));
     
 	pCamera->FocusOnTheObject(&(pPlane->GetBody()));
+
 }
 
 void FirstLevel::UpDate(float delta_time, const bool *keys
@@ -78,7 +79,7 @@ void FirstLevel::UpDate(float delta_time, const bool *keys
 
 //	pCamera->Follow(delta_time);
 
-	pPlane->Fly(delta_time, keys[W], keys[S], angle);	
+	pPlane->Fly(delta_time, keys['W'], keys['S'], angle);	
 
 	objects.GetPhysic("1")->Move(delta_time);
 	objects.GetPhysic("2")->Move(delta_time);

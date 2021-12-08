@@ -7,75 +7,24 @@ void Game::Init(ILevel& level) const
 
 void Game::UpDate(float delta_time, ILevel& level)
 {
-    if(haveScroll) {
-	    level.UpDate(delta_time, pressedKeys, angle, scroll);
-        haveScroll = false;
-    } else {
-	    level.UpDate(delta_time, pressedKeys, angle, 0.0);
-    }
+	level.UpDate(delta_time, input.Keys(), input.GetAngle(), input.GetScroll());
+    input.ChangeScroll(0.0);
 	level.Render();
 }
 
-void Game::KeyboardInput(GLFWwindow *pWindow, int key, int scancode
-											, int action, int modes)
+void Game::KeyboardInput(int key, int scancode, int action, int modes)
 {
-	switch(key) {
-	case GLFW_KEY_ESCAPE:
-		if(action == GLFW_PRESS) {
-        	glfwSetWindowShouldClose(pWindow, GLFW_TRUE);
-    	}
-		break;
-	case GLFW_KEY_W:
-		if(action == GLFW_PRESS) {
-			pressedKeys[W] = true;
-		} 
-		if(action == GLFW_RELEASE) {
-			pressedKeys[W] = false;
-		}
-		break;
-	case GLFW_KEY_A:
-		if(action == GLFW_PRESS) {
-			pressedKeys[A] = true;
-		} 
-		if(action == GLFW_RELEASE) {
-			pressedKeys[A] = false;
-		}
-		break;
-	case GLFW_KEY_S:
-		if(action == GLFW_PRESS) {
-			pressedKeys[S] = true;
-		}
-		if(action == GLFW_RELEASE) {
-			pressedKeys[S] = false;
-		}
-		break;
-    case GLFW_KEY_D:
-		if(action == GLFW_PRESS) {
-			pressedKeys[D] = true;
-		} 
-		if(action == GLFW_RELEASE) {
-			pressedKeys[D] = false;
-		}
-        break; 		
-    }
+    input.Keyboard(key, scancode, action, modes);
 }	
 
-void Game::MouseInput(float curY)
+void Game::MouseInput(float curX, float curY)
 {
-	float delta_y = lastPosY - curY;
-	lastPosY = curY;
-
-//Для расчёта угла смещения мыши строится треуголник,
-//в котором sensity и delta_y катиты, a через значение
-//тангенса вычисляется угол.
-	const float sensity = 500;
-	angle = atan((delta_y/sensity));
+    input.Mouse(curX, curY);
 }	
 
 void Game::ScrollInput(float yOffset)
 {
-    haveScroll = true;
-    scroll = yOffset;
+    input.Scroll(yOffset);
 }
 
 int getSize(const char* str)

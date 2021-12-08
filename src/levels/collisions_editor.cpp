@@ -18,10 +18,15 @@ void CollisionsEditor::Load()
 								  "../shaders/sprite.frag");
 	resources.LoadShader("aabb", "../shaders/aabb.vert", 
 						"../shaders/aabb.frag", "../shaders/aabb.geom");
+    resources.LoadTexture("collis", "../resources/others/collis.jpg");
 	
 	pCamera = new FreeCamera(glm::vec3(0.0, 0.0, 10.0));
     objects.New("body", new Aircraft::RustyBody(resources.GetShader("plane")));
     objects.GetBody("body")->initShaderData(vertexes, indices, 20, 6);
+    objects.GetBody("body")->StartDrawCollision(resources.GetShader("plane")
+                                              , resources.GetShader("aabb")
+                                              , resources.GetTexture("collis"));
+                                                
 }
 
 void CollisionsEditor::UpDate(float delta_time, const bool *keys

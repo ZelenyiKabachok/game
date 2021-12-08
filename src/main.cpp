@@ -9,12 +9,14 @@ Game game;
 static void keyboard(GLFWwindow *pWindow, int key, int scancode, int action
                                                                , int modes)
 {
-	game.KeyboardInput(pWindow, key, scancode, action, modes);
+	if(key == GLFW_KEY_ESCAPE)
+    { glfwSetWindowShouldClose(pWindow, GLFW_TRUE); }
+	game.KeyboardInput(key, scancode, action, modes);
 }	
 
 static void mouse(GLFWwindow *pWindow, double x, double y)
 {
-	game.MouseInput(y);
+	game.MouseInput(x, y);
 }
 
 static void scroll(GLFWwindow *pWindow, double xOffset, double yOffset)
