@@ -63,8 +63,7 @@ public:
 
 	const Body& GetBody() const;
 
-    void StartDrawCollision(Graphic::Shader& coll, Graphic::Shader& aabb
-                        , Graphic::Texture2D& collTex);
+    void StartDrawCollision();
 
 };
 }

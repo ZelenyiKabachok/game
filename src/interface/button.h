@@ -6,17 +6,22 @@
 #include "../objects/graphic_object.h"
 #include "../objects/collision.h"
 
-namespace Interface {
+namespace GUI {
 
 class Button : public Graphic::GraphObject {
+protected:
 
-    glm::vec2 pV2Points[4];
-    const char* title;
+    glm::vec2 pV2Points[2];
+
+    char* sTitle;
+    int size;
+
     bool pressed = false;
 
 public:
 
-    Button(glm::vec2 *pV2Two, const char* str
+    Button(const glm::vec2& v2First, const glm::vec2& v2Second
+                            , const char* str, int length
                             , Graphic::Shader& sh, Graphic::Texture2D& tex
                             , const glm::vec3& v3Pos = glm::vec3(0)
                             , const glm::vec3& v3Ratio = glm::vec3(1)
@@ -24,10 +29,13 @@ public:
                             , const glm::vec3& v3sl = { 0.0, 0.0, 1.0 }
                             , const float slAng = 0.0);
 
-    void Press();
+    Button(const Button& button);
 
-    virtual ~Button() {}
+    virtual void Press();
 
+    const glm::vec2* GetCoord();
+
+    virtual ~Button();
 
 };
 }

@@ -12,6 +12,8 @@ class Input {
 
     bool mouseInput = false;
     bool keyInput = false;
+    bool press = false; 
+    
 
     float curPosX = 0;
     float curPosY = 0;
@@ -24,7 +26,9 @@ public:
 
     void Keyboard(int key, int scancode, int action, int modes);
 
-	void Mouse(float curX, float curY);
+	void MousePosition(float curX, float curY);
+
+    void MouseButton(int button, int action, int modes);
 
     void Scroll(float yOffset);
 

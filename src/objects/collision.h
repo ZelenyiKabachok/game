@@ -1,8 +1,11 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
-#include <cstdio>
 #include "coll_draw.h"
+
+namespace Graphic {
+class CollDraw;
+}
 
 namespace Physic {
 
@@ -44,8 +47,7 @@ public:
 
 	void Draw(const Camera& camera) const;
 
-    void BeginDraw(Graphic::Shader& coll, Graphic::Shader& aabb
-                 , Graphic::Texture2D& collTex);
+    void BeginDraw();
 
 	void Movement(glm::vec3 v3NewPos);
 

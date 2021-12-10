@@ -5,21 +5,26 @@ const int Width = 1920;
 
 Game game;
 
-
-static void keyboard(GLFWwindow *pWindow, int key, int scancode, int action
-                                                               , int modes)
+void key_callback(GLFWwindow *pWindow, int key, int scancode, int action
+                                                            , int modes)
 {
 	if(key == GLFW_KEY_ESCAPE)
     { glfwSetWindowShouldClose(pWindow, GLFW_TRUE); }
 	game.KeyboardInput(key, scancode, action, modes);
 }	
 
-static void mouse(GLFWwindow *pWindow, double x, double y)
+void cursor_position_callback(GLFWwindow *pWindow, double x, double y)
 {
-	game.MouseInput(x, y);
+	game.MousePosition(x, y);
 }
 
-static void scroll(GLFWwindow *pWindow, double xOffset, double yOffset)
+void mouse_button_callback(GLFWwindow *pWindow, int button, int action
+                                                          , int modes)
+{
+    game.MouseButton(button, action, modes);
+}
+
+void scroll_callback(GLFWwindow *pWindow, double xOffset, double yOffset)
 {
     game.ScrollInput(yOffset);
 } 
@@ -29,14 +34,14 @@ int main(int argc, char **argv)
 	GLFWwindow *pWindow;
 
 	if(!glfwInit()) {
-		printf("Error, can't init GLFW!\n");
+		fprintf(stderr, "Error, can't init GLFW!\n");
 		return -1;
 	}
 
 	pWindow = glfwCreateWindow(Width, Height, "Game", NULL, NULL);
 
 	if(pWindow == NULL) {
-		printf("Error, can't create window!\n");
+		fprintf(stderr, "Error, can't create window!\n");
 		return -1;
 	}
 
@@ -44,13 +49,25 @@ int main(int argc, char **argv)
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-		printf("Error, can't init GLAD!\n");
+		fprintf(stderr, "Error, can't init GLAD!\n");
         return -1;
     }
 
-	glfwSetKeyCallback(pWindow, keyboard);
-	glfwSetCursorPosCallback(pWindow, mouse);
-    glfwSetScrollCallback(pWindow, scroll);
+    FT_Library ft;
+    if(FT_Init_FreeType(&ft)) {
+        fprintf(stderr, "Error init FreeType library\n");
+        return -1;
+    }
+    FT_Face face;
+    if(FT_New_Face(ft, "../resources/fronts/front.ttf", 0, &face)) {
+        fprintf(stderr, "Error load front\n");
+        return -1;
+    }
+
+	glfwSetKeyCallback(pWindow, key_callback);
+	glfwSetCursorPosCallback(pWindow, cursor_position_callback);
+    glfwSetScrollCallback(pWindow, scroll_callback);
+    glfwSetMouseButtonCallback(pWindow, mouse_button_callback);
 
     ILevel *Level = game.ChooseLevel(pWindow, argc, argv);
 

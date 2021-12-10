@@ -8,12 +8,12 @@
 
 class ObjectLoader {
 
-    std::map <const char*, Graphic::GraphObject*> graphics;
-    std::map <const char*, Physic::PhysicObject*> physics;
-    std::map <const char*, Aircraft::Body*> bodies;
-    std::map <const char*, Aircraft::Engine*> engines;
-    std::map <const char*, Aircraft::Wings*> wings;
-    std::map <const char*, Aircraft::Tail*> tails;
+    std::map <String, Graphic::GraphObject*> graphics;
+    std::map <String, Physic::PhysicObject*> physics;
+    std::map <String, Aircraft::Body*> bodies;
+    std::map <String, Aircraft::Engine*> engines;
+    std::map <String, Aircraft::Wings*> wings;
+    std::map <String, Aircraft::Tail*> tails;
 
 public:
 

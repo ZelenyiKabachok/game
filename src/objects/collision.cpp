@@ -132,12 +132,10 @@ void Physic::Collision::Draw(const Camera& camera) const
     pShRender->DrawAABB(camera, pV2AABB, v3Position);
 }
 
-void Physic::Collision::BeginDraw(Graphic::Shader& coll
-                                  , Graphic::Shader& aabb
-                                  , Graphic::Texture2D& collTex)
+void Physic::Collision::BeginDraw()
 {
     pShRender = new Graphic::CollDraw;
-	pShRender->Init(ppShapes, numOfShapes, pV2AABB, coll, aabb, collTex);
+	pShRender->Init(ppShapes, numOfShapes, pV2AABB);
 }
 
 void Physic::Collision::Movement(glm::vec3 v3NewPos)

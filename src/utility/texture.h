@@ -19,6 +19,8 @@ public:
 	unsigned int FilterMin;
 	unsigned int FilterMax;
 
+public:
+
 	Texture2D();
 	
 	void Generate(unsigned int width, unsigned int height

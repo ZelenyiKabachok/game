@@ -17,49 +17,32 @@ void Game::KeyboardInput(int key, int scancode, int action, int modes)
     input.Keyboard(key, scancode, action, modes);
 }	
 
-void Game::MouseInput(float curX, float curY)
+void Game::MousePosition(float curX, float curY)
 {
-    input.Mouse(curX, curY);
+    input.MousePosition(curX, curY);
+//    Interface
 }	
+
+void Game::MouseButton(int button, int action, int modes)
+{
+    input.MouseButton(button, action, modes);
+}
 
 void Game::ScrollInput(float yOffset)
 {
     input.Scroll(yOffset);
 }
 
-int getSize(const char* str)
-{
-    int i;
-    for(i = 0; str[i] != '\0'; i++)
-        {}
-    return i+1;
-}
-
-bool compareStrings(const char* str1, const char* str2)
-{
-    int size1 = getSize(str1);
-    int size2 = getSize(str2);
-    if(size1 != size2) {
-        return false;
-    }
-    for(int i = 0; i < size1; i++) {
-        if(str1[i] != str2[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-enum Levels whatLevel(const char* str)
+enum Levels whatLevel(const String& str)
 {
     int quant = 2;
-    const char *levels[quant] {
-        {"Collisions_Editor"},
-        {"First_Level"},
+    String levels[quant] {
+        String("Collisions_Editor")
+      , String("First_Level")
     };
-    for(int j = 0; j < quant; j++) {
-        if(compareStrings(str, levels[j])) {
-            return (Levels)(j);
+    for(int i = 0; i < quant; i++) {
+        if(str == levels[i]) {
+            return (Levels)(i);
         }        
     }
     return NOTHING;

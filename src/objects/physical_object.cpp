@@ -43,10 +43,8 @@ Physic::PhysicObject::PhysicObject(const char* fCollis, float m
 	v3ForceOfAttract.y = mass * -9.8;
 }
 
-void Physic::PhysicObject::StartDrawCollision(Graphic::Shader& coll
-                                    , Graphic::Shader& aabb
-                                    , Graphic::Texture2D& collTex)
-{ collision.BeginDraw(coll, aabb, collTex); }
+void Physic::PhysicObject::StartDrawCollision()
+{ collision.BeginDraw(); }
 
 void Physic::PhysicObject::Draw(const Camera& camera)
 {

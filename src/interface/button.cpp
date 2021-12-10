@@ -1,6 +1,7 @@
 #include "button.h"
 
-Interface::Button::Button(glm::vec2 *pV2Two, const char* str
+GUI::Button::Button(const glm::vec2& v2First, const glm::vec2& v2Second
+                            , const char* str, int length
                             , Graphic::Shader& sh, Graphic::Texture2D& tex
                             , const glm::vec3& v3Pos
                             , const glm::vec3& v3Ratio
@@ -8,14 +9,36 @@ Interface::Button::Button(glm::vec2 *pV2Two, const char* str
                             , const glm::vec3& v3sl
                             , const float slAng)
                         : Graphic::GraphObject(sh, tex, v3Pos, v3Ratio
-                                        , v3Spd, v3sl, slAng), title(str)
+                                        , v3Spd, v3sl, slAng), size(length)
 {
-    pV2Points[0] = pV2Two[0];
-    pV2Points[1] = glm::vec2(pV2Two[0].x, pV2Two[1].y);
-    pV2Points[2] = pV2Two[1];
-    pV2Points[3] = glm::vec2(pV2Two[1].x, pV2Two[0].y);
+    sTitle = new char[size];
+    for(int i = 0; i < size; i++) {
+        sTitle[i] = str[i];
+    }
+    pV2Points[0] = v2First;
+    pV2Points[1] = v2Second;
 } 
 
-void Interface::Button::Press()
+GUI::Button::Button(const Button& button)
+                : Graphic::GraphObject(button)
+{
+    sTitle = new char[button.size];
+    for(int i = 0; i < size; i++) {
+        sTitle[i] = button.sTitle[i];
+        }
+    pV2Points[0] = button.pV2Points[0];
+    pV2Points[1] = button.pV2Points[1];
+}
+
+GUI::Button::~Button()
+{
+    delete[] sTitle;
+//    delete[] pV2Points;
+}
+
+const glm::vec2* GUI::Button::GetCoord()
+{ return pV2Points; }
+
+void GUI::Button::Press()
 {
 } 

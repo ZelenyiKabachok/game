@@ -35,9 +35,8 @@ public:
                , float coof, Graphic::GraphObject object);
 
 //Вызывается один раз перед началом отрисовки коллизии.
-    void StartDrawCollision(Graphic::Shader& coll
-                          , Graphic::Shader& aabb
-                          , Graphic::Texture2D& collTex);
+    void StartDrawCollision();
+
 // Рисует как объект, так и его коллизию.
     void Draw(const Camera& camera);
 

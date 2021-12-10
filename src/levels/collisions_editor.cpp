@@ -21,24 +21,37 @@ void CollisionsEditor::Load()
     resources.LoadTexture("collis", "../resources/others/collis.jpg");
 	
 	pCamera = new FreeCamera(glm::vec3(0.0, 0.0, 10.0));
-    objects.New("body", new Aircraft::RustyBody(resources.GetShader("plane")));
-    objects.GetBody("body")->initShaderData(vertexes, indices, 20, 6);
-    objects.GetBody("body")->StartDrawCollision(resources.GetShader("plane")
-                                              , resources.GetShader("aabb")
-                                              , resources.GetTexture("collis"));
-                                                
+    Physic::PhysicObject *p = new Aircraft::RustyBody();
+    objects.New("RustyBody", p);
+    objects.GetPhysic("RustyBody")->initShaderData(vertexes, indices, 20, 6);
+    objects.GetPhysic("RustyBody")->StartDrawCollision();
+
+    p = new Aircraft::RustyEngine();
+    objects.New("RustyEngine", p);
+    objects.GetPhysic("RustyEngine")->initShaderData(vertexes, indices, 20, 6);
+    objects.GetPhysic("RustyEngine")->StartDrawCollision();
+
+    p = new Aircraft::RustyWings();
+    objects.New("RustyWings", p);
+    objects.GetPhysic("RustyWings")->initShaderData(vertexes, indices, 20, 6);
+    objects.GetPhysic("RustyWings")->StartDrawCollision();
+
+    p = new Aircraft::RustyTail();
+    objects.New("RustyTail", p);
+    objects.GetPhysic("RustyTail")->initShaderData(vertexes, indices, 20, 6);
+    objects.GetPhysic("RustyTail")->StartDrawCollision();
 }
 
 void CollisionsEditor::UpDate(float delta_time, const bool *keys
                             , const float angle, float scroll)
 {
     pCamera->Move(delta_time, keys, scroll);
-    objects.GetBody("body")->Graphic::GraphObject::Move(delta_time);
+    objects.GetPhysic(sActive)->Graphic::GraphObject::Move(delta_time);
 }
 
 void CollisionsEditor::Render()
 {
-    objects.GetBody("body")->Draw(*pCamera);
+    objects.GetPhysic(sActive)->Draw(*pCamera);
 }
 
 CollisionsEditor::~CollisionsEditor()

@@ -5,12 +5,11 @@
 #include "../free_camera.h"
 #include "object_loader.h"
 
-
 class CollisionsEditor : public ILevel {
 
-    //List<Graphic::GraphObject> Objects;
     ObjectLoader objects;
     FreeCamera *pCamera;
+    const char* sActive = "RustyEngine";
 
 public:
 

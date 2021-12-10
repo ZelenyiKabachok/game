@@ -5,6 +5,7 @@
 #include "../game_camera.h"
 #include "../free_camera.h"
 #include "object_loader.h"
+#include "../interface/interface.h"
 
 class FirstLevel : public ILevel {
 

@@ -8,7 +8,7 @@ namespace Aircraft {
 class RustyBody : public Body {
 public:
 
-	RustyBody(Graphic::Shader& shader);
+	RustyBody();
 
 };
 }

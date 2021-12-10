@@ -8,7 +8,7 @@ namespace Aircraft {
 class RustyWings : public Wings {
 public:
 	
-	RustyWings(Graphic::Shader& shader);
+	RustyWings();
 
 };
 }

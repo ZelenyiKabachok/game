@@ -115,7 +115,5 @@ const Aircraft::Body& Aircraft::Plane::GetBody() const
 	return *pBody;
 }
 
-void Aircraft::Plane::StartDrawCollision(Graphic::Shader& coll
-                                    , Graphic::Shader& aabb
-                                    , Graphic::Texture2D& collTex)
-{ pCollision->BeginDraw(coll, aabb, collTex); }
+void Aircraft::Plane::StartDrawCollision()
+{ pCollision->BeginDraw(); }

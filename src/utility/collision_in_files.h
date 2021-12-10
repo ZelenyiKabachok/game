@@ -3,6 +3,10 @@
 
 #include "../objects/collision.h"
 
+namespace Physic {
+class Collision;
+}
+
 bool isNumber(char letter);
 
 int getInt(const char* sCollis, unsigned int& pos);

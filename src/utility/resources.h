@@ -3,11 +3,16 @@
 
 #include <map>
 #include "collision_in_files.h"
+#include "string.h"
+
+namespace Physic {
+class Collision;
+};
 
 class ResourceManager {
 	
-    std::map <const char*, Graphic::Shader> Shaders;
-	std::map <const char*, Graphic::Texture2D> Textures;
+    std::map <String, Graphic::Shader> Shaders;
+	std::map <String, Graphic::Texture2D> Textures;
 
 public:
 

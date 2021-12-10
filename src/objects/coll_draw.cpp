@@ -1,15 +1,20 @@
 #include "coll_draw.h"
 
+//extern ResourceManager resources;
+
 void Graphic::CollDraw::Init(Physic::Shape **ppShapes
-                    , unsigned int numOfShapes, const glm::vec2 *pV2AABB
-                    , Shader& shader, Shader& aabbShader, Texture2D& texture)
+                    , unsigned int numOfShapes, const glm::vec2 *pV2AABB)
 {
+    Graphic::Shader& shader = ResourceManager::Instance().GetShader("plane");
+    Graphic::Shader& aabb = ResourceManager::Instance().GetShader("aabb");
+    Graphic::Texture2D& texture = ResourceManager::Instance().GetTexture("collis");
+
 	number = numOfShapes;
 	ppGraphic = new ShapeDraw*[numOfShapes+1];
 	for(unsigned int i = 0; i < numOfShapes; i++) {
 		ppGraphic[i] = new ShapeDraw(shader, texture, glm::vec3(0.0, 0.0, 0.0));
 	}
-	ppGraphic[numOfShapes] = new ShapeDraw(aabbShader, texture, glm::vec3(0.0));
+	ppGraphic[numOfShapes] = new ShapeDraw(aabb, texture, glm::vec3(0.0));
 
 	for(unsigned int i = 0; i < numOfShapes; i++) {
 		ppGraphic[i]->initShaderData(ppShapes[i]->pV2Points

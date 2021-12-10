@@ -41,8 +41,11 @@ add_executable(game 					src/main.cpp
 	src/utility/list.cpp				src/utility/list.h		
     src/utility/temp_list.cpp
     src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
+    src/utility/string.cpp              src/utility/string.h
 
     src/interface/button.cpp            src/interface/button.h
+    src/interface/load_button.cpp       src/interface/load_button.h
+    src/interface/interface.cpp         src/interface/interface.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp                      src/camera.h

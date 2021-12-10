@@ -1,6 +1,6 @@
 #include "input.h"
 
-void Input::Mouse(float curX, float curY)
+void Input::MousePosition(float curX, float curY)
 {
     
     float delta_x = curPosX - curX;
@@ -16,6 +16,16 @@ void Input::Mouse(float curX, float curY)
     mouseInput = true;
 }	
 
+void Input::MouseButton(int button, int action, int modes)
+{
+    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+        press = true;
+    }
+    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
+        press = false;
+    }
+}
+
 void Input::Scroll(float yOffset)
 {
     scroll = yOffset;
@@ -26,7 +36,7 @@ void Input::Keyboard(int key, int scancode, int action, int modes)
 {
     if(action == GLFW_PRESS) {
         pressedKeys[key] = true;
-    } else {
+    } else if(action == GLFW_RELEASE) {
         pressedKeys[key] = false;
     }
     keyInput = true;

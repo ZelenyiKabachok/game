@@ -13,10 +13,10 @@ void FirstLevel::Load()
 	resources.LoadTexture("box", "../resources/others/wooden_container1.jpg");
 	resources.LoadTexture("collis", "../resources/others/collis.jpg");
 
-    objects.New("RustyBody", new Aircraft::RustyBody(planeShader));
-    objects.New("RustyEngine", new Aircraft::RustyEngine(planeShader));
-    objects.New("RustyWings", new Aircraft::RustyWings(planeShader));
-    objects.New("RustyTail", new Aircraft::RustyTail(planeShader));
+    objects.New("RustyBody", new Aircraft::RustyBody());
+    objects.New("RustyEngine", new Aircraft::RustyEngine());
+    objects.New("RustyWings", new Aircraft::RustyWings());
+    objects.New("RustyTail", new Aircraft::RustyTail());
 
     objects.New("Back", new Graphic::GraphObject(planeShader
         , resources.GetTexture("back"), glm::vec3(118.0, 2.5, 0.0)
@@ -59,15 +59,9 @@ void FirstLevel::Load()
                         , objects.GetTail("RustyTail")
 						, glm::vec3(-50.0, 0.0, 0.0), glm::vec3(30.0, 0.0, 0.0)
 						, CollObjects);
-	pPlane->StartDrawCollision(planeShader, resources.GetShader("aabb")
-                        , resources.GetTexture("collis"));
-    
-    objects.GetPhysic("1")->StartDrawCollision(planeShader
-                        , resources.GetShader("aabb")
-                        , resources.GetTexture("collis"));
-    objects.GetPhysic("2")->StartDrawCollision(planeShader
-                        , resources.GetShader("aabb")
-                        , resources.GetTexture("collis"));
+	pPlane->StartDrawCollision();
+    objects.GetPhysic("1")->StartDrawCollision();
+    objects.GetPhysic("2")->StartDrawCollision();
     
 	pCamera->FocusOnTheObject(&(pPlane->GetBody()));
 
