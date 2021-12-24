@@ -11,7 +11,8 @@ class FreeCamera : public Camera {
 
 public:
 
-    FreeCamera(const glm::vec3& v3Pos = glm::vec3(0), float sp = 8);
+    FreeCamera(int width, int height, const glm::vec3& v3Pos = glm::vec3(0)
+             , float sp = 6);
 
     virtual void Move(float delta_time, const bool *keys, float scroll);
 

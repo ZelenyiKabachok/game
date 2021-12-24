@@ -1,9 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "utility/collision_in_files.h"
-#include "input.h"
 #include "levels.h"
+#include "utility/collision_in_files.h"
 #include "utility/resources.h"
 #include "objects.h"
 #include "camera.h"
@@ -11,19 +10,16 @@
 
 enum Levels { COLLISIONS_EDITOR, FIRST_LEVEL, NOTHING };
 
-extern const int Width;
-extern const int Height;
-
 class Game {
 
-    Input input;    
+    Input *input;    
     //GUI::Interface interface;
 
 public:	
 
     Game() {}
 
-	~Game() {}
+	~Game();
 
 	void KeyboardInput(int key, int scancode, int action, int modes);
 
@@ -33,7 +29,7 @@ public:
 
     void ScrollInput(float yOffset);
 
-	void Init(ILevel& level) const;
+	void Init(ILevel& level, int width, int height);
 
 	void UpDate(float delta_time, ILevel& level);
 

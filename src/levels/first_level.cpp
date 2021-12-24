@@ -1,13 +1,15 @@
 #include "first_level.h"
 
-void FirstLevel::Load()
+void FirstLevel::Load(int width, int height)
 {
     ResourceManager& resources = ResourceManager::Instance();
 	Graphic::Shader& planeShader = resources.LoadShader("plane"
                                 , "../shaders/sprite.vert"
 								, "../shaders/sprite.frag");
-	resources.LoadShader("aabb", "../shaders/aabb.vert", 
-						"../shaders/aabb.frag", "../shaders/aabb.geom");
+	resources.LoadShader("aabb", "../shaders/aabb.vert"
+						, "../shaders/aabb.frag", "../shaders/aabb.geom");
+//    resources.LoadShader("button", "../shaders/button.vert"
+//                                , "../shaders/button.frag");
 	
 	resources.LoadTexture("back", "../resources/backgrounds/Back7.jpg");
 	resources.LoadTexture("box", "../resources/others/wooden_container1.jpg");
@@ -51,7 +53,8 @@ void FirstLevel::Load()
     objects.GetPhysic("2")->initShaderData(QuadData, QuadIndices, 20, 6);
 
 
-	pCamera = new GameCamera(glm::vec3(0.0, 0.0, 40.0), glm::vec3(0.0, 0.0, 0.0));
+	pCamera = new GameCamera(width, height, glm::vec3(0.0, 0.0, 40.0)
+                            , glm::vec3(0.0, 0.0, 0.0));
 
 	pPlane = new Aircraft::Plane(objects.GetBody("RustyBody")
                         , objects.GetEngine("RustyEngine")
@@ -67,13 +70,12 @@ void FirstLevel::Load()
 
 }
 
-void FirstLevel::UpDate(float delta_time, const bool *keys
-                , const float angle, float scroll)
+void FirstLevel::UpDate(float delta_time, const Input& input)
 {
-
 //	pCamera->Follow(delta_time);
 
-	pPlane->Fly(delta_time, keys['W'], keys['S'], angle);	
+	pPlane->Fly(delta_time, input.Keys()['W'], input.Keys()['S']
+                                             , input.GetAngle());	
 
 	objects.GetPhysic("1")->Move(delta_time);
 	objects.GetPhysic("2")->Move(delta_time);

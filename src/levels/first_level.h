@@ -21,10 +21,9 @@ public:
 
 	FirstLevel() {}
 
-	virtual void Load();
+	virtual void Load(int width, int height);
 
-	virtual void UpDate(float delta_time, const bool *pKeys
-                , const float angle, float scroll);
+	virtual void UpDate(float delta_time, const Input& input);
 
 	virtual void Render();
 

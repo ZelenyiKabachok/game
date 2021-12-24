@@ -12,17 +12,23 @@ class Input {
 
     bool mouseInput = false;
     bool keyInput = false;
-    bool press = false; 
+    bool mousePress = false; 
     
 
-    float curPosX = 0;
+    float screenWidth;
+    float screenHeight;
+
+    float curPosX = 0;      
     float curPosY = 0;
+
+    float normX;                //Нормализированые координаты.
+    float normY;
 
 	float angle = 0;	        //Угол смещение мыши для Aircraft::Plane::Fly
 
 public:
     
-    Input() {}
+    Input(float width, float height);
 
     void Keyboard(int key, int scancode, int action, int modes);
 
@@ -31,13 +37,17 @@ public:
     void MouseButton(int button, int action, int modes);
 
     void Scroll(float yOffset);
+    //void ChangeScroll(float newScroll); 
 
-    const bool* Keys();
-    void ChangeScroll(float newScroll); 
-    float GetScroll();
-    float GetAngle();
-    bool MouseInput();
-    bool KeyInput();
+    const bool* Keys() const;
+    float GetScroll() const;
+    float GetAngle() const;
+    float GetXPos() const;
+    float GetYPos() const;
+    void MouseNotPress();
+    bool MousePress() const;
+    bool MouseInput() const;
+    bool KeyInput() const;
 
     ~Input() {}
 };

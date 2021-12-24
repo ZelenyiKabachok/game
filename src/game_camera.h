@@ -21,7 +21,7 @@ public:
 
 	virtual void Move(float delta_time);
 
-	GameCamera(const glm::vec3& v3Pos = glm::vec3(0)
+	GameCamera(int width, int height, const glm::vec3& v3Pos = glm::vec3(0)
              , const glm::vec3& v3Sp = glm::vec3(0));
 
     virtual ~GameCamera() {}

@@ -1,5 +1,8 @@
 #include "input.h"
 
+Input::Input(float width, float height)
+           : screenWidth(width), screenHeight(height) {}
+
 void Input::MousePosition(float curX, float curY)
 {
     
@@ -7,6 +10,9 @@ void Input::MousePosition(float curX, float curY)
 	float delta_y = curPosY - curY;
     curPosX = curX;
     curPosY = curY;
+
+    normX = curPosX/(screenWidth/2) - 1;
+    normY = -(curPosY/(screenHeight/2) - 1);
 
 //Для расчёта угла смещения мыши строится треуголник,
 //в котором sensity и delta_y катиты, a через значение
@@ -18,19 +24,19 @@ void Input::MousePosition(float curX, float curY)
 
 void Input::MouseButton(int button, int action, int modes)
 {
-    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
-        press = true;
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS) {
+        mousePress = true;
     }
-    if(button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_RELEASE) {
-        press = false;
+    if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE) {
+        mousePress = false;
     }
 }
 
 void Input::Scroll(float yOffset)
-{
-    scroll = yOffset;
-}
+{ scroll = yOffset; }
 
+//void Input::ChangeScroll(float newScroll)
+//{ scroll = newScroll; }
 
 void Input::Keyboard(int key, int scancode, int action, int modes)
 {
@@ -42,15 +48,21 @@ void Input::Keyboard(int key, int scancode, int action, int modes)
     keyInput = true;
 }
 
-const bool* Input::Keys()
+const bool* Input::Keys() const
 { return pressedKeys; }
-void Input::ChangeScroll(float newScroll)
-{ scroll = newScroll; }
-float Input::GetScroll()
+float Input::GetScroll() const
 { return scroll; }
-float Input::GetAngle()
+float Input::GetAngle() const
 { return angle; }
-bool Input::MouseInput()
+float Input::GetXPos() const
+{ return normX; }
+float Input::GetYPos() const
+{ return normY; }
+void Input::MouseNotPress()
+{ mousePress = false; }
+bool Input::MousePress() const
+{ return mousePress; }
+bool Input::MouseInput() const
 { return mouseInput; }
-bool Input::KeyInput()
-{ return keyInput; }
+bool Input::KeyInput() const
+{ return keyInput; } 

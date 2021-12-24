@@ -1,14 +1,24 @@
 #include "interface.h"
 
-GUI::Interface::Interface(const GUI::Button *buttons
-                                  , int numOfBut)
-                                  : quantity(numOfBut)
+void GUI::Interface::Init(const GUI::Button *pButtons, int numOfBut)
 {
+   float vertexes[] = {
+      -1.0, -1.0, 0.0,     0.0, 0.0,
+      -1.0,  1.0, 0.0,     0.0, 1.0,
+       1.0,  1.0, 0.0,     1.0, 1.0,
+       1.0, -1.0, 0.0,     1.0, 0,0
+    };
+    unsigned int indices[] {
+        0, 1, 2,
+        0, 2, 3
+    };
+
+    quantity = numOfBut;
     ppButtons = new GUI::Button*[quantity];
     for(int i = 0; i < quantity; i++) {
-        ppButtons[i] = new GUI::Button(buttons[i]);
+        ppButtons[i] = new GUI::Button(pButtons[i]);
+        ppButtons[i]->initShaderData(vertexes, indices, 20, 6);
     }
-    
 }
 
 bool GUI::Interface::CheckMouse(const glm::vec2 *pV2Button
@@ -28,15 +38,26 @@ void GUI::Interface::Render(const Camera& camera)
     }
 }
 
-void GUI::Interface::MouseInput(float posX, float posY, bool press)
+void GUI::Interface::ChangeButtonState(GUI::Button* pButton
+                                    , Setting& date, GUI::State state)
 {
-    glm::vec2 pos(posX, posY);
+    pButton->ChangeState(state, date);
+}
+
+void GUI::Interface::Click(const Input& input, Setting& date)
+{
+    glm::vec2 pos(input.GetXPos(), input.GetYPos());
     for(int i = 0; i < quantity; i++) {
         if(CheckMouse(ppButtons[i]->GetCoord(), pos)) {
-            if(press) {
-                ppButtons[i]->Press();
-                break;
+            if(input.MousePress()) {
+                ChangeButtonState(ppButtons[i], date, GUI::PRESSED);
+                continue;
+            } else {
+                ChangeButtonState(ppButtons[i], date, GUI::HOVERED);
+                continue;
             }
+        } else {
+            ChangeButtonState(ppButtons[i], date, GUI::NOT_HOVERED);
         }
     } 
 }

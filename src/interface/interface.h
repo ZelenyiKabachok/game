@@ -2,27 +2,31 @@
 #define INTERFACE_H
 
 #include "button.h"
+#include "../input.h"
 
 namespace GUI {
 
 class Interface {
+protected:
 
-    Button **ppButtons;
-    int quantity;
+    Button **ppButtons = NULL;
+    int quantity = 0;
 
-private:
+protected:
 
     bool CheckMouse(const glm::vec2 *pV2Button, const glm::vec2 v2Mouse);
 
+    virtual void ChangeButtonState(Button* pButton, Setting& date, State state);
+
 public:
 
-    Interface(const Button *buttons, int numOfBut);
+    Interface() {}
+
+    virtual void Init(const Button *pButtons, int numOfBut);
 
     virtual void Render(const Camera& camera);
 
-    virtual void MouseInput(float posX, float posY, bool press);
-
-    static void RenderText();
+    virtual void Click(const Input& input, Setting& date);
 
     virtual ~Interface();
 

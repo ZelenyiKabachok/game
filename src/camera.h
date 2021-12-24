@@ -20,11 +20,13 @@ protected:
 
 public:
 
-    Camera(const glm::vec3& v3Pos); 
+    Camera(int width, int height, const glm::vec3& v3Pos); 
 
     virtual void Move(float delta_time) {}
 
 	virtual glm::mat4 GetMatrix() const;
+
+    virtual glm::mat4 GetProjection() const;
 
     virtual glm::vec3 GetPosition() const;
 

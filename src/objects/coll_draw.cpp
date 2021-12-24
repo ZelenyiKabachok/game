@@ -1,7 +1,5 @@
 #include "coll_draw.h"
 
-//extern ResourceManager resources;
-
 void Graphic::CollDraw::Init(Physic::Shape **ppShapes
                     , unsigned int numOfShapes, const glm::vec2 *pV2AABB)
 {

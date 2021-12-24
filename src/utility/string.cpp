@@ -5,7 +5,7 @@ int String::DefineSize(const char* str)
     int i;
     for(i = 0; str[i] != '\0'; i++)
         {}
-    return i+1;
+    return i;
 } 
 
 String::String(const char* str)
@@ -24,6 +24,11 @@ String::String(const String& str)
     for(int i = 0; i < size; i++) {
         string[i] = str.string[i];
     }
+}
+
+void String::Print() const
+{
+    printf("%s\n", string);
 }
 
 bool operator==(const String& str1, const String& str2)
@@ -66,7 +71,7 @@ char String::operator[](int index)
 const String& String::operator=(const String& str)
 {
     size = str.size;  
-    delete[] string;
+    //delete string;
     string = new char[size];
     for(int i = 0; i < size; i++) {
         string[i] = str.string[i];

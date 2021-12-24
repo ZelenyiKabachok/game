@@ -1,36 +1,38 @@
 #include "game.h"
 
-void Game::Init(ILevel& level) const
+void Game::Init(ILevel& level, int width, int height)
 {
-	level.Load();
+    input = new Input(width, height);
+	level.Load(width, height);
 }
 
 void Game::UpDate(float delta_time, ILevel& level)
 {
-	level.UpDate(delta_time, input.Keys(), input.GetAngle(), input.GetScroll());
-    input.ChangeScroll(0.0);
+	level.UpDate(delta_time, *input);
+    input->Scroll(0.0);
+    input->MouseNotPress();
 	level.Render();
 }
 
 void Game::KeyboardInput(int key, int scancode, int action, int modes)
 {
-    input.Keyboard(key, scancode, action, modes);
+    input->Keyboard(key, scancode, action, modes);
 }	
 
 void Game::MousePosition(float curX, float curY)
 {
-    input.MousePosition(curX, curY);
+    input->MousePosition(curX, curY);
 //    Interface
 }	
 
 void Game::MouseButton(int button, int action, int modes)
 {
-    input.MouseButton(button, action, modes);
+    input->MouseButton(button, action, modes);
 }
 
 void Game::ScrollInput(float yOffset)
 {
-    input.Scroll(yOffset);
+    input->Scroll(yOffset);
 }
 
 enum Levels whatLevel(const String& str)
@@ -63,4 +65,7 @@ ILevel* Game::ChooseLevel(GLFWwindow *pWindow, int argc, char **argv)
     }
 }
 
-
+Game::~Game()
+{
+    delete input;
+}

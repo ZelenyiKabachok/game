@@ -7,8 +7,9 @@ void GameCamera::Move(float delta_time)
     this->matCamera = this->matProjection * this->matView * this->matModel;
 }
 
-GameCamera::GameCamera(const glm::vec3& v3Pos, const glm::vec3& v3Sp)
-					: Camera(v3Pos), v3Speed(-v3Sp) {}
+GameCamera::GameCamera(int width, int height, const glm::vec3& v3Pos
+                    , const glm::vec3& v3Sp)
+					: Camera(width, height, v3Pos), v3Speed(-v3Sp) {}
 
 void GameCamera::FocusOnTheObject(const Graphic::GraphObject *obj)
 {

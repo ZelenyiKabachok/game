@@ -1,8 +1,5 @@
 #include "game.h"
 
-const int Height = 1080;
-const int Width = 1920;
-
 Game game;
 
 void key_callback(GLFWwindow *pWindow, int key, int scancode, int action
@@ -38,8 +35,15 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-	pWindow = glfwCreateWindow(Width, Height, "Game", NULL, NULL);
-
+	//pWindow = glfwCreateWindow(Width, Height, "Game", NULL, NULL);
+    const GLFWvidmode *vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    int width, height;
+    width = vidmode->width;
+    height = vidmode->height;
+    
+    //glfwGetWindowSize(&Width, &Height);
+    pWindow = glfwCreateWindow(width, height, "Game"
+                            , glfwGetPrimaryMonitor(), nullptr);
 	if(pWindow == NULL) {
 		fprintf(stderr, "Error, can't create window!\n");
 		return -1;
@@ -71,13 +75,13 @@ int main(int argc, char **argv)
 
     ILevel *Level = game.ChooseLevel(pWindow, argc, argv);
 
-	game.Init(*Level);
+  	game.Init(*Level, width, height);
 
 	float current_time = 0.0;
 	float delta_time = 0.0;
 	float last_time = 0.0;
 
-    glViewport(0, 0, Width, Height);
+    glViewport(0, 0, width, height);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

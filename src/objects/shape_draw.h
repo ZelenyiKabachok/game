@@ -4,8 +4,6 @@
 #include "shape.h"
 #include "graphic_object.h"
 
-//extern Camera camera;
-
 namespace Graphic {
 
 //Отрисовка контура фигуры класса Shape.

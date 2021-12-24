@@ -16,7 +16,7 @@ class GraphObject {
 protected:
 	Shader& shader;
 	Texture2D& texture;
-	glm::vec3 v3Color = glm::vec3(1.0, 1.0, 1.0);
+	glm::vec3 v3Color = glm::vec3(1.0f);
 	GLuint VAO;
 	GLenum type;
 	unsigned int points;

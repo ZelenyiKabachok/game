@@ -17,14 +17,14 @@ void Emit(vec4 v4Point)
 void main()
 {
 
-	vec4 v4First = matCamera * matPosition * vec4(v3First, 1.0f);
-	vec4 v4Second = matCamera * matPosition * vec4(v3Second, 1.0f);
+    vec4 v4First = matCamera * matPosition * vec4(v3First, 1.0f);
+    vec4 v4Second = matCamera * matPosition * vec4(v3Second, 1.0f);
 
-	vec4 v4Bottom = v4First;
-	v4Bottom.x = v4Second.x;
+    vec4 v4Bottom = v4First;
+    v4Bottom.x = v4Second.x;
 
-	vec4 v4Up = v4First;
-	v4Up.y = v4Second.y;
+    vec4 v4Up = v4First;
+    v4Up.y = v4Second.y;
 
     Emit(v4First);
     Emit(v4Bottom);
@@ -32,6 +32,6 @@ void main()
     Emit(v4Up);
     Emit(v4First);
 
-	EndPrimitive();
+    EndPrimitive();
 }
 

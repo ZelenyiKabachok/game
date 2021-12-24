@@ -8,10 +8,11 @@ namespace GUI {
 class LoadButton : public Button {
 public:
 
-    LoadButton(Graphic::Shader& shader, Graphic::Texture2D texture
-                                     , const char *str, int length);
+    LoadButton(const String& name, glm::vec3 v3Pos);
     
-    void Press();
+    virtual void ChangeState(State newState, Setting& data);
+
+    virtual ~LoadButton() {}
 
 };
 }

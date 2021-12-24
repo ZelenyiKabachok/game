@@ -4,17 +4,17 @@
 #include "../utility/resources.h"
 #include "../utility/list.h"
 #include "../objects.h"
+#include "../input.h"
 
 //Класс-интерфейс - уровнь.
 class ILevel {
 public:
 
 //Загрузка уровня.
-	virtual void Load() = 0;
+	virtual void Load(int width, int height) = 0;
 
 //Обновление состояния объектов уровня.
-	virtual void UpDate(float delta_time, const bool *pKeys
-                , const float angle, float scroll) = 0;
+	virtual void UpDate(float delta_time, const Input& input) = 0;
 
 //Отрисовка уровня.
 	virtual void Render() = 0;

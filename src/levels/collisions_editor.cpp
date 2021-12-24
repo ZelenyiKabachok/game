@@ -1,8 +1,8 @@
 #include "collisions_editor.h"
 
-void CollisionsEditor::Load()
+void CollisionsEditor::Load(int width, int height)
 {
-    float vertexes[] = {    
+    float vertexes[] = {   
       -1.0, -1.0, 0.0,     0.0, 0.0,
       -1.0,  1.0, 0.0,     0.0, 1.0,
        1.0,  1.0, 0.0,     1.0, 1.0,
@@ -16,11 +16,16 @@ void CollisionsEditor::Load()
     ResourceManager& resources = ResourceManager::Instance();
     resources.LoadShader("plane", "../shaders/sprite.vert", 
 								  "../shaders/sprite.frag");
+    resources.LoadShader("button", "../shaders/sprite.vert", 
+								  "../shaders/sprite.frag");
 	resources.LoadShader("aabb", "../shaders/aabb.vert", 
 						"../shaders/aabb.frag", "../shaders/aabb.geom");
     resources.LoadTexture("collis", "../resources/others/collis.jpg");
+    resources.LoadTexture("button", "../resources/others/button.png");
 	
-	pCamera = new FreeCamera(glm::vec3(0.0, 0.0, 10.0));
+    active.string = "RustyEngine";
+    pInterface = new GUI::CollEditGui;
+	pCamera = new FreeCamera(width, height, glm::vec3(0.0, 0.0, 10.0));
     Physic::PhysicObject *p = new Aircraft::RustyBody();
     objects.New("RustyBody", p);
     objects.GetPhysic("RustyBody")->initShaderData(vertexes, indices, 20, 6);
@@ -42,16 +47,17 @@ void CollisionsEditor::Load()
     objects.GetPhysic("RustyTail")->StartDrawCollision();
 }
 
-void CollisionsEditor::UpDate(float delta_time, const bool *keys
-                            , const float angle, float scroll)
+void CollisionsEditor::UpDate(float delta_time, const Input& input)
 {
-    pCamera->Move(delta_time, keys, scroll);
-    objects.GetPhysic(sActive)->Graphic::GraphObject::Move(delta_time);
+    pCamera->Move(delta_time, input.Keys(), input.GetScroll());
+    objects.GetPhysic(active.string)->Graphic::GraphObject::Move(delta_time);
+    pInterface->Click(input, active);
 }
 
 void CollisionsEditor::Render()
 {
-    objects.GetPhysic(sActive)->Draw(*pCamera);
+    objects.GetPhysic(active.string)->Draw(*pCamera);
+    pInterface->Render(*pCamera);
 }
 
 CollisionsEditor::~CollisionsEditor()

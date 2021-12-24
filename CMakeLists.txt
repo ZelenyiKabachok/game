@@ -46,6 +46,7 @@ add_executable(game 					src/main.cpp
     src/interface/button.cpp            src/interface/button.h
     src/interface/load_button.cpp       src/interface/load_button.h
     src/interface/interface.cpp         src/interface/interface.h
+    src/interface/coll_edit_gui.cpp     src/interface/coll_edit_gui.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp                      src/camera.h

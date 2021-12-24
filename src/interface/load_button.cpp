@@ -1,12 +1,16 @@
 #include "load_button.h"
 
-GUI::LoadButton::LoadButton(Graphic::Shader& shader, Graphic::Texture2D texture
-                                                 , const char *str, int length)
-                : Button(glm::vec2(-1.0, -0.5), glm::vec2(1.0, 0.5)
-                        , str, length, shader, texture)
+GUI::LoadButton::LoadButton(const String& name, glm::vec3 v3Pos)
+                    : Button(glm::vec2(-1.0, -0.5), glm::vec2(1.0, 0.5)
+                        , name
+                        , ResourceManager::Instance().GetShader("button")
+                        , ResourceManager::Instance().GetTexture("button")
+                        , v3Pos, glm::vec3(0.12, 0.06, 1))
 {}
 
-void GUI::LoadButton::Press()
+void GUI::LoadButton::ChangeState(GUI::State newState, Setting& data)
 {
-//    sActive = this->sTitle;
+    this->state = newState;
+    if(this->state == PRESSED) 
+    { data.string = this->sTitle; }
 }

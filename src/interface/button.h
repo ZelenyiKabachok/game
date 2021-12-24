@@ -5,23 +5,26 @@
 #include FT_FREETYPE_H
 #include "../objects/graphic_object.h"
 #include "../objects/collision.h"
+#include "../utility/resources.h"
+#include "setting.h"
 
 namespace GUI {
+
+enum State { PRESSED, HOVERED, NOT_HOVERED };
 
 class Button : public Graphic::GraphObject {
 protected:
 
     glm::vec2 pV2Points[2];
 
-    char* sTitle;
-    int size;
+    String sTitle;
 
-    bool pressed = false;
+    enum State state = NOT_HOVERED;
 
 public:
 
     Button(const glm::vec2& v2First, const glm::vec2& v2Second
-                            , const char* str, int length
+                            , const String& name
                             , Graphic::Shader& sh, Graphic::Texture2D& tex
                             , const glm::vec3& v3Pos = glm::vec3(0)
                             , const glm::vec3& v3Ratio = glm::vec3(1)
@@ -31,11 +34,13 @@ public:
 
     Button(const Button& button);
 
-    virtual void Press();
+    virtual void ChangeState(State newState, Setting& data);
+
+    virtual void Draw(const Camera& camera);
 
     const glm::vec2* GetCoord();
 
-    virtual ~Button();
+    virtual ~Button() {}
 
 };
 }

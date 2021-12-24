@@ -19,32 +19,32 @@ public:
 
     ObjectLoader() {}
 
-    Graphic::GraphObject* New(const char* name
+    Graphic::GraphObject* New(const String& name
                                     , Graphic::GraphObject* pObj);
-    Physic::PhysicObject* New(const char* name
+    Physic::PhysicObject* New(const String& name
                                     , Physic::PhysicObject* pObj);
-    Aircraft::Body* New(const char* name
+    Aircraft::Body* New(const String& name
                                     , Aircraft::Body* pObj);
-    Aircraft::Engine* New(const char* name
+    Aircraft::Engine* New(const String& name
                                     , Aircraft::Engine* pObj);
-    Aircraft::Wings* New(const char* name
+    Aircraft::Wings* New(const String& name
                                     , Aircraft::Wings* pObj);
-    Aircraft::Tail* New(const char* name
+    Aircraft::Tail* New(const String& name
                                     , Aircraft::Tail* pObj);
     
-    void DeleteGraphic(const char* name);
-    void DeletePhysic(const char* name);
-    void DeleteBody(const char* name);
-    void DeleteEngine(const char* name);
-    void DeleteWings(const char* name);
-    void DeleteTail(const char* name);
+    void DeleteGraphic(const String& name);
+    void DeletePhysic(const String& name);
+    void DeleteBody(const String& name);
+    void DeleteEngine(const String& name);
+    void DeleteWings(const String& name);
+    void DeleteTail(const String& name);
 
-    Graphic::GraphObject* GetGraphic(const char* name);
-    Physic::PhysicObject* GetPhysic(const char* name);
-    Aircraft::Body* GetBody(const char* name);
-    Aircraft::Engine* GetEngine(const char* name);
-    Aircraft::Wings* GetWings(const char* name);
-    Aircraft::Tail* GetTail(const char* name);
+    Graphic::GraphObject* GetGraphic(const String& name);
+    Physic::PhysicObject* GetPhysic(const String& name);
+    Aircraft::Body* GetBody(const String& name);
+    Aircraft::Engine* GetEngine(const String& name);
+    Aircraft::Wings* GetWings(const String& name);
+    Aircraft::Tail* GetTail(const String& name);
 
     ~ObjectLoader();
 
