@@ -1,6 +1,6 @@
 #include "first_level.h"
 
-void FirstLevel::Load(int width, int height)
+void FirstLevel::Load(const FT_Face& face, int width, int height)
 {
     ResourceManager& resources = ResourceManager::Instance();
 	Graphic::Shader& planeShader = resources.LoadShader("plane"
@@ -44,13 +44,13 @@ void FirstLevel::Load(int width, int height)
 		0, 2, 3
 	};
 
-    objects.GetBody("RustyBody")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetEngine("RustyEngine")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetWings("RustyWings")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetTail("RustyTail")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetGraphic("Back")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetPhysic("1")->initShaderData(QuadData, QuadIndices, 20, 6);
-    objects.GetPhysic("2")->initShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetBody("RustyBody")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetEngine("RustyEngine")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetWings("RustyWings")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetTail("RustyTail")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetGraphic("Back")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetPhysic("1")->InitShaderData(QuadData, QuadIndices, 20, 6);
+    objects.GetPhysic("2")->InitShaderData(QuadData, QuadIndices, 20, 6);
 
 
 	pCamera = new GameCamera(width, height, glm::vec3(0.0, 0.0, 40.0)

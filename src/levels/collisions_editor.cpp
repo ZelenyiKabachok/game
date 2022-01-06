@@ -1,56 +1,60 @@
 #include "collisions_editor.h"
 
-void CollisionsEditor::Load(int width, int height)
+void CollisionsEditor::Load(const FT_Face& face, int width, int height)
 {
-    float vertexes[] = {   
+    float pVertexes[] = {   
       -1.0, -1.0, 0.0,     0.0, 0.0,
       -1.0,  1.0, 0.0,     0.0, 1.0,
        1.0,  1.0, 0.0,     1.0, 1.0,
        1.0, -1.0, 0.0,     1.0, 0,0
     }; 
-    unsigned int indices[] {
+    unsigned int pIndices[] {
         0, 1, 2,
         0, 2, 3
     };
      
     ResourceManager& resources = ResourceManager::Instance();
-    resources.LoadShader("plane", "../shaders/sprite.vert", 
-								  "../shaders/sprite.frag");
-    resources.LoadShader("button", "../shaders/sprite.vert", 
-								  "../shaders/sprite.frag");
-	resources.LoadShader("aabb", "../shaders/aabb.vert", 
-						"../shaders/aabb.frag", "../shaders/aabb.geom");
+    resources.LoadShader("plane", "../shaders/sprite.vert" 
+								, "../shaders/sprite.frag");
+    resources.LoadShader("button", "../shaders/button.vert"
+								 , "../shaders/button.frag");
+	resources.LoadShader("aabb", "../shaders/aabb.vert"
+						       , "../shaders/aabb.frag"
+                               , "../shaders/aabb.geom");
+    resources.LoadShader("text", "../shaders/text.vert"
+                               , "../shaders/text.frag");
     resources.LoadTexture("collis", "../resources/others/collis.jpg");
     resources.LoadTexture("button", "../resources/others/button.png");
 	
     active.string = "RustyEngine";
-    pInterface = new GUI::CollEditGui;
+    pInterface = new GUI::CollEditGui(face, width, height);
 	pCamera = new FreeCamera(width, height, glm::vec3(0.0, 0.0, 10.0));
-    Physic::PhysicObject *p = new Aircraft::RustyBody();
-    objects.New("RustyBody", p);
-    objects.GetPhysic("RustyBody")->initShaderData(vertexes, indices, 20, 6);
+
+    Physic::PhysicObject *curObj = new Aircraft::RustyBody();
+    objects.New("RustyBody", curObj);
+    objects.GetPhysic("RustyBody")->InitShaderData(pVertexes, pIndices, 20, 6);
     objects.GetPhysic("RustyBody")->StartDrawCollision();
 
-    p = new Aircraft::RustyEngine();
-    objects.New("RustyEngine", p);
-    objects.GetPhysic("RustyEngine")->initShaderData(vertexes, indices, 20, 6);
+    curObj = new Aircraft::RustyEngine();
+    objects.New("RustyEngine", curObj);
+    objects.GetPhysic("RustyEngine")->InitShaderData(pVertexes, pIndices, 20, 6);
     objects.GetPhysic("RustyEngine")->StartDrawCollision();
 
-    p = new Aircraft::RustyWings();
-    objects.New("RustyWings", p);
-    objects.GetPhysic("RustyWings")->initShaderData(vertexes, indices, 20, 6);
+    curObj = new Aircraft::RustyWings();
+    objects.New("RustyWings", curObj);
+    objects.GetPhysic("RustyWings")->InitShaderData(pVertexes, pIndices, 20, 6);
     objects.GetPhysic("RustyWings")->StartDrawCollision();
 
-    p = new Aircraft::RustyTail();
-    objects.New("RustyTail", p);
-    objects.GetPhysic("RustyTail")->initShaderData(vertexes, indices, 20, 6);
+    curObj = new Aircraft::RustyTail();
+    objects.New("RustyTail", curObj);
+    objects.GetPhysic("RustyTail")->InitShaderData(pVertexes, pIndices, 20, 6);
     objects.GetPhysic("RustyTail")->StartDrawCollision();
+
 }
 
 void CollisionsEditor::UpDate(float delta_time, const Input& input)
 {
     pCamera->Move(delta_time, input.Keys(), input.GetScroll());
-    objects.GetPhysic(active.string)->Graphic::GraphObject::Move(delta_time);
     pInterface->Click(input, active);
 }
 

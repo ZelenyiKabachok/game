@@ -7,7 +7,7 @@
 
 class Input {
 
-	bool pressedKeys[128];  //Нажатые клавишы
+	bool pressedKeys[128] = { false };  //Нажатые клавишы
     float scroll = 0;    
 
     bool mouseInput = false;
@@ -21,7 +21,8 @@ class Input {
     float curPosX = 0;      
     float curPosY = 0;
 
-    float normX;                //Нормализированые координаты.
+    float normX;                //Координаты курсора в системе
+                                //координат от (-1; -1) до (1; 1).
     float normY;
 
 	float angle = 0;	        //Угол смещение мыши для Aircraft::Plane::Fly
@@ -44,6 +45,8 @@ public:
     float GetAngle() const;
     float GetXPos() const;
     float GetYPos() const;
+    float GetNormXPos() const;
+    float GetNormYPos() const;
     void MouseNotPress();
     bool MousePress() const;
     bool MouseInput() const;

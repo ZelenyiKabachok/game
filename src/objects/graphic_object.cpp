@@ -1,13 +1,13 @@
 #include "graphic_object.h"
 
-void Graphic::GraphObject::initShaderData(const float *pData
+void Graphic::GraphObject::InitShaderData(const float *pData
                                 , const unsigned int *pIndices
 								, int numOfVert, unsigned int numOfInd
 								, GLenum DrawType)
 {
 	type = DrawType;
 	points = numOfInd;
-	unsigned int VBO, EBO;
+	GLuint VBO, EBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);

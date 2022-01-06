@@ -1,7 +1,7 @@
 #version 330
 
-layout (location = 0) in vec3 Position;
-layout (location = 1) in vec2 TexPosition;
+layout (location = 0) in vec3 v3Position;
+layout (location = 1) in vec2 v2TexPosition;
 
 uniform mat4 matCamera;
 uniform mat4 matPosition;
@@ -13,6 +13,7 @@ out vec2 TexCoord;
 void main()
 {
 	gl_Position = matCamera * matPosition * matRotation
-                            * matScale * vec4(Position, 1.0f);
-	TexCoord = TexPosition;
+                            * matScale * vec4(v3Position, 1.0f);
+	TexCoord = v2TexPosition;
 }
+

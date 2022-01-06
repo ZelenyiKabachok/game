@@ -2,8 +2,8 @@
 #include "shader.h"
 
 void Graphic::Shader::Generate(const char *sVertCode
-                                , const char *sFragCode
-                                , const char *sGeomCode)
+                             , const char *sFragCode
+                             , const char *sGeomCode)
 {
 	GLint vertShader;
 	GLint fragShader;
@@ -25,7 +25,7 @@ void Graphic::Shader::SetMatrix4(const char *sVarName
 {
 	GLuint location = glGetUniformLocation(programHandle, sVarName);
 	if(location >= 0)
-		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matVar));
+	{ glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matVar)); }
 }
 
 void Graphic::Shader::SetVector3(const char *sVarName
@@ -34,7 +34,7 @@ void Graphic::Shader::SetVector3(const char *sVarName
 	GLuint location = glGetUniformLocation(programHandle, sVarName);
 	float pArr[3] = { v3Var.x, v3Var.y, v3Var.z };
 	if(location >= 0)
-		glUniform3fv(location, 1, pArr);
+	{ glUniform3fv(location, 1, pArr); }
 }
 
 void Graphic::Shader::SetInt(const char *sVarName, const int var) const

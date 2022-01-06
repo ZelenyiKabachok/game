@@ -9,7 +9,7 @@ Graphic::ShapeDraw::ShapeDraw(Shader& sh, Texture2D& tex
 				: GraphObject(sh, tex, v3Pos, v3Size, v3Speed, v3Slant, slAng)
 {}
 
-void Graphic::ShapeDraw::initShaderData(const float *pData
+void Graphic::ShapeDraw::InitShaderData(const float *pData
                                       , const glm::vec3& v3Col
 								      , unsigned int vertexes
                                       , GLenum DrawType)
@@ -32,7 +32,7 @@ void Graphic::ShapeDraw::initShaderData(const float *pData
     glEnableVertexAttribArray(0);
 }
 
-void Graphic::ShapeDraw::initShaderData(const glm::vec2 *pData
+void Graphic::ShapeDraw::InitShaderData(const glm::vec2 *pData
                                       , const glm::vec3& v3Col
 								      , unsigned int vertexes
                                       , GLenum DrawType)
@@ -42,7 +42,7 @@ void Graphic::ShapeDraw::initShaderData(const glm::vec2 *pData
 		pArrData[j] = pData[i].x;
 		pArrData[j+1] = pData[i].y;
 	}
-	initShaderData(pArrData, v3Col, vertexes, DrawType);
+	InitShaderData(pArrData, v3Col, vertexes, DrawType);
 }
 
 void Graphic::ShapeDraw::Draw(const Camera& camera, float width) const

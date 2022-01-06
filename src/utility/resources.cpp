@@ -18,9 +18,8 @@ Graphic::Texture2D& ResourceManager::LoadTexture(const char *sName
 
 Physic::Collision ResourceManager::LoadCollision(const char *fName)
 {
-    const char* sCollis = loadFileAsString(fName);
-    Physic::Collision collision = readCollision(sCollis);
-    delete[] sCollis;
+    String sCollis = loadFileAsString(fName);
+    Physic::Collision collision = readCollision(sCollis.GetPointer());
     return collision;
 }
 
@@ -64,27 +63,45 @@ ResourceManager::~ResourceManager()
 }
 
 Graphic::Shader ResourceManager::LoadShaderFromFile(const char *fVertexShader
-										            , const char *fFragShader
-										            , const char *fGeomShader)
+										          , const char *fFragShader
+										          , const char *fGeomShader)
 {
-	const char *sVertCode = loadFileAsString(fVertexShader);
-	const char *sFragCode = loadFileAsString(fFragShader);
-	const char *sGeomCode = NULL;
+
+	String sVertCode = loadFileAsString(fVertexShader);
+	String sFragCode = loadFileAsString(fFragShader);
+	String sGeomCode;// = '\0';//NULL;
 	if(fGeomShader)
 	{ sGeomCode = loadFileAsString(fGeomShader); }
 
-	Graphic::Shader shader;
-	shader.Generate(sVertCode, sFragCode, sGeomCode);
+    //printf("\nVertex:\n%s\nFrag:\n%s\nGeom:\n%s\n", sVertCode.GetPointer()
+     //       , sFragCode.GetPointer(), sGeomCode.GetPointer());
 
-	delete[] sVertCode;
-	delete[] sFragCode;
-	if(fGeomShader)
-    { delete[] sGeomCode; }
+	Graphic::Shader shader;
+	shader.Generate(sVertCode.GetPointer(), sFragCode.GetPointer()
+                  , sGeomCode.GetPointer());
 
 	return shader;
 }	
 
-const char* ResourceManager::loadFileAsString(const char *fFile)
+
+String ResourceManager::loadFileAsString(const char *fFile)
+{
+    std::string string;
+    std::ifstream file(fFile);
+    std::stringstream vShaderStream;
+ 
+    vShaderStream << file.rdbuf();
+
+    file.close();
+
+    string = vShaderStream.str();
+    
+    return String(string.c_str());
+} 
+
+/*
+//Я не понимаю откуда берутся лишние символы в конце строки!
+String ResourceManager::loadFileAsString(const char *fFile)
 {
 	unsigned int file_size;
 	FILE *fd = fopen(fFile, "rw");
@@ -92,18 +109,20 @@ const char* ResourceManager::loadFileAsString(const char *fFile)
 		fprintf(stderr, "Can't open file: %s\n", fFile);
 		exit(0);
 	}
-	
+
 	fseek(fd, 0, SEEK_END);
 	file_size = ftello(fd);
 	fseek(fd, 0, SEEK_SET);
 
-//  printf("File '%s' size = %u\n", fFile, file_size);
-
-	char *sStr = new char[file_size];
+    char sStr[file_size+1];
 	fread(sStr, 1, file_size, fd);
+    sStr[file_size] = '\0';
+    printf("String: %s\n", sStr);
+    String string(sStr);
 	fclose(fd);
-	return sStr;
+	return string;
 }
+*/
 
 Graphic::Texture2D& ResourceManager::GetTexture(const char *sName)
 { return Textures[sName]; }

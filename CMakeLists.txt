@@ -42,6 +42,7 @@ add_executable(game 					src/main.cpp
     src/utility/temp_list.cpp
     src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
     src/utility/string.cpp              src/utility/string.h
+    src/utility/visual_string.cpp       src/utility/visual_string.h
 
     src/interface/button.cpp            src/interface/button.h
     src/interface/load_button.cpp       src/interface/load_button.h

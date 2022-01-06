@@ -2,6 +2,10 @@
 #define RESOURSES_H
 
 #include <map>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <iostream>
 #include "collision_in_files.h"
 #include "string.h"
 
@@ -28,7 +32,7 @@ public:
 
     Physic::Collision LoadCollision(const char* fFile);
 
-	const char* loadFileAsString(const char *sFileName);
+	String loadFileAsString(const char *sFileName);
 
 	void DeleteShader(const char *sName);
 	

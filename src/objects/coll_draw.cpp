@@ -15,11 +15,11 @@ void Graphic::CollDraw::Init(Physic::Shape **ppShapes
 	ppGraphic[numOfShapes] = new ShapeDraw(aabb, texture, glm::vec3(0.0));
 
 	for(unsigned int i = 0; i < numOfShapes; i++) {
-		ppGraphic[i]->initShaderData(ppShapes[i]->pV2Points
+		ppGraphic[i]->InitShaderData(ppShapes[i]->pV2Points
                                     , glm::vec3(0.0, 0.0, 1.0)
 									, ppShapes[i]->num_points);
 	}
-	ppGraphic[numOfShapes]->initShaderData(pV2AABB, glm::vec3(1.0, 0.0, 0.0)
+	ppGraphic[numOfShapes]->InitShaderData(pV2AABB, glm::vec3(1.0, 0.0, 0.0)
                                            , 2, GL_LINE_STRIP);
 }
 

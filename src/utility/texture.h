@@ -21,7 +21,8 @@ public:
 
 public:
 
-	Texture2D();
+	Texture2D(unsigned int wrap_s = GL_REPEAT, unsigned int wrap_t = GL_REPEAT
+            , unsigned int internal = GL_RGB, unsigned int image = GL_RGB);
 	
 	void Generate(unsigned int width, unsigned int height
                     , const unsigned char *pData);

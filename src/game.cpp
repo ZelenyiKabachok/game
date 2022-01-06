@@ -1,9 +1,9 @@
 #include "game.h"
 
-void Game::Init(ILevel& level, int width, int height)
+void Game::Init(const FT_Face& face, ILevel& level, int width, int height)
 {
     input = new Input(width, height);
-	level.Load(width, height);
+	level.Load(face, width, height);
 }
 
 void Game::UpDate(float delta_time, ILevel& level)

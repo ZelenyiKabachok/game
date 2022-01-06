@@ -15,7 +15,7 @@ public:
 	Shader() {}
 
 	void Generate(const char *sVertCode, const char *sFragCode
-                                        , const char *sGeomCode);
+                                       , const char *sGeomCode);
 
 	void Use() const;
 

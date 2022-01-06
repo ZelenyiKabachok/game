@@ -29,7 +29,7 @@ public:
 
     void ScrollInput(float yOffset);
 
-	void Init(ILevel& level, int width, int height);
+	void Init(const FT_Face& face, ILevel& level, int width, int height);
 
 	void UpDate(float delta_time, ILevel& level);
 

@@ -21,11 +21,11 @@ public:
                 , const float slAng = 0.0);
 
 
-	virtual void initShaderData(const float *pData
+	virtual void InitShaderData(const float *pData
                                 , const glm::vec3& v3Color
 				                , unsigned int vertexes
                                 , GLenum DrawType = GL_LINE_LOOP);
-	virtual void initShaderData(const glm::vec2 *pData
+	virtual void InitShaderData(const glm::vec2 *pData
                                 , const glm::vec3& v3Color
 						        , unsigned int vertexes
                                 , GLenum DrawType = GL_LINE_LOOP);

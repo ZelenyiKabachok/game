@@ -9,7 +9,7 @@ namespace GUI {
 class CollEditGui : public Interface {
 public:
 
-    CollEditGui();
+    CollEditGui(const FT_Face& Face, int width, int height);
 
     virtual ~CollEditGui() {}
 

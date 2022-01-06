@@ -1,9 +1,11 @@
 #include "texture.h"
 
 
-Graphic::Texture2D::Texture2D() : Width(0), Height(0)
-                                , InternalFormat(GL_RGB), ImageFormat(GL_RGB)
-		                        , Wrap_S(GL_REPEAT), Wrap_T(GL_REPEAT)
+Graphic::Texture2D::Texture2D(unsigned int wrap_s, unsigned int wrap_t
+                            , unsigned int internal, unsigned int image)
+                                : Width(0), Height(0)
+                                , InternalFormat(internal), ImageFormat(image)
+		                        , Wrap_S(wrap_s), Wrap_T(wrap_t)
                                 , FilterMin(GL_LINEAR), FilterMax(GL_LINEAR)
 {
 	glGenTextures(1, &texID);

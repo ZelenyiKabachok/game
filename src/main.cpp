@@ -63,7 +63,7 @@ int main(int argc, char **argv)
         return -1;
     }
     FT_Face face;
-    if(FT_New_Face(ft, "../resources/fronts/front.ttf", 0, &face)) {
+    if(FT_New_Face(ft, "../resources/fonts/Timmana-Regular.ttf", 0, &face)) {
         fprintf(stderr, "Error load front\n");
         return -1;
     }
@@ -75,7 +75,10 @@ int main(int argc, char **argv)
 
     ILevel *Level = game.ChooseLevel(pWindow, argc, argv);
 
-  	game.Init(*Level, width, height);
+  	game.Init(face, *Level, width, height);
+
+    FT_Done_Face(face);
+    FT_Done_FreeType(ft);
 
 	float current_time = 0.0;
 	float delta_time = 0.0;

@@ -3,6 +3,7 @@
 
 #include "../utility/resources.h"
 #include "../utility/list.h"
+#include "../interface/interface.h"
 #include "../objects.h"
 #include "../input.h"
 
@@ -11,7 +12,7 @@ class ILevel {
 public:
 
 //Загрузка уровня.
-	virtual void Load(int width, int height) = 0;
+	virtual void Load(const FT_Face& face, int width, int height) = 0;
 
 //Обновление состояния объектов уровня.
 	virtual void UpDate(float delta_time, const Input& input) = 0;

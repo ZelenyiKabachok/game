@@ -11,6 +11,13 @@ protected:
 
     Button **ppButtons = NULL;
     int quantity = 0;
+    Character pCharacters[256];
+
+    int screenWidth;
+    int screenHeight; 
+
+    unsigned int VBO;
+    unsigned int VAO;
 
 protected:
 
@@ -20,7 +27,7 @@ protected:
 
 public:
 
-    Interface() {}
+    Interface(const FT_Face& face, int width, int height);
 
     virtual void Init(const Button *pButtons, int numOfBut);
 

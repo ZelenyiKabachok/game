@@ -21,7 +21,7 @@ public:
 
 	FirstLevel() {}
 
-	virtual void Load(int width, int height);
+	virtual void Load(const FT_Face& face, int width, int height);
 
 	virtual void UpDate(float delta_time, const Input& input);
 

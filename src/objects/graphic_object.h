@@ -34,10 +34,9 @@ protected:
 public:
 
 //Инициализация шейдера
-//инициализация без текстуры
-	virtual void initShaderData(const float *pData, const unsigned int *pIndices
-                            , int numOfVert, unsigned int numOfInd
-						    , GLenum DrawType = GL_TRIANGLES);	
+	virtual void InitShaderData(const float *pData, const unsigned int *pIndices
+                              , int numOfVert, unsigned int numOfInd
+						      , GLenum DrawType = GL_TRIANGLES);	
 //Отрисовывает объект
 	virtual void Draw(const Camera& camera) const;  
 //Обновляет позицию объектa.

@@ -6,7 +6,7 @@ Input::Input(float width, float height)
 void Input::MousePosition(float curX, float curY)
 {
     
-    float delta_x = curPosX - curX;
+//    float delta_x = curPosX - curX;
 	float delta_y = curPosY - curY;
     curPosX = curX;
     curPosY = curY;
@@ -55,8 +55,12 @@ float Input::GetScroll() const
 float Input::GetAngle() const
 { return angle; }
 float Input::GetXPos() const
-{ return normX; }
+{ return curPosX; }
 float Input::GetYPos() const
+{ return curPosY; }
+float Input::GetNormXPos() const
+{ return normX; }
+float Input::GetNormYPos() const
 { return normY; }
 void Input::MouseNotPress()
 { mousePress = false; }

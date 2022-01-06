@@ -8,7 +8,8 @@ namespace GUI {
 class LoadButton : public Button {
 public:
 
-    LoadButton(const String& name, glm::vec3 v3Pos);
+    LoadButton(const Graphic::VisualString& name, const glm::vec3& v3Pos
+             , int screenWidth, int screenHeight);
     
     virtual void ChangeState(State newState, Setting& data);
 
