@@ -43,11 +43,14 @@ add_executable(game 					src/main.cpp
     src/utility/collision_in_files.cpp  src/utility/collision_in_files.h
     src/utility/string.cpp              src/utility/string.h
     src/utility/visual_string.cpp       src/utility/visual_string.h
+    src/utility/coordinate_system.cpp   src/utility/coordinate_system.h
 
     src/interface/button.cpp            src/interface/button.h
     src/interface/load_button.cpp       src/interface/load_button.h
     src/interface/interface.cpp         src/interface/interface.h
     src/interface/coll_edit_gui.cpp     src/interface/coll_edit_gui.h
+    src/interface/color_button.cpp      src/interface/color_button.h
+    src/interface/show_hide_button.cpp  src/interface/show_hide_button.h
 
 	external/stb_image/stb_image.cpp	external/stb_image/stb_image.h
 	src/camera.cpp                      src/camera.h

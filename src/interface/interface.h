@@ -2,7 +2,6 @@
 #define INTERFACE_H
 
 #include "button.h"
-#include "../input.h"
 
 namespace GUI {
 
@@ -21,9 +20,10 @@ protected:
 
 protected:
 
-    bool CheckMouse(const glm::vec2 *pV2Button, const glm::vec2 v2Mouse);
+    bool CheckMouse(const glm::vec2 *pV2Button, glm::vec2 v2Mouse);
 
-    virtual void ChangeButtonState(Button* pButton, Setting& date, State state);
+    virtual void ChangeButtonState(Button* pButton, Data& data
+                                 , State state, const Input& input);
 
 public:
 
@@ -33,7 +33,7 @@ public:
 
     virtual void Render(const Camera& camera);
 
-    virtual void Click(const Input& input, Setting& date);
+    virtual void Click(const Input& input, Data& data);
 
     virtual ~Interface();
 

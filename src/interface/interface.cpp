@@ -49,8 +49,9 @@ GUI::Interface::Interface(const FT_Face& face, int width, int height)
 }
 
 bool GUI::Interface::CheckMouse(const glm::vec2 *pV2Button
-                              , const glm::vec2 v2Mouse)
+                              , glm::vec2 v2Mouse)
 {
+    v2Mouse.y = screenHeight - v2Mouse.y;
     if(v2Mouse.x < pV2Button[0].x || v2Mouse.x > pV2Button[1].x)
     { return false; }
     if(v2Mouse.y < pV2Button[0].y || v2Mouse.y > pV2Button[1].y)
@@ -61,30 +62,30 @@ bool GUI::Interface::CheckMouse(const glm::vec2 *pV2Button
 void GUI::Interface::Render(const Camera& camera)
 {
     for(int i = 0; i < quantity; i++) {
-        ppButtons[i]->Draw(pCharacters, VBO, VAO);
+        ppButtons[i]->Draw(camera, pCharacters, VBO, VAO);
     }
 }
 
-void GUI::Interface::ChangeButtonState(GUI::Button* pButton
-                                    , Setting& date, GUI::State state)
+void GUI::Interface::ChangeButtonState(GUI::Button* pButton, Data& data
+                                     , GUI::State state, const Input& input)
 {
-    pButton->ChangeState(state, date);
+    pButton->ChangeState(state, data, input);
 }
 
-void GUI::Interface::Click(const Input& input, Setting& date)
+void GUI::Interface::Click(const Input& input, Data& data)
 {
     glm::vec2 pos(input.GetXPos(), input.GetYPos());
     for(int i = 0; i < quantity; i++) {
         if(CheckMouse(ppButtons[i]->GetCoord(), pos)) {
             if(input.MousePress()) {
-                ChangeButtonState(ppButtons[i], date, GUI::PRESSED);
+                ChangeButtonState(ppButtons[i], data, GUI::PRESSED, input);
                 continue;
             } else {
-                ChangeButtonState(ppButtons[i], date, GUI::HOVERED);
+                ChangeButtonState(ppButtons[i], data, GUI::HOVERED, input);
                 continue;
             }
         } else {
-            ChangeButtonState(ppButtons[i], date, GUI::NOT_HOVERED);
+            ChangeButtonState(ppButtons[i], data, GUI::NOT_HOVERED, input);
         }
     } 
 }

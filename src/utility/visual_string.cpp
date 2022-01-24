@@ -8,7 +8,6 @@ Graphic::VisualString::VisualString(int screenWidth, int screenHeight
                         , v3Color(v3Col), scale(size)
                         , shader(ResourceManager::Instance().GetShader("text"))
 {
-    v3Position.y = screenHeight - v3Position.y;
     glm::mat4 matProjection = glm::ortho(0.0, (double)(screenWidth)
                                        , 0.0, (double)(screenHeight));
     shader.Use();
@@ -69,7 +68,4 @@ void Graphic::VisualString::Draw(const Character *pCharacters
 
 void Graphic::VisualString::ChangePosition(int screenHeight
                                          , const glm::vec3& v3NewPos)
-{
-    v3Position = v3NewPos; 
-    v3Position.y = screenHeight - v3NewPos.y; 
-}
+{ v3Position = v3NewPos; }

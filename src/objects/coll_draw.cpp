@@ -3,7 +3,7 @@
 void Graphic::CollDraw::Init(Physic::Shape **ppShapes
                     , unsigned int numOfShapes, const glm::vec2 *pV2AABB)
 {
-    Graphic::Shader& shader = ResourceManager::Instance().GetShader("plane");
+    Graphic::Shader& shader = ResourceManager::Instance().GetShader("graphic");
     Graphic::Shader& aabb = ResourceManager::Instance().GetShader("aabb");
     Graphic::Texture2D& texture = ResourceManager::Instance().GetTexture("collis");
 

@@ -7,7 +7,7 @@
 
 namespace Graphic {
 
-class VisualString/* : public ShapeDraw */{
+class VisualString {
 
     String string;
     glm::vec3 v3Position;

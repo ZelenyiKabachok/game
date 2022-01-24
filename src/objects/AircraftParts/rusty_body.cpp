@@ -5,7 +5,7 @@ Aircraft::RustyBody::RustyBody() :
 		  RUST_BODY, 1000
         ,  "../resources/collisions/rusty_body.collis"
         , 2000, 700
-        , ResourceManager::Instance().GetShader("plane")
+        , ResourceManager::Instance().GetShader("graphic")
         , ResourceManager::Instance().LoadTexture("body"
         , "../resources/aircraft_parts/rusty_body.png")
 		, glm::vec3(0.0, 0.0, 0.0), glm::vec3(2.236, 1.0, 1.0)

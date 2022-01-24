@@ -5,7 +5,7 @@ Aircraft::RustyWings::RustyWings() :
 			RUST_WINGS, 600, 620
             , "../resources/collisions/rusty_wings.collis"
             , 500, 200
-            , ResourceManager::Instance().GetShader("plane")
+            , ResourceManager::Instance().GetShader("graphic")
 			, ResourceManager::Instance().LoadTexture("wings"
             , "../resources/aircraft_parts/rusty_wings.png")
 			, glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.4*2.736, 0.4*1.0, 1.0)

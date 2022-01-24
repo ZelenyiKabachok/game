@@ -3,7 +3,7 @@
 void FirstLevel::Load(const FT_Face& face, int width, int height)
 {
     ResourceManager& resources = ResourceManager::Instance();
-	Graphic::Shader& planeShader = resources.LoadShader("plane"
+	Graphic::Shader& planeShader = resources.LoadShader("graphic"
                                 , "../shaders/sprite.vert"
 								, "../shaders/sprite.frag");
 	resources.LoadShader("aabb", "../shaders/aabb.vert"
@@ -23,13 +23,15 @@ void FirstLevel::Load(const FT_Face& face, int width, int height)
     objects.New("Back", new Graphic::GraphObject(planeShader
         , resources.GetTexture("back"), glm::vec3(118.0, 2.5, 0.0)
         , glm::vec3(50*2.92, 50*1.0, 1.0)));
+
     objects.New("1", new Physic::PhysicObject(
           "../resources/collisions/box.collis", 5, 0.1
-        , resources.GetShader("plane"), resources.GetTexture("box")
+        , resources.GetShader("graphic"), resources.GetTexture("box")
 		, glm::vec3(0.0, -1.0, 0.0), glm::vec3(1.0, 1.0, 1.0))); 
+
     objects.New("2", new Physic::PhysicObject(
           "../resources/collisions/box.collis", 200, 2
-        , resources.GetShader("plane"), resources.GetTexture("box")
+        , resources.GetShader("graphic"), resources.GetTexture("box")
 		, glm::vec3(10.0, 20.0, 0.0), glm::vec3(1.0, 1.0, 1.0), glm::vec3(0)
 		, glm::vec3(0.0, 0.0, 1.0), (float)(M_PI/3)));
 

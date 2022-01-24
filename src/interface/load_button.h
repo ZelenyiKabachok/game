@@ -11,7 +11,7 @@ public:
     LoadButton(const Graphic::VisualString& name, const glm::vec3& v3Pos
              , int screenWidth, int screenHeight);
     
-    virtual void ChangeState(State newState, Setting& data);
+    virtual void ChangeState(State newState, Data& data, const Input& input);
 
     virtual ~LoadButton() {}
 

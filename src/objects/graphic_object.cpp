@@ -34,6 +34,7 @@ void Graphic::GraphObject::InitShaderData(const float *pData
 
     glBindVertexArray(0);
 
+
 }
 
 void Graphic::GraphObject::Draw(const Camera& camera) const

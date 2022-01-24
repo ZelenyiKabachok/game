@@ -8,7 +8,7 @@ GUI::Button::Button(const Graphic::VisualString& string
                   , const float slAng)
                 : Graphic::GraphObject(sh, tex, v3Pos, v3Ratio
                                           , v3Spd, v3sl, slAng)
-                , title(string)
+                , title(string), v3DefColor(1.0f)
 {
     //Получение крайних точек.
     glm::vec4 v4Left = this->matPosition * this->matSize
@@ -21,10 +21,10 @@ GUI::Button::Button(const Graphic::VisualString& string
     pV2Points[1].x = v4Right.x;
     pV2Points[1].y = v4Right.y;
 
-    glm::mat4 matProjection = glm::ortho(0.0, (double)(screenWidth)
-                                       , (double)(screenHeight), 0.0);
-    shader.Use();
-    shader.SetMatrix4("matProjection", matProjection);
+    matProjection = glm::ortho(0.0, (double)(screenWidth)
+                             , 0.0, (double)(screenHeight));
+
+    this->ChangeColor(v3DefColor);
 } 
 
 void GUI::Button::AlignText(int screenHeight)
@@ -34,7 +34,7 @@ void GUI::Button::AlignText(int screenHeight)
 
     glm::vec3 v3VisStrPos(0.0);
     v3VisStrPos.x = v2Left.x + 0.09 * (v2Right.x - v2Left.x);
-    v3VisStrPos.y = v2Right.y + 0.25 * (v2Left.y - v2Right.y);
+    v3VisStrPos.y = v2Left.y + 0.25 * (v2Right.y - v2Left.y);
     title.ChangePosition(screenHeight, v3VisStrPos);
 }
  
@@ -49,18 +49,20 @@ GUI::Button::Button(const Button& button)
 
 void GUI::Button::InitShaderData()
 {
-    float pVertexes[] = {
-      -1.0, -1.0, 0.0,
-      -1.0,  1.0, 0.0,
-       1.0,  1.0, 0.0,
-       1.0, -1.0, 0.0,
-    };
-
+    float pVertexes[] = {   
+      -1.0, -1.0, 0.0,     0.0, 0.0,
+      -1.0,  1.0, 0.0,     0.0, 1.0,
+       1.0,  1.0, 0.0,     1.0, 1.0,
+       1.0, -1.0, 0.0,     1.0, 0,0 
+    };  
     unsigned int pIndices[] {
         0, 1, 2,
         0, 2, 3
-    };
+    };  
 
+    this->GraphObject::InitShaderData(pVertexes, pIndices, 20, 6);
+
+/*
     GLuint VBO, EBO;
 
     glGenVertexArrays(1, &(this->VAO));
@@ -83,28 +85,29 @@ void GUI::Button::InitShaderData()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     glBindVertexArray(0);
+*/
 }
 
-void GUI::Button::Draw(const Character* pCharacters
-                     , unsigned int VBO, unsigned int VAO)
+void GUI::Button::Draw(const Camera& camera, const Character* pCharacters
+                                    , unsigned int VBO, unsigned int VAO)
 {
     switch(state) {
-    case NOT_HOVERED:
-        this->ChangeColor(glm::vec3(0.3f));
+    case HOVERED:
+        this->ChangeColor(glm::vec3(v3DefColor+0.2f));
         break;
     case PRESSED:
-        this->ChangeColor(glm::vec3(0.2f));
+        this->ChangeColor(glm::vec3(v3DefColor-0.1f));
         break;
     default:
-        this->ChangeColor(glm::vec3(0.5f));
+        this->ChangeColor(glm::vec3(v3DefColor));
+        break;
     }
     shader.Use();
 
-    //glActiveTexture(GL_TEXTURE0);
-    //texture.Bind();
-    //glm::mat4 matProjection = glm::ortho(0.0, 1920.0, 1080.0, 0.0);
-    //shader.SetMatrix4("matProjection", matProjection);
+    glActiveTexture(GL_TEXTURE0);
+    texture.Bind();
 
+    shader.SetMatrix4("matCamera", matProjection);
     shader.SetMatrix4("matPosition", matPosition);
     shader.SetMatrix4("matRotation", matRotation);
     shader.SetMatrix4("matScale", matSize);
@@ -112,7 +115,6 @@ void GUI::Button::Draw(const Character* pCharacters
    
     glBindVertexArray(this->VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-    //glDrawArrays(GL_TRIANGLES, 0, 3);
 
     title.Draw(pCharacters, VBO, VAO);
 }
@@ -120,7 +122,11 @@ void GUI::Button::Draw(const Character* pCharacters
 const glm::vec2* GUI::Button::GetCoord()
 { return pV2Points; }
 
-void GUI::Button::ChangeState(GUI::State newState, Setting& data)
+const Data& GUI::Button::GetData()
+{ return data; }
+
+void GUI::Button::ChangeState(GUI::State newState, Data& data
+                                            , const Input& input)
 {
     state = newState;
 } 
